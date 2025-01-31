@@ -1,47 +1,58 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Header } from './Header.tsx';
-
-const menuItems = [
-    { title: 'Dashboard', path: '/dashboard' },
-    { title: 'Reports', path: '/reports' },
-    {
-        title: 'Settings',
-        path: '/settings',
-        subItems: [
-            { title: 'Profile', path: '/profile' },
-            { title: 'Security', path: '/security' },
-        ],
-    },
-];
+import type { Meta, StoryObj } from "@storybook/react";
+import Header from "./Header";
 
 const meta = {
-    title: 'Novari/Header',
-    component: Header,
-    tags: ['autodocs'],
-    parameters: {
-        layout: 'fullscreen',
-    },
-    args: {
-        isLoggedIn: true,
-        userName: 'John Doe',
-        menuItems,
-    },
-    argTypes: {
-        onLogin: { action: 'onLogin' },
-        onLogout: { action: 'onLogout' },
-    },
+  title: "Novari/Header",
+  component: Header,
+  tags: ["autodocs"], // Enables automatic documentation in Storybook
+  parameters: {
+    layout: "fullscreen",
+  },
+  args: {
+    appName: "FINTApp",
+    menu: [
+      ["Dashboard", "/dashboard"],
+      ["Settings", "/settings"],
+    ],
+    loggedIn: true,
+    displayName: "John Doe",
+  },
+  argTypes: {
+    onLogout: { action: "onChange" },
+  },
+  decorators: [
+    (Story) => (
+      // <Page header={<Story />}>
+      //     test
+      // </Page>
+      <Story />
+    ),
+  ],
 } satisfies Meta<typeof Header>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Logged In Header
-export const LoggedIn: Story = {};
+// Default Header Story
+export const Default: Story = {};
 
-// Logged Out Header
+// Header with Logged Out State
 export const LoggedOut: Story = {
-    args: {
-        isLoggedIn: false,
-        userName: '',
-    },
+  args: {
+    loggedIn: false,
+    menu: ["Login", "/login"],
+  },
+};
+
+// Header with Custom Menu
+export const CustomMenu: Story = {
+  args: {
+    menu: [
+      ["Home", "/"],
+      ["About", "/about"],
+      ["Contact", "/contact"],
+      ["Support", "http://fintlabs.no"],
+      ["Glossary", "/help"],
+    ],
+  },
 };

@@ -1,72 +1,56 @@
-import {Button, HStack, ActionMenu, Box} from '@navikt/ds-react';
-import { LeaveIcon,ChevronDownIcon } from '@navikt/aksel-icons';
+// Header.tsx
+import React from "react";
 
-export interface MenuItem {
-    title: string;
-    path: string;
-    subItems?: { title: string; path: string }[];
-}
+import { Button, HStack } from "@navikt/ds-react";
+// import { ActionMenu } from "@navikt/ds-react";
+import { EnterIcon, LeaveIcon } from "@navikt/aksel-icons";
 
 export interface HeaderProps {
-    isLoggedIn: boolean;
-    userName?: string;
-    menuItems: MenuItem[];
-    onLogin?: () => void;
-    onLogout?: () => void;
+  appName: string;
+  menu: [string, string][] | [string, string];
+  loggedIn: boolean;
+  displayName?: string;
+  onLogout?: (selected: boolean) => void;
 }
 
-export const Header = ({ isLoggedIn, userName, menuItems, onLogin, onLogout }: HeaderProps) => {
-    return (
-        <Box as="header" style={{backgroundColor:"#FCF5ED"}}>
-            {/* Left: Logo & Menu */}
-            <HStack gap="4">
-                Name Here
-
-                    <HStack gap="2">
-                        <ActionMenu>
-                            <ActionMenu.Trigger>
-                                <Button
-                                    size={"small"}
-                                    variant="secondary-neutral"
-                                    icon={<ChevronDownIcon aria-hidden />}
-                                    iconPosition="right"
-                                >
-                                    Meny
-                                </Button>
-                            </ActionMenu.Trigger>
-                            <ActionMenu.Content>
-                                <ActionMenu.Group label="Systemer og oppslagsverk">
-                                    <ActionMenu.Item onSelect={console.info}>A-inntekt</ActionMenu.Item>
-                                    <ActionMenu.Item onSelect={console.info}>
-                                        Aa-registeret
-                                    </ActionMenu.Item>
-                                    <ActionMenu.Item onSelect={console.info}>Gosys</ActionMenu.Item>
-                                    <ActionMenu.Item onSelect={console.info}>
-                                        Modia Sykefraværsoppfølging
-                                    </ActionMenu.Item>
-                                    <ActionMenu.Item onSelect={console.info}>
-                                        Modia Personoversikt
-                                    </ActionMenu.Item>
-                                </ActionMenu.Group>
-                            </ActionMenu.Content>
-                        </ActionMenu>
-                    </HStack>
-
-            </HStack>
-
-            {/* Right: User Info & Login/Logout */}
-            <HStack gap="4">
-                {isLoggedIn ? (
-                    <>
-                        <span className="text-sm font-semibold">{userName}</span>
-                        <Button onClick={onLogout} variant="tertiary" icon={<LeaveIcon />} />
-                    </>
-                ) : (
-                    <Button onClick={onLogin} variant="primary">
-                        Login
-                    </Button>
-                )}
-            </HStack>
-        </Box>
-    );
+const Header: React.FC<HeaderProps> = ({
+  appName,
+  menu,
+  loggedIn,
+  displayName,
+  onLogout,
+}) => {
+  return (
+    <div className="flex justify-between bg-[#FCF5ED] pl-3 items-center">
+      <HStack gap={"2"}>
+        <h1 className={"text-[#500F2D]"}>{appName}</h1>
+      </HStack>
+      <HStack gap={"1"} className={"items-center"}>
+        {displayName && loggedIn && (
+          <>
+            <span>{displayName}</span>
+            <Button
+              variant="tertiary"
+              title="logg ut"
+              icon={<LeaveIcon title="logg ut" fontSize="1.5rem" />}
+              onClick={onLogout}
+            ></Button>
+          </>
+        )}
+        {!loggedIn && (
+          <Button
+            variant="tertiary"
+            title="logg ut"
+            icon={<EnterIcon title="logg ut" fontSize="1.5rem" />}
+            onClick={onLogout}
+            iconPosition="right"
+          >
+            Login
+          </Button>
+        )}
+      </HStack>
+    </div>
+  );
 };
+
+export default Header;
