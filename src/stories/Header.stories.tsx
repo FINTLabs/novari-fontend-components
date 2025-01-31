@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Header from "./Header";
+import { Box } from "@navikt/ds-react";
 
 const meta = {
   title: "Novari/Header",
@@ -11,21 +12,24 @@ const meta = {
   args: {
     appName: "FINTApp",
     menu: [
-      ["Dashboard", "/dashboard"],
-      ["Settings", "/settings"],
+      ["FirstPage", "/page1"],
+      ["SecondPage", "/page2"],
     ],
     loggedIn: true,
     displayName: "John Doe",
   },
   argTypes: {
-    onLogout: { action: "onChange" },
+    onLogout: { action: "onLogout" },
   },
   decorators: [
     (Story) => (
       // <Page header={<Story />}>
       //     test
       // </Page>
-      <Story />
+      <Box>
+        <Story />
+        <div className={"min-h-50"}></div>
+      </Box>
     ),
   ],
 } satisfies Meta<typeof Header>;
