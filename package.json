@@ -14,8 +14,10 @@
   "dependencies": {
     "@navikt/ds-css": "^7.10.0",
     "@navikt/ds-react": "^7.10.0",
+    "@tailwindcss/vite": "^4.0.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.0.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.4",
@@ -23,6 +25,7 @@
     "@storybook/addon-essentials": "^8.5.2",
     "@storybook/addon-interactions": "^8.5.2",
     "@storybook/addon-onboarding": "^8.5.2",
+    "@storybook/addon-styling-webpack": "^1.0.1",
     "@storybook/blocks": "^8.5.2",
     "@storybook/react": "^8.5.2",
     "@storybook/react-vite": "^8.5.2",

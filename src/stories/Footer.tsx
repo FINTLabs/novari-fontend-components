@@ -8,19 +8,18 @@ export interface FooterLink {
 }
 
 export interface FooterProps {
-    backgroundColor?: string;
     links: FooterLink[];
 }
 
-export const Footer = ({ backgroundColor = '#282c34', links }: FooterProps) => {
+export const Footer = ({ links }: FooterProps) => {
     return (
         <Box
             style={{
                 padding: '2rem',
                 marginTop: '2rem',
-                backgroundColor,
                 textAlign: 'center',
-            }}>
+            }}
+        className={"bg-[#6B133D] "}>
             <HStack gap="4" align="center">
             <Heading level="2" size="medium" spacing>
                 <Link href="http://novari.no" >

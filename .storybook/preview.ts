@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react";
 import "@navikt/ds-css";
-
+import '../src/index.css';
 const preview: Preview = {
   parameters: {
     controls: {

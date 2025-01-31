@@ -11,7 +11,6 @@ const meta = {
         layout: 'fullscreen',
     },
     args: {
-        backgroundColor: '#6B133D',
         links: [
             { label: 'Driftsmeldinger', href: 'https://novari.no/driftsmeldinger/' },
             { label: 'Opprett supportsak', href: 'http://support.novari.no' },
