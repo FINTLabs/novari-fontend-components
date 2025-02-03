@@ -24,28 +24,30 @@ const Header: React.FC<HeaderProps> = ({
         <Heading size={"medium"} className={"text-[#500F2D] pr-10"}>
           {appName}
         </Heading>
-        <ActionMenu>
-          <ActionMenu.Trigger>
-            <Button
-              size={"small"}
-              variant="tertiary-neutral"
-              icon={<ChevronDownIcon aria-hidden />}
-              iconPosition="right"
-            >
-              Meny
-            </Button>
-          </ActionMenu.Trigger>
-          <ActionMenu.Content>
-            {menu.map(([label, action], index) => (
-              <ActionMenu.Item
-                key={index}
-                onSelect={() => console.info(action)}
+        {loggedIn && (
+          <ActionMenu>
+            <ActionMenu.Trigger>
+              <Button
+                size={"small"}
+                variant="tertiary-neutral"
+                icon={<ChevronDownIcon aria-hidden />}
+                iconPosition="right"
               >
-                {label}
-              </ActionMenu.Item>
-            ))}
-          </ActionMenu.Content>
-        </ActionMenu>
+                Meny
+              </Button>
+            </ActionMenu.Trigger>
+            <ActionMenu.Content>
+              {menu.map(([label, action], index) => (
+                <ActionMenu.Item
+                  key={index}
+                  onSelect={() => console.info(action)}
+                >
+                  {label}
+                </ActionMenu.Item>
+              ))}
+            </ActionMenu.Content>
+          </ActionMenu>
+        )}
       </HStack>
       <HStack gap={"1"} className={"items-center"}>
         {displayName && loggedIn && (
