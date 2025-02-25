@@ -5,7 +5,7 @@ import { Box } from "@navikt/ds-react";
 const meta = {
   title: "Novari/Header",
   component: Header,
-  tags: ["autodocs"], // Enables automatic documentation in Storybook
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },
