@@ -1,0 +1,116 @@
+section.link-boxes .wrapper {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+section.link-boxes .link-box {
+  background-color: var(--novari-blue-purple-medium);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+section.link-boxes .link-box:after {
+  content: "";
+  position: absolute;
+  background-color: var(--novari-blue-purple-10);
+  z-index: 3;
+}
+@media (min-width: 64.0625rem) {
+  section.link-boxes .link-box {
+    padding: 3.1875rem 2.1875rem 3.125rem 2.1875rem;
+    min-height: 21.4375rem;
+  }
+  section.link-boxes .link-box::after {
+    -webkit-mask-image: url(/wp-content/themes/novari-live/assets/icons/link-box-arrow.svg);
+    mask-image: url(/wp-content/themes/novari-live/assets/icons/link-box-arrow.svg);
+    bottom: 1.9375rem;
+    right: 2.4375rem;
+    width: 2.0625rem;
+    height: 1.9375rem;
+  }
+  section.link-boxes .link-box::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 32px;
+    left: 180px;
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
+    background-color: var(--novari-dark-purple);
+    -webkit-mask-image: url(/wp-content/themes/novari-live/assets/illustrations/link-box-background.svg);
+    mask-image: url(/wp-content/themes/novari-live/assets/illustrations/link-box-background.svg);
+    width: 17.5rem;
+    height: 17.4375rem;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+  section.link-boxes .link-box:hover::before {
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    left: 40px;
+  }
+  section.link-boxes .link-box:nth-child(2n)::before {
+    -webkit-mask-image: url(/wp-content/themes/novari-live/assets/illustrations/link-box-background2.svg);
+    mask-image: url(/wp-content/themes/novari-live/assets/illustrations/link-box-background2.svg);
+  }
+  section.link-boxes .link-box:nth-child(3n)::before {
+    -webkit-mask-image: url(/wp-content/themes/novari-live/assets/illustrations/link-box-background3.svg);
+    mask-image: url(/wp-content/themes/novari-live/assets/illustrations/link-box-background3.svg);
+  }
+  section.link-boxes .link-box:nth-child(3n):hover::before {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    left: 40px;
+  }
+}
+section.link-boxes .link-box .box-content {
+  z-index: 2;
+}
+section.link-boxes .link-box h2,
+section.link-boxes .link-box h3,
+section.link-boxes .link-box p {
+  color: var(--white);
+  z-index: 2;
+  text-wrap: balance;
+}
+@media (max-width: 64rem) {
+  section.link-boxes .wrapper {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+@media (min-width: 48rem) and (max-width: 64rem) {
+  section.link-boxes .link-box {
+    padding: 1.875rem 1.5625rem 4.0625rem 1.875rem;
+  }
+  section.link-boxes .link-box::after {
+    -webkit-mask-image: url(/wp-content/themes/novari-live/assets/icons/link-box-arrow-small.svg);
+    mask-image: url(/wp-content/themes/novari-live/assets/icons/link-box-arrow-small.svg);
+    bottom: 1.875rem;
+    left: 1.875rem;
+    width: 1.5625rem;
+    height: 1.4375rem;
+  }
+  section.link-boxes .link-box .box-content h2 {
+    font-size: 1.375rem;
+    line-height: 1.875rem;
+  }
+  section.link-boxes .link-box .box-content p {
+    display: none;
+  }
+}
+@media (max-width: 47.9375rem) {
+  section.link-boxes .link-box {
+    padding: 2.0625rem 4.0625rem 2.0625rem 2.0625rem;
+  }
+  section.link-boxes .link-box::after {
+    -webkit-mask-image: url(/wp-content/themes/novari-live/assets/icons/link-box-arrow-small.svg);
+    mask-image: url(/wp-content/themes/novari-live/assets/icons/link-box-arrow-small.svg);
+    top: 2rem;
+    right: 1.9375rem;
+    width: 1.5625rem;
+    height: 1.4375rem;
+  }
+  section.link-boxes .link-box .box-content p {
+    display: none;
+  }
+}

@@ -12,23 +12,37 @@ const meta = {
   args: {
     appName: "FINTApp",
     menu: [
-      ["FirstPage", "/page1"],
-      ["SecondPage", "/page2"],
+      ["Home", "/"],
+      {
+        label: "Main Sections",
+        items: [
+          ["About", "/about"],
+          ["Team", "/team"],
+          ["Careers", "/careers"],
+        ],
+      },
+      ["Contact", "/contact"],
+      {
+        label: "Settings",
+        items: [
+          ["Profile", "/profile"],
+          ["Security", "/security"],
+        ],
+      },
     ],
     loggedIn: true,
     displayName: "John Doe",
+    showLogo: false, // Default to false
   },
   argTypes: {
     onLogout: { action: "onLogout" },
+    showLogo: { control: "boolean", description: "Show or hide the logo" },
   },
   decorators: [
     (Story) => (
-      // <Page header={<Story />}>
-      //     test
-      // </Page>
       <Box>
         <Story />
-        <div className={"min-h-50"}></div>
+        <div className="min-h-50"></div>
       </Box>
     ),
   ],
@@ -44,7 +58,7 @@ export const Default: Story = {};
 export const LoggedOut: Story = {
   args: {
     loggedIn: false,
-    menu: ["Login", "/login"],
+    menu: [["Login", "/login"]],
   },
 };
 
@@ -53,10 +67,29 @@ export const CustomMenu: Story = {
   args: {
     menu: [
       ["Home", "/"],
-      ["About", "/about"],
+      {
+        label: "Main Sections",
+        items: [
+          ["About", "/about"],
+          ["Team", "/team"],
+          ["Careers", "/careers"],
+        ],
+      },
       ["Contact", "/contact"],
-      ["Support", "http://fintlabs.no"],
-      ["Glossary", "/help"],
+      {
+        label: "Settings",
+        items: [
+          ["Profile", "/profile"],
+          ["Security", "/security"],
+        ],
+      },
     ],
+  },
+};
+
+// Header with Logo
+export const WithLogo: Story = {
+  args: {
+    showLogo: true,
   },
 };
