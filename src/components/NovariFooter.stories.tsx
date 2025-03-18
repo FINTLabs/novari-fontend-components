@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Footer } from "./Footer";
+import { NovariFooter } from "./NovariFooter.tsx";
 
 const meta = {
-  title: "Novari/Footer",
-  component: Footer,
+  title: "Novari/NovariFooter",
+  component: NovariFooter,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
@@ -22,22 +22,22 @@ const meta = {
       <Story />
     ),
   ],
-} satisfies Meta<typeof Footer>;
+} satisfies Meta<typeof NovariFooter>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Default Footer Story
+// Default NovariFooter Story
 export const Default: Story = {};
 
-// // Footer with Light Background
+// // NovariFooter with Light Background
 // export const LightBackground: Story = {
 //     args: {
 //         backgroundColor: '#ffffff',
 //     },
 // };
 
-// Footer with Custom Links
+// NovariFooter with Custom Links
 export const CustomLinks: Story = {
   args: {
     links: [

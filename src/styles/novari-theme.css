@@ -31,9 +31,10 @@
 
     --ac-guide-panel-border: #6B133D;
 
-    /* NOVARI Footer and header */
+    /* NOVARI NovariFooter and header */
     .novari-header {
         background:  #FCF5ED;
+        font-family: Brockmann;
     }
 
     .novari-footer {

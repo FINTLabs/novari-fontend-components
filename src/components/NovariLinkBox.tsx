@@ -8,7 +8,11 @@ export interface LinkBoxProps {
   href?: string;
 }
 
-const LinkBox: React.FC<LinkBoxProps> = ({ title, description, href }) => {
+const NovariLinkBox: React.FC<LinkBoxProps> = ({
+  title,
+  description,
+  href,
+}) => {
   return (
     <Box
       as="a"
@@ -31,4 +35,4 @@ const LinkBox: React.FC<LinkBoxProps> = ({ title, description, href }) => {
   );
 };
 
-export default LinkBox;
+export default NovariLinkBox;

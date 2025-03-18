@@ -1,8 +1,7 @@
 import type { Preview } from "@storybook/react";
 import "@navikt/ds-css";
 import "../src/index.css";
-import "../src/styles/novari-theme.css";
-// TODO: apply novari theme..
+import '../src/tailwind.css'; // replace with the name of your tailwind css file
 
 const preview: Preview = {
   parameters: {

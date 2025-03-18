@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import LinkBox from "./LinkBox";
+import NovariLinkBox from "./NovariLinkBox.tsx";
 
-const meta: Meta<typeof LinkBox> = {
-  title: "Novari/LinkBox",
-  component: LinkBox,
+const meta: Meta<typeof NovariLinkBox> = {
+  title: "Novari/NovariLinkBox",
+  component: NovariLinkBox,
   parameters: {
     layout: "padded",
   },
@@ -17,7 +17,7 @@ const meta: Meta<typeof LinkBox> = {
     description: { control: "text" },
     href: { control: "text" },
   },
-} satisfies Meta<typeof LinkBox>;
+} satisfies Meta<typeof NovariLinkBox>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "lib",         // ✅ Ensures output goes into `lib/`
+    "declaration": true,      // ✅ Generates `.d.ts` files
+    "declarationMap": true,
+    "emitDeclarationOnly": false, // ✅ Generates both `.js` and `.d.ts`
+    "allowJs": false,         // ❌ Ensure TypeScript does not process `.js`
+    "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true
+  },
+  "include": ["src"],         // ✅ Includes all TypeScript files in `src/`
+  "exclude": ["node_modules", "lib", "**/*.test.ts", "**/*.stories.tsx"]
+}

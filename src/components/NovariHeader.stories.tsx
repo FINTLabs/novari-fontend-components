@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Header from "./Header";
+import NovariHeader from "./NovariHeader.tsx";
 import { Box } from "@navikt/ds-react";
 
 const meta = {
-  title: "Novari/Header",
-  component: Header,
+  title: "Novari/NovariHeader",
+  component: NovariHeader,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
@@ -46,15 +46,15 @@ const meta = {
       </Box>
     ),
   ],
-} satisfies Meta<typeof Header>;
+} satisfies Meta<typeof NovariHeader>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Default Header Story
+// Default NovariHeader Story
 export const Default: Story = {};
 
-// Header with Logged Out State
+// NovariHeader with Logged Out State
 export const LoggedOut: Story = {
   args: {
     loggedIn: false,
@@ -62,7 +62,7 @@ export const LoggedOut: Story = {
   },
 };
 
-// Header with Custom Menu
+// NovariHeader with Custom Menu
 export const CustomMenu: Story = {
   args: {
     menu: [
@@ -87,7 +87,7 @@ export const CustomMenu: Story = {
   },
 };
 
-// Header with Logo
+// NovariHeader with Logo
 export const WithLogo: Story = {
   args: {
     showLogo: true,

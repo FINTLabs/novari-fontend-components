@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@navikt/ds-react";
 import { EnterIcon, LeaveIcon, ChevronDownIcon } from "@navikt/aksel-icons";
-import { NovariIKS } from "../logo/NovariIKS";
+import { NovariIKS } from "./assets/NovariIKS";
 
 export interface HeaderProps {
   appName: string;
@@ -19,7 +19,7 @@ export interface HeaderProps {
   showLogo?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const NovariHeader: React.FC<HeaderProps> = ({
   appName,
   menu,
   loggedIn,
@@ -122,4 +122,4 @@ const Header: React.FC<HeaderProps> = ({
   );
 };
 
-export default Header;
+export default NovariHeader;
