@@ -41,3 +41,5 @@ export const NovariFooter = ({ links }: FooterProps) => {
     </Box>
   );
 };
+
+export default NovariFooter;
