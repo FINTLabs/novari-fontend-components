@@ -27,7 +27,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
   return (
 
 
-        <HStack gap="2" className={"bg-[#f8ebdb] "}>
+        <HStack gap="2" className={"bg-[#4FACF8] "}>
           <HStack gap="2" className={"pl-2 pt-2 "}>
             {showLogo ? (
               <NovariIKS width="9em" />
