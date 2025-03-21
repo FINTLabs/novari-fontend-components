@@ -32,7 +32,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
   }, []);
 
   return (
-    <VStack gap="2" className="bg-[#FCF5ED]">
+    <VStack gap="2">
       <Box className="flex justify-between bg-[#FCF5ED] pl-3 items-center">
         <HStack gap="2">
           <HStack gap="2">

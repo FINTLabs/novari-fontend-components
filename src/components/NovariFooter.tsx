@@ -26,7 +26,6 @@ export const NovariFooter = ({ links }: FooterProps) => {
           <Link href="http://novari.no">
             <NovariIKS width={"9em"} />
           </Link>
-            logo
         </Heading>
 
         {links.map((link, index) => (
