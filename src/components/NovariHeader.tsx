@@ -1,14 +1,7 @@
-import React, { useEffect } from "react";
-import {
-  Button,
-  HStack,
-  Heading,
-  ActionMenu,
-  Box,
-  VStack,
-} from "@navikt/ds-react";
-import { EnterIcon, LeaveIcon, ChevronDownIcon } from "@navikt/aksel-icons";
-import { NovariIKS } from "./assets/NovariIKS";
+import React, {useEffect} from "react";
+import {ActionMenu, Box, Button, Heading, HStack, Spacer,} from "@navikt/ds-react";
+import {ChevronDownIcon, EnterIcon, LeaveIcon} from "@navikt/aksel-icons";
+import {NovariIKS} from "./assets/NovariIKS";
 
 export interface HeaderProps {
   appName: string;
@@ -32,10 +25,10 @@ const NovariHeader: React.FC<HeaderProps> = ({
   }, []);
 
   return (
-    <VStack gap="2">
-      <Box className="flex justify-between bg-[#FCF5ED] pl-3 items-center">
-        <HStack gap="2">
-          <HStack gap="2">
+
+
+        <HStack gap="2" className={"bg-[#f8ebdb] "}>
+          <HStack gap="2" className={"pl-2 pt-2 "}>
             {showLogo ? (
               <NovariIKS width="9em" />
             ) : (
@@ -91,19 +84,19 @@ const NovariHeader: React.FC<HeaderProps> = ({
               })}
             </HStack>
           )}
-        </HStack>
 
-        <HStack gap="1" className="items-center">
+          <Spacer />
+
           {displayName && loggedIn && (
-            <>
-              <span>{displayName}</span>
+            <HStack gap={"2"} >
+              <Box padding={"3"}>{displayName}</Box>
               <Button
                 variant="tertiary"
                 title="logg ut"
                 icon={<LeaveIcon title="logg ut" fontSize="1.5rem" />}
                 onClick={onLogout}
               />
-            </>
+            </HStack>
           )}
           {!loggedIn && (
             <Button
@@ -117,8 +110,8 @@ const NovariHeader: React.FC<HeaderProps> = ({
             </Button>
           )}
         </HStack>
-      </Box>
-    </VStack>
+
+
   );
 };
 
