@@ -26,8 +26,14 @@ const NovariHeader: React.FC<HeaderProps> = ({
 
   return (
 
+      <Box
+          style={{
+            textAlign: "center",
+          }}
+          className={"bg-[#FCF5ED] "}
+      >
 
-        <HStack gap="2" className={"bg-pink-100"}>
+        <HStack gap="2" >
           <HStack gap="2" className={"pl-2 pt-2 "}>
             {showLogo ? (
               <NovariIKS width="9em" />
@@ -110,7 +116,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
             </Button>
           )}
         </HStack>
-
+      </Box>
 
   );
 };
