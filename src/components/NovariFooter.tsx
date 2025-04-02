@@ -18,8 +18,9 @@ export const NovariFooter = ({ links }: FooterProps) => {
         padding: "2rem",
         marginTop: "2rem",
         textAlign: "center",
+          backgroundColor: "var(--a-surface-alt-3-moderate)"
       }}
-      className={"bg-[#6B133D] "}
+
     >
       <HStack gap="4" align="center">
         <Heading level="2" size="medium" spacing>

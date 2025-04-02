@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {ActionMenu, Box, Button, Heading, HStack, Spacer,} from "@navikt/ds-react";
 import {ChevronDownIcon, EnterIcon, LeaveIcon} from "@navikt/aksel-icons";
 import {NovariIKS} from "./assets/NovariIKS";
@@ -20,17 +20,17 @@ const NovariHeader: React.FC<HeaderProps> = ({
   onLogout,
   showLogo = true,
 }) => {
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "novari");
-  }, []);
+  // useEffect(() => {
+  //   document.documentElement.setAttribute("data-theme", "novari");
+  // }, []);
 
   return (
 
       <Box
           style={{
             textAlign: "center",
+            backgroundColor: "var(--a-bg-subtle)"
           }}
-          className={"bg-[#FCF5ED] "}
       >
 
         <HStack gap="2" >

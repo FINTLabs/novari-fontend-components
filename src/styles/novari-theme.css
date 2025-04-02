@@ -31,15 +31,6 @@
 
     --ac-guide-panel-border: #6B133D;
 
-    /* NOVARI NovariFooter and header */
-    .novari-header {
-        background:  #FCF5ED;
-        font-family: Brockmann;
-    }
-
-    .novari-footer {
-        background: #6B133D;
-    }
     /* Styles for the active panel */
     .my-custom-panel {
         background-color: #f3f4f6; /* Light gray background */
