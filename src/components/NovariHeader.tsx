@@ -10,6 +10,7 @@ export interface HeaderProps {
   displayName?: string;
   onLogout?: () => void;
   showLogo?: boolean;
+  onMenuClick?: (action: string) => void;
 }
 
 const NovariHeader: React.FC<HeaderProps> = ({
@@ -19,6 +20,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
   displayName,
   onLogout,
   showLogo = true,
+    onMenuClick,
 }) => {
   // useEffect(() => {
   //   document.documentElement.setAttribute("data-theme", "novari");
@@ -30,6 +32,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
           style={{
             textAlign: "center",
             backgroundColor: "var(--a-bg-subtle)"
+
           }}
       >
 
@@ -55,7 +58,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                       key={index}
                       size="small"
                       variant="tertiary-neutral"
-                      onClick={() => console.info(action)}
+                      onClick={() => onMenuClick?.(action)}
                     >
                       {label}
                     </Button>
@@ -78,7 +81,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                         {menuItem.items.map(([label, action], i) => (
                           <ActionMenu.Item
                             key={i}
-                            onSelect={() => console.info(action)}
+                            onSelect={() => onMenuClick?.(action)}
                           >
                             {label}
                           </ActionMenu.Item>

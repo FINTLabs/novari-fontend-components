@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import NovariHeader from "./NovariHeader.tsx";
+import NovariHeader from "./NovariHeader";
 import { Box } from "@navikt/ds-react";
 
 const meta = {
@@ -11,6 +11,8 @@ const meta = {
   },
   args: {
     appName: "FINTApp",
+    onLogout: () => console.log("Logged out"),
+    onMenuClick: (action: string) => console.log("Menu clicked:", action),
     menu: [
       ["Home", "/"],
       {
@@ -32,11 +34,12 @@ const meta = {
     ],
     loggedIn: true,
     displayName: "John Doe",
-    showLogo: false, // Default to false
+    showLogo: false,
   },
   argTypes: {
     onLogout: { action: "onLogout" },
     showLogo: { control: "boolean", description: "Show or hide the logo" },
+    onMenuClick: { action: "onMenuClick" },
   },
   decorators: [
     (Story) => (
