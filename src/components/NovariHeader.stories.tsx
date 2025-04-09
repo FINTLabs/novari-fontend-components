@@ -12,6 +12,7 @@ const meta = {
   args: {
     appName: "FINTApp",
     onLogout: () => console.log("Logged out"),
+    onLogin: () => console.log("Logged in"),
     onMenuClick: (action: string) => console.log("Menu clicked:", action),
     menu: [
       ["Home", "/"],
@@ -32,13 +33,12 @@ const meta = {
         ],
       },
     ],
-    loggedIn: true,
+    isLoggedIn: true,
     displayName: "John Doe",
-    showLogo: false,
   },
   argTypes: {
     onLogout: { action: "onLogout" },
-    showLogo: { control: "boolean", description: "Show or hide the logo" },
+    onLogin: { action: "onLogin" },
     onMenuClick: { action: "onMenuClick" },
   },
   decorators: [
@@ -60,32 +60,41 @@ export const Default: Story = {};
 // NovariHeader with Logged Out State
 export const LoggedOut: Story = {
   args: {
-    loggedIn: false,
-    menu: [["Login", "/login"]],
+    isLoggedIn: false,
+    displayName: undefined,
+  },argTypes: {
+    onLogin: { action: "onLogin" },
+  },
+};
+
+export const NoLoginRequired: Story = {
+  args: {
+    isLoggedIn: true,
+    displayName: "John Doe",
+    onLogin: undefined,
+    onLogout: undefined,
+  },
+};
+
+export const NoLoginRequiredAndNoName: Story = {
+  args: {
+    isLoggedIn: true,
+    displayName: undefined,
+    onLogin: undefined,
+    onLogout: undefined,
+    menu: [
+      ["Home", "/"],
+      ["Contact", "/contact"],
+    ],
   },
 };
 
 // NovariHeader with Custom Menu
-export const CustomMenu: Story = {
+export const CustomMenuOnlyButtons: Story = {
   args: {
     menu: [
       ["Home", "/"],
-      {
-        label: "Main Sections",
-        items: [
-          ["About", "/about"],
-          ["Team", "/team"],
-          ["Careers", "/careers"],
-        ],
-      },
       ["Contact", "/contact"],
-      {
-        label: "Settings",
-        items: [
-          ["Profile", "/profile"],
-          ["Security", "/security"],
-        ],
-      },
     ],
   },
 };
@@ -93,6 +102,6 @@ export const CustomMenu: Story = {
 // NovariHeader with Logo
 export const WithLogo: Story = {
   args: {
-    showLogo: true,
+    appName: undefined,
   },
 };

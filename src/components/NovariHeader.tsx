@@ -4,22 +4,22 @@ import {ChevronDownIcon, EnterIcon, LeaveIcon} from "@navikt/aksel-icons";
 import {NovariIKS} from "./assets/NovariIKS";
 
 export interface HeaderProps {
-  appName: string;
+  appName?: string;
   menu: ({ label?: string; items: [string, string][] } | [string, string])[];
-  loggedIn: boolean;
+  isLoggedIn: boolean;
   displayName?: string;
   onLogout?: () => void;
-  showLogo?: boolean;
+    onLogin?: () => void;
   onMenuClick?: (action: string) => void;
 }
 
 const NovariHeader: React.FC<HeaderProps> = ({
   appName,
   menu,
-  loggedIn,
+                                                 isLoggedIn,
   displayName,
   onLogout,
-  showLogo = true,
+    onLogin,
     onMenuClick,
 }) => {
   // useEffect(() => {
@@ -38,16 +38,16 @@ const NovariHeader: React.FC<HeaderProps> = ({
 
         <HStack gap="2" >
           <HStack gap="2" className={"pl-2 pt-2 "}>
-            {showLogo ? (
-              <NovariIKS width="9em" />
+            {!appName ? (
+                <NovariIKS width="9em" />
             ) : (
-              <Heading size="medium" className="text-[#500F2D] pr-10">
-                {appName}
-              </Heading>
+                <Heading size="medium" className="text-[#500F2D] pr-10">
+                  {appName}
+                </Heading>
             )}
           </HStack>
 
-          {loggedIn && (
+          {isLoggedIn && (
             <HStack gap="2">
               {menu.map((menuItem, index) => {
                 if (Array.isArray(menuItem)) {
@@ -96,23 +96,24 @@ const NovariHeader: React.FC<HeaderProps> = ({
 
           <Spacer />
 
-          {displayName && loggedIn && (
+
             <HStack gap={"2"} >
-              <Box padding={"3"}>{displayName}</Box>
-              <Button
+                {displayName && <Box padding={"3"}>{displayName}</Box>}
+
+                {isLoggedIn && onLogout &&  (<Button
                 variant="tertiary"
                 title="logg ut"
                 icon={<LeaveIcon title="logg ut" fontSize="1.5rem" />}
                 onClick={onLogout}
-              />
+              />)}
             </HStack>
-          )}
-          {!loggedIn && (
+
+          {!isLoggedIn && onLogin && (
             <Button
               variant="tertiary"
               title="logg inn"
               icon={<EnterIcon title="logg inn" fontSize="1.5rem" />}
-              onClick={onLogout}
+              onClick={onLogin}
               iconPosition="right"
             >
               Login
