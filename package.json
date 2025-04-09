@@ -80,8 +80,5 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
-  },
-  "dependencies": {
-    "@remix-run/react": "^2.16.4"
   }
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import {ActionMenu, Box, Button, Heading, HStack, Spacer,} from "@navikt/ds-react";
 import {ChevronDownIcon, EnterIcon, LeaveIcon} from "@navikt/aksel-icons";
 import {NovariIKS} from "./assets/NovariIKS";
