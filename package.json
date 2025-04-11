@@ -86,7 +86,9 @@
     ".": {
       "import": "./lib/index.mjs",
       "require": "./lib/index.cjs",
-      "style": "./lib/index.css"
+      "types": "./lib/index.d.ts",
+      "style": "./lib/index.css",
+      "default": "./lib/index.mjs"
     }
   }
 }
