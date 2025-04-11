@@ -89,6 +89,10 @@
       "types": "./lib/index.d.ts",
       "style": "./lib/index.css",
       "default": "./lib/index.mjs"
+    },
+    "./lib/index.css": {
+      "default": "./lib/index.css"
     }
   }
+
 }
