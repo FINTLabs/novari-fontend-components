@@ -7,6 +7,7 @@
   "main": "lib/index.cjs",
   "module": "lib/index.mjs",
   "types": "lib/index.d.ts",
+  "style": "lib/index.css",
   "license": "MIT",
   "author": "Jennifer Maarberg",
   "files": [
@@ -80,5 +81,12 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
+  },
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.cjs",
+      "style": "./lib/index.css"
+    }
   }
 }

@@ -2,6 +2,7 @@ import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import postcss from "rollup-plugin-postcss";
+import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import { createRequire } from "node:module";
 
@@ -10,31 +11,39 @@ const packageJson = requireFile("./package.json");
 
 export default [
   {
-    input: "lib/index.js",
+    input: "src/index.ts", // ✅ use src/index.ts not lib/index.js
     output: [
       {
-        file: packageJson.main.replace(".js", ".cjs"), // ✅ CommonJS
+        file: packageJson.main.replace(/\.js$/, ".cjs"),
         format: "cjs",
         sourcemap: true,
       },
       {
-        file: packageJson.module.replace(".js", ".mjs"), // ✅ ESM
+        file: packageJson.main.replace(/\.js$/, ".mjs"),
+
         format: "esm",
         sourcemap: true,
       },
     ],
     external: [
-      ...Object.keys(packageJson.dependencies || {}), // ✅ Exclude all dependencies
-      "@navikt/aksel-icons", // ✅ Exclude `@navikt/aksel-icons` explicitly
+      ...Object.keys(packageJson.dependencies || {}),
+      "@navikt/aksel-icons",
     ],
     plugins: [
       peerDepsExternal(),
-      resolve({
-        extensions: [".js", ".jsx"],
-      }),
+      resolve({ extensions: [".js", ".jsx", ".ts", ".tsx"] }),
       commonjs(),
+      typescript({
+        tsconfig: "./tsconfig.build.json",
+        include: ["src/**/*.ts", "src/**/*.tsx"],
+        sourceMap: true,
+        declaration: false,
+      }),
       postcss({
         extensions: [".css"],
+        extract: true,
+        minimize: true,
+        sourceMap: true,
       }),
     ],
   },

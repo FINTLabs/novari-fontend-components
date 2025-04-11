@@ -3,7 +3,7 @@
     "outDir": "lib",         // ✅ Ensures output goes into `lib/`
     "declaration": true,      // ✅ Generates `.d.ts` files
     "declarationMap": true,
-    "emitDeclarationOnly": false, // ✅ Generates both `.js` and `.d.ts`
+    "emitDeclarationOnly": true, // ✅ Generates both `.js` and `.d.ts`
     "allowJs": false,         // ❌ Ensure TypeScript does not process `.js`
     "strict": true,
     "target": "ESNext",
