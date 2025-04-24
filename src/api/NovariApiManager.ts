@@ -11,8 +11,7 @@ export interface NovariApiConfig {
 export interface ApiCallOptions {
   method: HttpMethod;
   endpoint: string;
-  body?: any;           // Changed from message to body for request payload
-  message?: any;        // Keep message for backward compatibility and specific message overrides
+  body?: any;
   contentType?: string;
   functionName?: string;
   additionalHeaders?: Record<string, string>;
@@ -42,7 +41,6 @@ export class NovariApiManager {
     method,
     endpoint,
     body,          // New body parameter
-    message,       // Keep message for backward compatibility
     contentType = 'application/json',
     functionName,
     additionalHeaders = {},
@@ -50,6 +48,15 @@ export class NovariApiManager {
     customSuccessMessage,
   }: ApiCallOptions): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
+
+    // Add debug logging
+    console.log('Full URL:', url);
+    console.log('Headers being sent:', {
+      'Content-Type': contentType,
+      ...this.config.defaultHeaders,
+      ...additionalHeaders,
+    });
+
     const headers: Record<string, string> = {
       'Content-Type': contentType,
       ...this.config.defaultHeaders,
@@ -62,7 +69,7 @@ export class NovariApiManager {
     };
 
     // Use body for the request payload, fallback to message for backward compatibility
-    const requestBody = body ?? message;
+    const requestBody = body;
     if (requestBody && method !== 'GET') {
       requestOptions.body = typeof requestBody === 'string' 
         ? requestBody 
@@ -106,9 +113,7 @@ export class NovariApiManager {
               if (jsonResponse?.data) {
                 data = jsonResponse.data;
               } else {
-                // If no data property, assume the whole response (minus message) is the data
-                const { message, ...rest } = jsonResponse;
-                data = Object.keys(rest).length > 0 ? rest as T : jsonResponse as T;
+                data = undefined
               }
             } else {
               // If no message property, use the whole response as data
@@ -129,7 +134,7 @@ export class NovariApiManager {
         variant: 'success',
         data,
         status: response.status,
-        body: requestBody,  // Include the request body in the response
+        body:  response.body || requestBody,  // Include the request body in the response
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
