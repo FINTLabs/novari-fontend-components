@@ -11,7 +11,8 @@ export interface NovariApiConfig {
 export interface ApiCallOptions {
   method: HttpMethod;
   endpoint: string;
-  message?: any;
+  body?: any;           // Changed from message to body for request payload
+  message?: any;        // Keep message for backward compatibility and specific message overrides
   contentType?: string;
   functionName?: string;
   additionalHeaders?: Record<string, string>;
@@ -25,6 +26,7 @@ export interface ApiResponse<T> {
   variant: 'success' | 'error' | 'warning';
   data?: T;
   status?: number;
+  body?: any;  // Add body to include the request payload in the response
 }
 
 export class NovariApiManager {
@@ -39,7 +41,8 @@ export class NovariApiManager {
   async call<T>({
     method,
     endpoint,
-    message,
+    body,          // New body parameter
+    message,       // Keep message for backward compatibility
     contentType = 'application/json',
     functionName,
     additionalHeaders = {},
@@ -58,18 +61,25 @@ export class NovariApiManager {
       headers,
     };
 
-    if (message && method !== 'GET') {
-      requestOptions.body = typeof message === 'string' ? message : JSON.stringify(message);
+    // Use body for the request payload, fallback to message for backward compatibility
+    const requestBody = body ?? message;
+    if (requestBody && method !== 'GET') {
+      requestOptions.body = typeof requestBody === 'string' 
+        ? requestBody 
+        : JSON.stringify(requestBody);
     }
 
     console.log(`${method} API URL: ${url}`);
+    if (requestBody) {
+      console.log('Request body:', requestBody);
+    }
 
     try {
       const response = await fetch(url, requestOptions);
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        console.error(`Request body: ${requestOptions.body}`);
+        console.error(`Request body:`, requestBody);
         console.error(`Response from ${functionName}: ${errorMessage}`);
         
         return {
@@ -77,30 +87,49 @@ export class NovariApiManager {
           message: customErrorMessage || errorMessage,
           variant: 'error',
           status: response.status,
+          body: requestBody,  // Include the request body in the response
         };
       }
 
       let data: T | undefined;
+      let responseMessage: string = '';
+
       if (response.status !== 204) {
         const contentType = response.headers.get('Content-Type');
         try {
           if (contentType?.includes('application/json')) {
-            data = await response.json();
+            const jsonResponse = await response.json();
+            // Check if the response has a message property
+            if (jsonResponse?.message) {
+              responseMessage = jsonResponse.message;
+              // If the response has both message and data properties
+              if (jsonResponse?.data) {
+                data = jsonResponse.data;
+              } else {
+                // If no data property, assume the whole response (minus message) is the data
+                const { message, ...rest } = jsonResponse;
+                data = Object.keys(rest).length > 0 ? rest as T : jsonResponse as T;
+              }
+            } else {
+              // If no message property, use the whole response as data
+              data = jsonResponse as T;
+            }
           } else if (contentType?.includes('text/plain')) {
-            const text = await response.text();
-            data = text as unknown as T;
+            responseMessage = await response.text();
+            data = responseMessage as unknown as T;
           }
         } catch (err) {
-          console.warn(`Response parsing error for ${functionName}`);
+          console.warn(`Response parsing error for ${functionName}:`, err);
         }
       }
 
       return {
         success: true,
-        message: customSuccessMessage || response.statusText,
+        message: customSuccessMessage || responseMessage || response.statusText,
         variant: 'success',
         data,
         status: response.status,
+        body: requestBody,  // Include the request body in the response
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
@@ -111,6 +140,7 @@ export class NovariApiManager {
         message: customErrorMessage || errorMessage,
         variant: 'error',
         status: 500,
+        body: requestBody,  // Include the request body in the response
       };
     }
   }
