@@ -30,20 +30,23 @@ export const NovariAlertManager: React.FC<AlertManagerProps> = ({
 
     useEffect(() => {
         if (alerts.length) {
-            const latestAlert = alerts[alerts.length - 1];
-            setDisplayAlerts((prev) => {
-                const updatedAlerts = [...prev, latestAlert];
-                if (updatedAlerts.length > maxAlerts) {
-                    updatedAlerts.shift();
-                }
-                return updatedAlerts;
-            });
+            // Process all new alerts that aren't already displayed
+            const newAlerts = alerts.filter(alert => 
+                !displayAlerts.some(displayAlert => displayAlert.id === alert.id)
+            );
 
-            setTimeout(() => {
-                setDisplayAlerts((prev) => 
-                    prev.filter((alert) => alert.id !== latestAlert.id)
-                );
-            }, autoRemoveDelay);
+            newAlerts.forEach(newAlert => {
+                setDisplayAlerts((prev) => {
+                    const updatedAlerts = [...prev, newAlert];
+                    return updatedAlerts.slice(-maxAlerts); // Keep only the last maxAlerts
+                });
+
+                setTimeout(() => {
+                    setDisplayAlerts((prev) => 
+                        prev.filter((alert) => alert.id !== newAlert.id)
+                    );
+                }, autoRemoveDelay);
+            });
         }
     }, [alerts, maxAlerts, autoRemoveDelay]);
 
