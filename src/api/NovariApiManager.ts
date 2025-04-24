@@ -11,7 +11,7 @@ export interface NovariApiConfig {
 export interface ApiCallOptions {
   method: HttpMethod;
   endpoint: string;
-  body?: any;
+  message?: any;
   contentType?: string;
   functionName?: string;
   additionalHeaders?: Record<string, string>;
@@ -39,7 +39,7 @@ export class NovariApiManager {
   async call<T>({
     method,
     endpoint,
-    body,
+    message,
     contentType = 'application/json',
     functionName,
     additionalHeaders = {},
@@ -58,8 +58,8 @@ export class NovariApiManager {
       headers,
     };
 
-    if (body && method !== 'GET') {
-      requestOptions.body = typeof body === 'string' ? body : JSON.stringify(body);
+    if (message && method !== 'GET') {
+      requestOptions.body = typeof message === 'string' ? message : JSON.stringify(message);
     }
 
     console.log(`${method} API URL: ${url}`);

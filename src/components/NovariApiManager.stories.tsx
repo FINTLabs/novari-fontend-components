@@ -24,7 +24,7 @@ const ApiDemo: React.FC<{
       const response = await api.call({
         method,
         endpoint,
-        body,
+        message: body,
         functionName: 'storybook-demo',
         customErrorMessage,
         customSuccessMessage,

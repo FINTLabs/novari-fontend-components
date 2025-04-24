@@ -81,9 +81,9 @@ This will:
 
 1. Update version:
 ```bash
-npm version patch  # For backwards-compatible bug fixes
-npm version minor  # For new features
-npm version major  # For breaking changes
+npm version patch
+npm version minor
+npm version major
 ```
 
 2. Publish to npm:
