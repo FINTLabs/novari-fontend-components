@@ -8,3 +8,14 @@ export { default as NovariInternalHeader} from "./components/NovariInternalHeade
 
 export { NovariIKS };
 // export { NovariHeader };
+
+// API
+export { NovariApiManager } from './api/NovariApiManager';
+export type {
+  NovariApiConfig,
+  ApiCallOptions,
+  ApiResponse,
+  HttpMethod
+} from './api/NovariApiManager';
+// export { defaultLogger } from './utils/logger';
+// export type { Logger } from './utils/logger';

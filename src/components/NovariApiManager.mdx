@@ -1,0 +1,174 @@
+import { Meta, Story, Canvas } from '@storybook/blocks';
+import * as NovariApiManagerStories from './NovariApiManager.stories';
+
+<Meta of={NovariApiManagerStories} />
+
+# NovariApiManager
+
+A flexible API manager for making HTTP requests with built-in error handling and logging.
+
+## Quick Start - Hello World
+
+Here's a simple example to get started with NovariApiManager:
+
+```typescript
+// Initialize the API manager
+const api = new NovariApiManager({
+  baseUrl: 'https://api.example.com',
+  logger: {
+    info: (msg) => console.log(`[App] ${msg}`),
+    warn: (msg) => console.warn(`[App] ${msg}`),
+    error: (msg) => console.error(`[App] ${msg}`),
+  }
+});
+
+// Make a simple GET request
+try {
+  const response = await api.get('/hello', 'getHelloWorld');
+  console.log(response); // { message: "Hello, World!" }
+} catch (error) {
+  console.error('Failed to fetch:', error);
+}
+```
+
+## Features
+
+- Type-safe API calls with TypeScript
+- Configurable base URL and default headers
+- Built-in logging with customizable logger
+- Convenience methods for GET, POST, PUT, DELETE
+- Error handling and response processing
+
+## Common Use Cases
+
+### 1. Basic GET Request
+```typescript
+// Fetch user data
+const user = await api.get('/users/123', 'getUser');
+```
+
+### 2. Authenticated Request
+```typescript
+const api = new NovariApiManager({
+  baseUrl: 'https://api.example.com',
+  defaultHeaders: {
+    'Authorization': 'Bearer your-token-here'
+  }
+});
+
+const data = await api.get('/protected-resource', 'getProtectedData');
+```
+
+### 3. Error Handling
+```typescript
+try {
+  const response = await api.get('/users/123', 'getUser');
+  // Handle success
+} catch (error) {
+  if (error.status === 404) {
+    console.log('User not found');
+  } else {
+    console.log('An error occurred:', error.message);
+  }
+}
+```
+
+## Live Examples
+
+### GET Request Example
+<Canvas of={NovariApiManagerStories.GetExample} />
+
+### POST Request Example
+<Canvas of={NovariApiManagerStories.PostExample} />
+
+### Error Handling Example
+<Canvas of={NovariApiManagerStories.ErrorExample} />
+
+## API Reference
+
+### Configuration Options
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| baseUrl | string | Yes | The base URL for all API calls |
+| defaultHeaders | Record<string, string> | No | Default headers included in all requests |
+| logger | Logger | No | Custom logger implementation |
+
+### Available Methods
+
+#### GET Request
+```typescript
+api.get<T>(endpoint: string, functionName: string, headers?: Record<string, string>): Promise<T>
+```
+
+#### POST Request
+```typescript
+api.post<T>(endpoint: string, body: unknown, functionName: string, headers?: Record<string, string>): Promise<T>
+```
+
+#### PUT Request
+```typescript
+api.put<T>(endpoint: string, body: unknown, functionName: string, headers?: Record<string, string>): Promise<T>
+```
+
+#### DELETE Request
+```typescript
+api.delete<T>(endpoint: string, functionName: string, headers?: Record<string, string>): Promise<T>
+```
+
+## TypeScript Example
+
+```typescript
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+const api = new NovariApiManager({
+  baseUrl: 'https://api.example.com'
+});
+
+// Type-safe GET request
+const user = await api.get<User>('/users/123', 'getUser');
+console.log(user.name); // TypeScript knows this is a string
+
+// Type-safe POST request
+const newUser = await api.post<User>('/users', {
+  name: 'John Doe',
+  email: 'john@example.com'
+}, 'createUser');
+```
+
+## Best Practices
+
+1. **Always provide meaningful function names**
+   ```typescript
+   // Good
+   await api.get('/users', 'getUserList');
+   
+   // Avoid
+   await api.get('/users', 'getData');
+   ```
+
+2. **Use TypeScript interfaces for type safety**
+   ```typescript
+   interface ApiResponse<T> {
+     data: T;
+     status: number;
+   }
+   
+   const response = await api.get<ApiResponse<User>>('/users/123', 'getUser');
+   ```
+
+3. **Handle errors appropriately**
+   ```typescript
+   try {
+     const data = await api.get('/users', 'getUsers');
+   } catch (error) {
+     // Log the error
+     console.error('Failed to fetch users:', error);
+     // Show user-friendly message
+     showErrorNotification('Unable to load users');
+   }
+   ```
