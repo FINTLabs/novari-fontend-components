@@ -2,15 +2,24 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { NovariApiManager } from '../api/NovariApiManager.ts';
 
-// Example component to demonstrate API usage
-const ApiDemo: React.FC<{
+// Update the interface to mark required props
+interface ApiDemoProps {
+  /** Base URL for the API @required */
   baseUrl: string;
+  /** API endpoint path @required */
   endpoint: string;
+  /** HTTP method @required */
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  /** Request body (for POST/PUT) */
   body?: any;
+  /** Custom error message to override default */
   customErrorMessage?: string;
+  /** Custom success message to override default */
   customSuccessMessage?: string;
-}> = ({ baseUrl, endpoint, method, body, customErrorMessage, customSuccessMessage }) => {
+}
+
+// Example component to demonstrate API usage
+const ApiDemo: React.FC<ApiDemoProps> = ({ baseUrl, endpoint, method, body, customErrorMessage, customSuccessMessage }) => {
   const [result, setResult] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -127,15 +136,30 @@ A flexible API manager for making HTTP requests with built-in error handling and
     baseUrl: {
       control: 'text',
       description: 'Base URL for the API',
+      required: true,
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
     },
     endpoint: {
       control: 'text',
       description: 'API endpoint path',
+      required: true,
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
     },
     method: {
       control: 'select',
       options: ['GET', 'POST', 'PUT', 'DELETE'],
       description: 'HTTP method',
+      required: true,
+      table: {
+        type: { summary: "'GET' | 'POST' | 'PUT' | 'DELETE'" },
+        defaultValue: { summary: 'undefined' },
+      },
     },
     body: {
       control: 'object',
@@ -158,11 +182,15 @@ type Story = StoryObj<typeof meta>;
 // GET example
 export const GetExample: Story = {
   args: {
-    baseUrl: 'https://jsonplaceholder.typicode.com',
+    baseUrl: "localhost:8080",
     endpoint: '/todos/1',
     method: 'GET',
     customSuccessMessage: 'Successfully retrieved todo',
     customErrorMessage: 'Failed to get todo',
+
+    body: {
+      "firstname": "jennifer"
+    }
   },
 };
 
