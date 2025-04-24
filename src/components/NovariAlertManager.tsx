@@ -29,26 +29,29 @@ export const NovariAlertManager: React.FC<AlertManagerProps> = ({
     const [displayAlerts, setDisplayAlerts] = useState<AlertType[]>([]);
 
     useEffect(() => {
-        if (alerts.length) {
-            // Process all new alerts that aren't already displayed
+        // When alerts prop changes, update displayAlerts
+        if (alerts.length > 0) {
             const newAlerts = alerts.filter(alert => 
-                !displayAlerts.some(displayAlert => displayAlert.id === alert.id)
+                !displayAlerts.find(d => d.id === alert.id)
             );
-
-            newAlerts.forEach(newAlert => {
-                setDisplayAlerts((prev) => {
-                    const updatedAlerts = [...prev, newAlert];
-                    return updatedAlerts.slice(-maxAlerts); // Keep only the last maxAlerts
+            
+            if (newAlerts.length > 0) {
+                setDisplayAlerts(prev => {
+                    const combined = [...prev, ...newAlerts];
+                    return combined.slice(-maxAlerts);
                 });
 
-                setTimeout(() => {
-                    setDisplayAlerts((prev) => 
-                        prev.filter((alert) => alert.id !== newAlert.id)
-                    );
-                }, autoRemoveDelay);
-            });
+                // Set removal timeout for new alerts
+                newAlerts.forEach(alert => {
+                    setTimeout(() => {
+                        setDisplayAlerts(prev => 
+                            prev.filter(a => a.id !== alert.id)
+                        );
+                    }, autoRemoveDelay);
+                });
+            }
         }
-    }, [alerts, maxAlerts, autoRemoveDelay]);
+    }, [alerts]);
 
     return (
         <VStack
@@ -65,8 +68,8 @@ export const NovariAlertManager: React.FC<AlertManagerProps> = ({
                     closeButton
                     size="small"
                     onClose={() =>
-                        setDisplayAlerts((prev) => 
-                            prev.filter((a) => a.id !== alert.id)
+                        setDisplayAlerts(prev => 
+                            prev.filter(a => a.id !== alert.id)
                         )
                     }>
                     {alert.header && (
