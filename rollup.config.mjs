@@ -11,33 +11,36 @@ const packageJson = requireFile("./package.json");
 
 export default [
   {
-    input: "src/index.ts", // ✅ use src/index.ts not lib/index.js
+    input: "src/index.ts",
     output: [
       {
-        file: packageJson.main.replace(/\.js$/, ".cjs"),
+        file: packageJson.main,
         format: "cjs",
         sourcemap: true,
       },
       {
-        file: packageJson.main.replace(/\.js$/, ".mjs"),
-
+        file: packageJson.module,
         format: "esm",
         sourcemap: true,
       },
     ],
     external: [
       ...Object.keys(packageJson.dependencies || {}),
+      ...Object.keys(packageJson.peerDependencies || {}),
       "@navikt/aksel-icons",
     ],
     plugins: [
       peerDepsExternal(),
-      resolve({ extensions: [".js", ".jsx", ".ts", ".tsx"] }),
+      resolve({ 
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        preferBuiltins: true
+      }),
       commonjs(),
       typescript({
         tsconfig: "./tsconfig.build.json",
         include: ["src/**/*.ts", "src/**/*.tsx"],
         sourceMap: true,
-        declaration: false,
+        declaration: true,
       }),
       postcss({
         extensions: [".css"],
