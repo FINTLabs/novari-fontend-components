@@ -24,7 +24,7 @@ export const NovariAlertManager: React.FC<AlertManagerProps> = ({
     alerts,
     maxAlerts = 3,
     autoRemoveDelay = 10000,
-    position = { top: '5rem', right: '1rem' }
+    position = { top: '1rem', right: '1rem' }
 }) => {
     const [displayAlerts, setDisplayAlerts] = useState<AlertType[]>([]);
 
