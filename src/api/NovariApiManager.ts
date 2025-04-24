@@ -21,7 +21,7 @@ export interface ApiCallOptions {
 
 export interface ApiResponse<T> {
   success: boolean;
-  body: string;
+  message: string;
   variant: 'success' | 'error' | 'warning';
   data?: T;
   status?: number;
@@ -74,7 +74,7 @@ export class NovariApiManager {
         
         return {
           success: false,
-          body: customErrorMessage || errorMessage,
+          message: customErrorMessage || errorMessage,
           variant: 'error',
           status: response.status,
         };
@@ -97,7 +97,7 @@ export class NovariApiManager {
 
       return {
         success: true,
-        body: customSuccessMessage || response.statusText,
+        message: customSuccessMessage || response.statusText,
         variant: 'success',
         data,
         status: response.status,
@@ -108,7 +108,7 @@ export class NovariApiManager {
       
       return {
         success: false,
-        body: customErrorMessage || errorMessage,
+        message: customErrorMessage || errorMessage,
         variant: 'error',
         status: 500,
       };

@@ -10,8 +10,15 @@ npm install novari-frontend-components
 
 ## Usage
 
-```typescript
-import { NovariHeader, NovariFooter, NovariApiManager } from 'novari-frontend-components';
+```tsx
+import React, { useState } from 'react';
+import { 
+  NovariHeader, 
+  NovariFooter, 
+  NovariApiManager, 
+  NovariAlertManager,
+  AlertType 
+} from 'novari-frontend-components';
 import 'novari-frontend-components/lib/index.css';
 
 // Example using NovariApiManager
@@ -22,16 +29,37 @@ const api = new NovariApiManager({
   }
 });
 
-// Example using NovariHeader
-function App() {
+// Example using NovariAlertManager
+function App(): JSX.Element {
+  const [alerts, setAlerts] = useState<AlertType[]>([]);
+
+  const addAlert = (message: string, variant: AlertType['variant']): void => {
+    setAlerts(prev => [...prev, {
+      id: Date.now(),
+      message,
+      variant,
+      header: variant.charAt(0).toUpperCase() + variant.slice(1)
+    }]);
+  };
+
   return (
-    <NovariHeader 
-      appName="My App"
-      isLoggedIn={true}
-      displayName="John Doe"
-    />
+    <>
+      <NovariHeader 
+        appName="My App"
+        isLoggedIn={true}
+        displayName="John Doe"
+      />
+      <NovariAlertManager
+        alerts={alerts}
+        maxAlerts={3}
+        autoRemoveDelay={5000}
+        position={{ top: '5rem', right: '1rem' }}
+      />
+    </>
   );
 }
+
+export default App;
 ```
 
 ## Available Components
@@ -40,6 +68,67 @@ function App() {
 - `NovariFooter` - Application footer with customizable links
 - `NovariApiManager` - HTTP client for API interactions
 - `NovariInternalHeader` - Internal page header component
+- `NovariAlertManager` - Toast notification system for displaying alerts
+
+## Component Documentation
+
+### NovariAlertManager
+
+A flexible alert management system for displaying toast notifications.
+
+#### Types
+
+```tsx
+interface AlertType {
+    id: number;
+    message: string;
+    header?: string;
+    variant: 'error' | 'info' | 'warning' | 'success';
+}
+
+interface AlertManagerProps {
+    alerts: AlertType[];
+    maxAlerts?: number;         // Default: 3
+    autoRemoveDelay?: number;   // Default: 10000 (10 seconds)
+    position?: {
+        top?: string;
+        right?: string;
+        bottom?: string;
+        left?: string;
+    };                          // Default: { top: '5rem', right: '1rem' }
+}
+```
+
+#### Example Usage
+
+```tsx
+import React, { useState } from 'react';
+import { NovariAlertManager, AlertType } from 'novari-frontend-components';
+
+function MyComponent(): JSX.Element {
+  const [alerts, setAlerts] = useState<AlertType[]>([]);
+
+  const showSuccessAlert = (): void => {
+    setAlerts(prev => [...prev, {
+      id: Date.now(),
+      message: 'Operation completed successfully',
+      header: 'Success',
+      variant: 'success'
+    }]);
+  };
+
+  return (
+    <NovariAlertManager
+      alerts={alerts}
+      maxAlerts={3}
+      autoRemoveDelay={5000}
+      position={{ top: '5rem', right: '1rem' }}
+    />
+  );
+}
+
+export default MyComponent;
+```
 
 ## Development
 

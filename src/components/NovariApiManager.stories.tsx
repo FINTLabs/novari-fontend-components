@@ -79,7 +79,7 @@ const response = await api.call({
         <pre style={{ background: '#f5f5f5', padding: '1rem', borderRadius: '4px' }}>
 {`interface ApiResponse<T> {
   success: boolean;
-  body: string;
+  message: string;
   variant: 'success' | 'error' | 'warning';
   data?: T;
   status?: number;
