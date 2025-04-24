@@ -15,11 +15,13 @@ export interface ApiCallOptions {
   contentType?: string;
   functionName?: string;
   additionalHeaders?: Record<string, string>;
+  customErrorMessage?: string;
+  customSuccessMessage?: string;
 }
 
 export interface ApiResponse<T> {
   success: boolean;
-  message: string;
+  body: string;
   variant: 'success' | 'error' | 'warning';
   data?: T;
   status?: number;
@@ -41,6 +43,8 @@ export class NovariApiManager {
     contentType = 'application/json',
     functionName,
     additionalHeaders = {},
+    customErrorMessage,
+    customSuccessMessage,
   }: ApiCallOptions): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
     const headers: Record<string, string> = {
@@ -58,23 +62,19 @@ export class NovariApiManager {
       requestOptions.body = typeof body === 'string' ? body : JSON.stringify(body);
     }
 
-    // this.logger.info(`${method} API URL: ${url}`);
     console.log(`${method} API URL: ${url}`);
 
     try {
       const response = await fetch(url, requestOptions);
-      // this.logger.info(`API Response ${functionName}: ${response.status}`);
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        // this.logger.error(`Request body: ${requestOptions.body}`);
-        // this.logger.error(`Response from ${functionName}: ${errorMessage}`);
         console.error(`Request body: ${requestOptions.body}`);
         console.error(`Response from ${functionName}: ${errorMessage}`);
         
         return {
           success: false,
-          message: errorMessage,
+          body: customErrorMessage || errorMessage,
           variant: 'error',
           status: response.status,
         };
@@ -91,26 +91,24 @@ export class NovariApiManager {
             data = text as unknown as T;
           }
         } catch (err) {
-          // this.logger.warn(`Response parsing error for ${functionName}`);
           console.warn(`Response parsing error for ${functionName}`);
         }
       }
 
       return {
         success: true,
-        message: response.statusText,
+        body: customSuccessMessage || response.statusText,
         variant: 'success',
         data,
         status: response.status,
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      // this.logger.error('API call error:', errorMessage);
       console.error('API call error:', errorMessage);
       
       return {
         success: false,
-        message: errorMessage,
+        body: customErrorMessage || errorMessage,
         variant: 'error',
         status: 500,
       };

@@ -8,20 +8,14 @@ const ApiDemo: React.FC<{
   endpoint: string;
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   body?: any;
-}> = ({ baseUrl, endpoint, method, body }) => {
+  customErrorMessage?: string;
+  customSuccessMessage?: string;
+}> = ({ baseUrl, endpoint, method, body, customErrorMessage, customSuccessMessage }) => {
   const [result, setResult] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const api = new NovariApiManager({
-    baseUrl,
-    // logger: {
-    //   info: (msg) => console.log(`[Demo] ${msg}`),
-    //   warn: (msg) => console.warn(`[Demo] ${msg}`),
-    //   error: (msg) => console.error(`[Demo] ${msg}`),
-    // },
-
-  });
+  const api = new NovariApiManager({ baseUrl });
 
   const handleApiCall = async () => {
     setLoading(true);
@@ -32,6 +26,8 @@ const ApiDemo: React.FC<{
         endpoint,
         body,
         functionName: 'storybook-demo',
+        customErrorMessage,
+        customSuccessMessage,
       });
       setResult(JSON.stringify(response, null, 2));
     } catch (err) {
@@ -52,6 +48,34 @@ const ApiDemo: React.FC<{
           {loading ? 'Loading...' : 'Make API Call'}
         </button>
         <span>{`${method} ${baseUrl}${endpoint}`}</span>
+      </div>
+
+      <div style={{ marginBottom: '1rem' }}>
+        <strong>Code Example:</strong>
+        <pre style={{ background: '#f5f5f5', padding: '1rem', borderRadius: '4px' }}>
+{`const api = new NovariApiManager({
+  baseUrl: '${baseUrl}'
+});
+
+const response = await api.call({
+  method: '${method}',
+  endpoint: '${endpoint}',${body ? `\n  body: ${JSON.stringify(body, null, 2)},` : ''}${customSuccessMessage ? `\n  customSuccessMessage: '${customSuccessMessage}',` : ''}${customErrorMessage ? `\n  customErrorMessage: '${customErrorMessage}',` : ''}
+  functionName: 'demo'
+});`}
+        </pre>
+      </div>
+      
+      <div style={{ marginBottom: '1rem' }}>
+        <strong>Expected Response Type:</strong>
+        <pre style={{ background: '#f5f5f5', padding: '1rem', borderRadius: '4px' }}>
+{`interface ApiResponse<T> {
+  success: boolean;
+  body: string;
+  variant: 'success' | 'error' | 'warning';
+  data?: T;
+  status?: number;
+}`}
+        </pre>
       </div>
       
       {body && (
@@ -90,21 +114,12 @@ const meta = {
         component: `
 A flexible API manager for making HTTP requests with built-in error handling and logging.
 
-\`\`\`typescript
-const api = new NovariApiManager({
-  baseUrl: 'https://api.example.com',
-  defaultHeaders: {
-    'x-api-key': 'your-api-key'
-  }
-});
-
-const response = await api.call({
-  method: 'GET',
-  endpoint: '/users/123',
-  functionName: 'getUser'
-});
-\`\`\`
-        `,
+## Features
+- Custom success and error messages
+- Type-safe responses
+- Built-in error handling
+- Response formatting
+`,
       },
     },
   },
@@ -126,6 +141,14 @@ const response = await api.call({
       control: 'object',
       description: 'Request body (for POST/PUT)',
     },
+    customErrorMessage: {
+      control: 'text',
+      description: 'Custom error message to override default',
+    },
+    customSuccessMessage: {
+      control: 'text',
+      description: 'Custom success message to override default',
+    },
   },
 } satisfies Meta<typeof ApiDemo>;
 
@@ -137,7 +160,9 @@ export const GetExample: Story = {
   args: {
     baseUrl: 'https://jsonplaceholder.typicode.com',
     endpoint: '/todos/1',
-    method: "POST",
+    method: 'GET',
+    customSuccessMessage: 'Successfully retrieved todo',
+    customErrorMessage: 'Failed to get todo',
   },
 };
 
@@ -152,6 +177,8 @@ export const PostExample: Story = {
       body: 'bar',
       userId: 1,
     },
+    customSuccessMessage: 'Post created successfully',
+    customErrorMessage: 'Failed to create post',
   },
 };
 
@@ -161,5 +188,6 @@ export const ErrorExample: Story = {
     baseUrl: 'https://jsonplaceholder.typicode.com',
     endpoint: '/invalid-endpoint',
     method: 'GET',
+    customErrorMessage: 'This endpoint does not exist',
   },
 };

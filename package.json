@@ -84,10 +84,10 @@
   },
   "exports": {
     ".": {
-      "import": "./lib/index.mjs",
-      "require": "./lib/index.cjs",
       "types": "./lib/index.d.ts",
       "style": "./lib/index.css",
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.cjs",
       "default": "./lib/index.mjs"
     },
     "./lib/index.css": {
