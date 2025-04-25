@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
+import { Button } from '@navikt/ds-react';
 import { NovariApiManager } from '../api/NovariApiManager.ts';
 
 // Example interfaces for documentation
@@ -111,23 +112,21 @@ const ApiDemo: React.FC<ApiDemoProps> = ({
 
   return (
     <div style={{ padding: '20px' }}>
-      <h3>API Demo</h3>
+
       <div style={{ marginBottom: '20px' }}>
         <strong>Configuration:</strong>
         <pre>
-          {JSON.stringify({ baseUrl, endpoint, method, body, message }, null, 2)}
+          {JSON.stringify({ baseUrl, endpoint, method, body, message,customErrorMessage,customSuccessMessage }, null, 2)}
         </pre>
       </div>
-      <button
+      <Button
+        variant="primary"
+        loading={loading}
         onClick={handleApiCall}
-        disabled={loading}
-        style={{
-          padding: '8px 16px',
-          marginBottom: '16px'
-        }}
+        style={{ marginBottom: '16px' }}
       >
         {loading ? 'Loading...' : 'Make API Call'}
-      </button>
+      </Button>
       {error && (
         <div style={{ color: 'red', marginBottom: '16px' }}>
           Error: {error}
