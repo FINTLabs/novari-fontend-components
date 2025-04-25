@@ -83,8 +83,7 @@ export class NovariApiManager {
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        console.error(`[ERROR] [${new Date().toISOString()}]`);
-        console.error(`Response from ${functionName}: ${errorMessage}`);
+        console.error(`[ERROR] [${new Date().toISOString()}] Response from ${functionName}: ${errorMessage}`);
         
         return {
           success: false,
@@ -121,8 +120,7 @@ export class NovariApiManager {
             data = responseMessage as unknown as T;
           }
         } catch (err) {
-          console.error(`[ERROR] [${new Date().toISOString()}]`);
-          console.error(`Response parsing error for ${functionName}:`, err);
+          console.error(`[ERROR] [${new Date().toISOString()}] Response parsing error for ${functionName}:`, err);
         }
       }
 
@@ -136,8 +134,7 @@ export class NovariApiManager {
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.error(`[ERROR] [${new Date().toISOString()}]`);
-      console.error(`API call error: ${errorMessage}`);
+      console.error(`[ERROR] [${new Date().toISOString()}] API call error: ${errorMessage}`);
       
       return {
         success: false,
