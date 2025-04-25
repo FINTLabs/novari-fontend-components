@@ -1,11 +1,9 @@
-// import { logger } from '../utils/NovariLogger';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export interface NovariApiConfig {
   baseUrl: string;
   defaultHeaders?: Record<string, string>;
-  // logger?: Logger;
 }
 
 export interface ApiCallOptions {
@@ -34,7 +32,6 @@ export class NovariApiManager {
 
   constructor(config: NovariApiConfig) {
     this.config = config;
-    // this.logger = config.logger || defaultLogger;
   }
 
   async call<T>({
