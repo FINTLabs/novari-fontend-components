@@ -13,7 +13,9 @@ export class NovariLogger {
     private currentLevel: LogLevel;
 
     private constructor() {
-        this.currentLevel = (import.meta.env.VITE_NOVARI_LOGGER_LEVEL as LogLevel) || 'info';
+        this.currentLevel = (process.env?.NOVARI_LOGGER_LEVEL as LogLevel) || 
+                          (import.meta.env?.VITE_NOVARI_LOGGER_LEVEL as LogLevel) || 
+                          'info';
     }
 
     public static getInstance(): NovariLogger {
