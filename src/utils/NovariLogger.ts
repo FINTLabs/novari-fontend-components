@@ -11,11 +11,11 @@ export class NovariLogger {
     private static instance: NovariLogger;
     private currentLevel: LogLevel;
     private enabled: boolean;
-    private isServer: boolean;
+    private readonly isServer: boolean;
 
     private constructor() {
         const envLevel = this.getEnvironmentLogLevel();
-        this.currentLevel = envLevel || 'error';
+        this.currentLevel = envLevel || 'debug';
         this.enabled = true;
         // Check if we're in a browser environment
         this.isServer = typeof window === 'undefined';
@@ -118,8 +118,9 @@ export class NovariLogger {
 
 export const logger = NovariLogger.getInstance();
 
-// Enable logging by default in development
-if (import.meta.env.DEV) {
+// Check if we're in a Vite client environment
+const isDev = typeof import.meta !== 'undefined' && import.meta.env?.DEV;
+if (isDev) {
     logger.enable();
     logger.updateLevel('debug');
 }
