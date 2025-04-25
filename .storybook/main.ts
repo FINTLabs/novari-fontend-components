@@ -1,19 +1,28 @@
-import type { StorybookConfig } from '@storybook/react-vite';
+import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
-  "stories": [
-    "../src/**/*.stories.tsx"
-  ],
-  "addons": [
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  addons: [
+    "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-onboarding",
-    "@chromatic-com/storybook",
-    "@storybook/experimental-addon-test",
-    "@storybook/addon-styling-webpack"
+    "@storybook/addon-interactions",
   ],
-  "framework": {
-    "name": "@storybook/react-vite",
-    "options": {}
-  }
+  framework: {
+    name: "@storybook/react-vite",
+    options: {},
+  },
+  docs: {
+    autodocs: "tag",
+  },
+  viteFinal: async (config) => {
+    return {
+      ...config,
+      define: {
+        ...config.define,
+        'import.meta.env.VITE_NOVARI_LOGGER_LEVEL': JSON.stringify('info'),
+      },
+    };
+  },
 };
+
 export default config;

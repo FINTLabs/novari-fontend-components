@@ -130,6 +130,52 @@ function MyComponent(): JSX.Element {
 export default MyComponent;
 ```
 
+## Logging
+
+The library includes a built-in logger that can be used in your application:
+
+```typescript
+import { logger } from 'novari-frontend-components';
+
+// Different log levels
+logger.info('Normal operation information');
+logger.debug('Detailed debugging information');
+logger.crazy('Very detailed diagnostic information');
+
+// Enable Novari Logger by setting environment variables:
+// NOVARI_LOGGER_ENABLED=true
+// NOVARI_LOGGER_LEVEL=debug  // 'info' | 'debug' | 'crazy'
+
+// Example usage in a component:
+function MyComponent() {
+  const handleClick = () => {
+    logger.debug('Button clicked');
+    // Do something
+  };
+
+  useEffect(() => {
+    logger.info('Component mounted');
+    return () => logger.debug('Component unmounted');
+  }, []);
+
+  return <button onClick={handleClick}>Click me</button>;
+}
+```
+
+The logger provides:
+- Three logging levels: info, debug, and crazy
+- Colored output with timestamps
+- Environment variable control
+- Fallback to console.log when disabled
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| NOVARI_LOGGER_ENABLED | Enable/disable Novari Logger | false |
+| NOVARI_LOGGER_LEVEL | Set logging level | 'info' |
+
+
 ## Development
 
 ### Prerequisites

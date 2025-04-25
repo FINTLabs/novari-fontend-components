@@ -1,4 +1,4 @@
-// import { Logger, defaultLogger } from '../utils/logger';
+import { logger } from '../utils/NovariLogger';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -49,9 +49,9 @@ export class NovariApiManager {
   }: ApiCallOptions): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
 
-    // Add debug logging
-    console.log('Full URL:', url);
-    console.log('Headers being sent:', {
+    // Replace console.log with logger
+    logger.debug('Full URL:', url);
+    logger.debug('Headers being sent:', {
       'Content-Type': contentType,
       ...this.config.defaultHeaders,
       ...additionalHeaders,
@@ -76,9 +76,9 @@ export class NovariApiManager {
         : JSON.stringify(requestBody);
     }
 
-    console.log(`${method} API URL: ${url}`);
+    logger.info(`${method} API URL: ${url}`);
     if (requestBody) {
-      console.log('Request body:', requestBody);
+      logger.crazy('Request body:', requestBody);
     }
 
     try {
@@ -86,8 +86,8 @@ export class NovariApiManager {
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        console.error(`Request body:`, requestBody);
-        console.error(`Response from ${functionName}: ${errorMessage}`);
+        logger.info(`Request body:`, requestBody);
+        logger.info(`Response from ${functionName}: ${errorMessage}`);
         
         return {
           success: false,
@@ -124,7 +124,7 @@ export class NovariApiManager {
             data = responseMessage as unknown as T;
           }
         } catch (err) {
-          console.warn(`Response parsing error for ${functionName}:`, err);
+          logger.debug(`Response parsing error for ${functionName}:`, err);
         }
       }
 
@@ -138,7 +138,7 @@ export class NovariApiManager {
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.error('API call error:', errorMessage);
+      logger.info('API call error:', errorMessage);
       
       return {
         success: false,
