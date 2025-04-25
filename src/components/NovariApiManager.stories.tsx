@@ -96,7 +96,7 @@ const ApiDemo: React.FC<ApiDemoProps> = ({
         method,
         endpoint,
         body,
-        message,
+        // message,
         functionName: 'storybook-demo',
         customErrorMessage,
         customSuccessMessage,

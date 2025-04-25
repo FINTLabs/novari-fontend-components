@@ -48,6 +48,7 @@ const UsageGuide = () => (
       fontFamily: 'monospace',
       fontSize: '14px'
     }}>
+
       {`import { logger } from 'novari-frontend-components';
 
 // Optional: Set log level (default is 'error')

@@ -40,7 +40,7 @@ export class NovariApiManager {
   async call<T>({
     method,
     endpoint,
-    body,          // New body parameter
+    body,
     contentType = 'application/json',
     functionName,
     additionalHeaders = {},
