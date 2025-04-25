@@ -4,6 +4,7 @@ const colors = {
   green: '\x1b[32m',
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
+  brown: '\x1b[38;5;136m',
   reset: '\x1b[0m'
 };
 
@@ -54,12 +55,16 @@ export class NovariApiManager {
   }: ApiCallOptions): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
 
-    console.log(`${colors.blue}[${new Date().toISOString()}] Full URL:${colors.reset}`, url);
-    console.log(`${colors.blue}[${new Date().toISOString()}] Headers being sent:${colors.reset}`, {
+    console.log(`${colors.green}[${new Date().toISOString()}] Starting function:${colors.reset}`, functionName);
+    console.log(`${colors.brown}[${new Date().toISOString()}] Headers being sent:${colors.reset}`, {
       'Content-Type': contentType,
       ...this.config.defaultHeaders,
       ...additionalHeaders,
     });
+
+    //TODO: Create levels of log lines based on environment
+    const isDevelopment = import.meta.env.DEV;
+    console.log(`${colors.brown}[${new Date().toISOString()}] DEV ENV:${colors.reset}`, isDevelopment);
 
     const headers: Record<string, string> = {
       'Content-Type': contentType,
@@ -81,9 +86,9 @@ export class NovariApiManager {
     }
 
     // logger.info(`${method} API URL: ${url}`);
-    console.log(`${colors.blue}[${new Date().toISOString()}] ${method} API URL: ${colors.reset}${url}`);
+    console.log(`${colors.brown}[${new Date().toISOString()}] ${method} API URL: ${colors.reset}${url}`);
     if (requestBody) {
-      console.log(`${colors.blue}[${new Date().toISOString()}] Request body:${colors.reset}`, requestBody);
+      console.log(`${colors.brown}[${new Date().toISOString()}] Request body:${colors.reset}`, requestBody);
     }
 
     try {
@@ -91,7 +96,7 @@ export class NovariApiManager {
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        console.error(`${colors.red}[ERROR] [${new Date().toISOString()}] Response from ${functionName}: ${errorMessage}${colors.reset}`);
+        console.log(`${colors.red}[${new Date().toISOString()}] [ERROR] Response from ${functionName}: ${errorMessage}${colors.reset}`);
         
         return {
           success: false,
@@ -128,10 +133,10 @@ export class NovariApiManager {
             data = responseMessage as unknown as T;
           }
         } catch (err) {
-          console.error(`${colors.red}[ERROR] [${new Date().toISOString()}] Response parsing error for ${functionName}:${colors.reset}`, err);
+          console.log(`${colors.red}[${new Date().toISOString()}] [ERROR] Response parsing error for ${functionName}:${colors.reset}`, err);
         }
       }
-
+      console.log(`${colors.green}[${new Date().toISOString()}] ${method} Finished with success: ${colors.reset}${functionName}`);
       return {
         success: true,
         message: customSuccessMessage || responseMessage || response.statusText,
@@ -142,7 +147,7 @@ export class NovariApiManager {
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.error(`${colors.red}[ERROR] [${new Date().toISOString()}] API call error: ${errorMessage}${colors.reset}`);
+      console.log(`${colors.red}[${new Date().toISOString()}] [ERROR] API call error: ${errorMessage}${colors.reset}`);
       
       return {
         success: false,

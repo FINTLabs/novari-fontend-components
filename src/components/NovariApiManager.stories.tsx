@@ -172,8 +172,8 @@ const response = await apiManager.call<IUser>({
   method: "GET",
   endpoint: "users/list",
   functionName: "getUsers",
-  customErrorMessage: "Get users failed",
-  customSuccessMessage: "Get users successfull",
+  customErrorMessage: "Get users failed", // Optional
+  customSuccessMessage: "Get users successfull", // Optional
 });
 
 // Response Success:
