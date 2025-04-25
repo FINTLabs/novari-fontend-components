@@ -1,5 +1,3 @@
-import chalk from 'chalk';
-
 export type LogLevel = 'error' | 'info' | 'debug' | 'crazy';
 
 export const LOG_LEVELS: Record<LogLevel, number> = {
@@ -33,15 +31,8 @@ export class NovariLogger {
     }
 
     private formatMessage(level: LogLevel, message: string): string {
-        const timestamp = chalk.gray(`[${this.getTimestamp()}]`);
-        const levelColor = {
-            error: chalk.red('[ERROR]'),
-            info: chalk.blue('[INFO]'),
-            debug: chalk.yellow('[DEBUG]'),
-            crazy: chalk.magenta('[CRAZY]')
-        };
-        
-        return `${timestamp} ${levelColor[level]} ${message}`;
+        const timestamp = `[${this.getTimestamp()}]`;
+        return `${timestamp} [${level.toUpperCase()}] ${message}`;
     }
 
     public updateLevel(level: LogLevel): void {
@@ -73,4 +64,5 @@ export class NovariLogger {
     }
 }
 
+// Export a singleton instance
 export const logger = NovariLogger.getInstance();
