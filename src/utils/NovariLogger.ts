@@ -1,11 +1,12 @@
 import chalk from 'chalk';
 
-export type LogLevel = 'info' | 'debug' | 'crazy';
+export type LogLevel = 'error' | 'info' | 'debug' | 'crazy';
 
 export const LOG_LEVELS: Record<LogLevel, number> = {
-    info: 0,
-    debug: 1,
-    crazy: 2
+    error: 0,
+    info: 1,
+    debug: 2,
+    crazy: 3
 };
 
 export class NovariLogger {
@@ -13,9 +14,7 @@ export class NovariLogger {
     private currentLevel: LogLevel;
 
     private constructor() {
-        this.currentLevel = (process.env?.NOVARI_LOGGER_LEVEL as LogLevel) || 
-                          (import.meta.env?.VITE_NOVARI_LOGGER_LEVEL as LogLevel) || 
-                          'info';
+        this.currentLevel = (import.meta.env?.VITE_NOVARI_LOGGER_LEVEL as LogLevel) || 'error';
     }
 
     public static getInstance(): NovariLogger {
@@ -30,12 +29,13 @@ export class NovariLogger {
     }
 
     private shouldLog(level: LogLevel): boolean {
-        return LOG_LEVELS[level] <= LOG_LEVELS[this.currentLevel];
+        return LOG_LEVELS[this.currentLevel] >= LOG_LEVELS[level];
     }
 
     private formatMessage(level: LogLevel, message: string): string {
         const timestamp = chalk.gray(`[${this.getTimestamp()}]`);
         const levelColor = {
+            error: chalk.red('[ERROR]'),
             info: chalk.blue('[INFO]'),
             debug: chalk.yellow('[DEBUG]'),
             crazy: chalk.magenta('[CRAZY]')
@@ -50,6 +50,11 @@ export class NovariLogger {
 
     public getCurrentLevel(): LogLevel {
         return this.currentLevel;
+    }
+
+    public error(message: string, ...args: any[]): void {
+        if (!this.shouldLog('error')) return;
+        console.error(this.formatMessage('error', message), ...args);
     }
 
     public info(message: string, ...args: any[]): void {

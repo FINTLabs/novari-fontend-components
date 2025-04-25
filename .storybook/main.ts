@@ -19,7 +19,7 @@ const config: StorybookConfig = {
       ...config,
       define: {
         ...config.define,
-        'import.meta.env.VITE_NOVARI_LOGGER_LEVEL': JSON.stringify('info'),
+        'import.meta.env.VITE_NOVARI_LOGGER_LEVEL': JSON.stringify('error'),
       },
     };
   },
