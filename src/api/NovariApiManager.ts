@@ -1,4 +1,4 @@
-import { logger } from '../utils/NovariLogger';
+// import { logger } from '../utils/NovariLogger';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -49,9 +49,8 @@ export class NovariApiManager {
   }: ApiCallOptions): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
 
-    // Replace console.log with logger
-    logger.debug('Full URL:', url);
-    logger.debug('Headers being sent:', {
+    console.log(`[${new Date().toISOString()}] Full URL:`, url);
+    console.log(`[${new Date().toISOString()}] Headers being sent:`, {
       'Content-Type': contentType,
       ...this.config.defaultHeaders,
       ...additionalHeaders,
@@ -76,9 +75,10 @@ export class NovariApiManager {
         : JSON.stringify(requestBody);
     }
 
-    logger.info(`${method} API URL: ${url}`);
+    // logger.info(`${method} API URL: ${url}`);
+    console.log(`${method} API URL: ${url}`);
     if (requestBody) {
-      logger.crazy('Request body:', requestBody);
+      console.log(`[${new Date().toISOString()}] Request body:`, requestBody);
     }
 
     try {
@@ -86,8 +86,7 @@ export class NovariApiManager {
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        logger.info(`Request body:`, requestBody);
-        logger.error(`Response from ${functionName}: ${errorMessage}`);
+        console.error(`[${new Date().toISOString()}] Response from ${functionName}: ${errorMessage}`);
         
         return {
           success: false,
@@ -124,7 +123,7 @@ export class NovariApiManager {
             data = responseMessage as unknown as T;
           }
         } catch (err) {
-          logger.error(`Response parsing error for ${functionName}:`, err);
+          console.error(`[${new Date().toISOString()}] Response parsing error for ${functionName}:`, err);
         }
       }
 
@@ -138,7 +137,7 @@ export class NovariApiManager {
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      logger.error('API call error:', errorMessage);
+      console.error(`[${new Date().toISOString()}] API call error:`, errorMessage);
       
       return {
         success: false,
