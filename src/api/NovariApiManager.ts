@@ -1,4 +1,12 @@
 
+const colors = {
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  reset: '\x1b[0m'
+};
+
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export interface NovariApiConfig {
@@ -46,8 +54,8 @@ export class NovariApiManager {
   }: ApiCallOptions): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
 
-    console.log(`[${new Date().toISOString()}] Full URL:`, url);
-    console.log(`[${new Date().toISOString()}] Headers being sent:`, {
+    console.log(`${colors.blue}[${new Date().toISOString()}] Full URL:${colors.reset}`, url);
+    console.log(`${colors.blue}[${new Date().toISOString()}] Headers being sent:${colors.reset}`, {
       'Content-Type': contentType,
       ...this.config.defaultHeaders,
       ...additionalHeaders,
@@ -73,9 +81,9 @@ export class NovariApiManager {
     }
 
     // logger.info(`${method} API URL: ${url}`);
-    console.log(`${method} API URL: ${url}`);
+    console.log(`${colors.blue}[${new Date().toISOString()}] ${method} API URL: ${colors.reset}${url}`);
     if (requestBody) {
-      console.log(`[${new Date().toISOString()}] Request body:`, requestBody);
+      console.log(`${colors.blue}[${new Date().toISOString()}] Request body:${colors.reset}`, requestBody);
     }
 
     try {
@@ -83,7 +91,7 @@ export class NovariApiManager {
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        console.error(`[ERROR] [${new Date().toISOString()}] Response from ${functionName}: ${errorMessage}`);
+        console.error(`${colors.red}[ERROR] [${new Date().toISOString()}] Response from ${functionName}: ${errorMessage}${colors.reset}`);
         
         return {
           success: false,
@@ -120,7 +128,7 @@ export class NovariApiManager {
             data = responseMessage as unknown as T;
           }
         } catch (err) {
-          console.error(`[ERROR] [${new Date().toISOString()}] Response parsing error for ${functionName}:`, err);
+          console.error(`${colors.red}[ERROR] [${new Date().toISOString()}] Response parsing error for ${functionName}:${colors.reset}`, err);
         }
       }
 
@@ -134,7 +142,7 @@ export class NovariApiManager {
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.error(`[ERROR] [${new Date().toISOString()}] API call error: ${errorMessage}`);
+      console.error(`${colors.red}[ERROR] [${new Date().toISOString()}] API call error: ${errorMessage}${colors.reset}`);
       
       return {
         success: false,
