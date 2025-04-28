@@ -150,7 +150,7 @@ const ApiDemo: React.FC<ApiDemoProps> = ({
 };
 
 const meta = {
-  title: 'Novari/ApiManager',
+  title: 'Novari/NovariApiManager',
   component: ApiDemo,
   parameters: {
     layout: 'centered',

@@ -8,60 +8,6 @@ Frontend component library for React.js applications using NAV Aksel design syst
 npm install novari-frontend-components
 ```
 
-## Usage
-
-```tsx
-import React, { useState } from 'react';
-import { 
-  NovariHeader, 
-  NovariFooter, 
-  NovariApiManager, 
-  NovariAlertManager,
-  AlertType 
-} from 'novari-frontend-components';
-import 'novari-frontend-components/lib/index.css';
-
-// Example using NovariApiManager
-const api = new NovariApiManager({
-  baseUrl: 'https://api.example.com',
-  defaultHeaders: {
-    'Authorization': 'Bearer your-token'
-  }
-});
-
-// Example using NovariAlertManager
-function App(): JSX.Element {
-  const [alerts, setAlerts] = useState<AlertType[]>([]);
-
-  const addAlert = (message: string, variant: AlertType['variant']): void => {
-    setAlerts(prev => [...prev, {
-      id: Date.now(),
-      message,
-      variant,
-      header: variant.charAt(0).toUpperCase() + variant.slice(1)
-    }]);
-  };
-
-  return (
-    <>
-      <NovariHeader 
-        appName="My App"
-        isLoggedIn={true}
-        displayName="John Doe"
-      />
-      <NovariAlertManager
-        alerts={alerts}
-        maxAlerts={3}
-        autoRemoveDelay={5000}
-        position={{ top: '5rem', right: '1rem' }}
-      />
-    </>
-  );
-}
-
-export default App;
-```
-
 ## Available Components
 
 - `NovariHeader` - Main application header with navigation and user menu
@@ -70,118 +16,16 @@ export default App;
 - `NovariInternalHeader` - Internal page header component
 - `NovariAlertManager` - Toast notification system for displaying alerts
 
-## Component Documentation
-
-### NovariAlertManager
-
-A flexible alert management system for displaying toast notifications.
-
-#### Types
-
-```tsx
-interface AlertType {
-    id: number;
-    message: string;
-    header?: string;
-    variant: 'error' | 'info' | 'warning' | 'success';
-}
-
-interface AlertManagerProps {
-    alerts: AlertType[];
-    maxAlerts?: number;         // Default: 3
-    autoRemoveDelay?: number;   // Default: 10000 (10 seconds)
-    position?: {
-        top?: string;
-        right?: string;
-        bottom?: string;
-        left?: string;
-    };                          // Default: { top: '5rem', right: '1rem' }
-}
-```
-
-#### Example Usage
-
-```tsx
-import React, { useState } from 'react';
-import { NovariAlertManager, AlertType } from 'novari-frontend-components';
-
-function MyComponent(): JSX.Element {
-  const [alerts, setAlerts] = useState<AlertType[]>([]);
-
-  const showSuccessAlert = (): void => {
-    setAlerts(prev => [...prev, {
-      id: Date.now(),
-      message: 'Operation completed successfully',
-      header: 'Success',
-      variant: 'success'
-    }]);
-  };
-
-  return (
-    <NovariAlertManager
-      alerts={alerts}
-      maxAlerts={3}
-      autoRemoveDelay={5000}
-      position={{ top: '5rem', right: '1rem' }}
-    />
-  );
-}
-
-export default MyComponent;
-```
-
-## Logging
-
-The library includes a built-in logger that can be used in your application:
-
-```typescript
-import { logger } from 'novari-frontend-components';
-
-// Different log levels
-logger.info('Normal operation information');
-logger.debug('Detailed debugging information');
-logger.crazy('Very detailed diagnostic information');
-
-// Enable Novari Logger by setting environment variables:
-// NOVARI_LOGGER_ENABLED=true
-// NOVARI_LOGGER_LEVEL=debug  // 'info' | 'debug' | 'crazy'
-
-// Example usage in a component:
-function MyComponent() {
-  const handleClick = () => {
-    logger.debug('Button clicked');
-    // Do something
-  };
-
-  useEffect(() => {
-    logger.info('Component mounted');
-    return () => logger.debug('Component unmounted');
-  }, []);
-
-  return <button onClick={handleClick}>Click me</button>;
-}
-```
-
-The logger provides:
-- Three logging levels: info, debug, and crazy
-- Colored output with timestamps
-- Environment variable control
-- Fallback to console.log when disabled
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| NOVARI_LOGGER_ENABLED | Enable/disable Novari Logger | false |
-| NOVARI_LOGGER_LEVEL | Set logging level | 'info' |
-
 
 ## Development
 
 ### Prerequisites
 
 - Node.js (v18 or higher)
-- npm (v9 or higher)
+- npm (v9 or higher)React 
+- NAV Aksel Design System 
+- TypeScript
+- React
 
 ### Local Development
 

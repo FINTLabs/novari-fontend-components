@@ -24,3 +24,9 @@ export type {
     AlertManagerProps
 } from './components/NovariAlertManager';
 
+export { default as NovariCookieConsent } from "./components/NovariCookieConsent";
+export type { CookieConsentProps, CookiePreferences } from "./components/NovariCookieConsent";
+
+export { default as NovariConfirmAction } from "./components/NovariConfirmAction";
+export type { NovariConfirmActionProps } from "./components/NovariConfirmAction";
+

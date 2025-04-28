@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { NovariAlertManager } from './NovariAlertManager';
 
 const meta = {
-    title: 'Novari/AlertManager',
+    title: 'Novari/NovariAlertManager',
     component: NovariAlertManager,
     tags: ['autodocs'],
     parameters: {
