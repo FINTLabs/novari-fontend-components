@@ -63,8 +63,8 @@ export class NovariApiManager {
     });
 
     //TODO: Create levels of log lines based on environment
-    const isDevelopment = import.meta.env.DEV;
-    console.log(`${colors.brown}[${new Date().toISOString()}] DEV ENV:${colors.reset}`, isDevelopment);
+    // const isDevelopment = import.meta.env.DEV;
+    // console.log(`${colors.brown}[${new Date().toISOString()}] DEV ENV:${colors.reset}`, isDevelopment);
 
     const headers: Record<string, string> = {
       'Content-Type': contentType,
