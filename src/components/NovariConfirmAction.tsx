@@ -1,6 +1,23 @@
 import React, { useState } from 'react';
 import { Button, Modal, Heading } from '@navikt/ds-react';
-import { ExclamationmarkTriangleIcon } from '@navikt/aksel-icons';
+import { 
+    ExclamationmarkTriangleIcon,
+    TrashIcon,
+    EraserIcon,
+    PersonCrossIcon,
+    XMarkIcon,
+    FolderMinusIcon 
+} from '@navikt/aksel-icons';
+
+const ICONS = {
+    trash: <TrashIcon title="Delete" fontSize="1.5rem" />,
+    eraser: <EraserIcon title="Erase" fontSize="1.5rem" />,
+    personCross: <PersonCrossIcon title="Remove person" fontSize="1.5rem" />,
+    xMark: <XMarkIcon title="Cancel" fontSize="1.5rem" />,
+    folderMinus: <FolderMinusIcon title="Remove folder" fontSize="1.5rem" />
+} as const;
+
+type IconType = keyof typeof ICONS;
 
 export interface NovariConfirmActionProps {
     /** Text to display on the trigger button */
@@ -17,8 +34,8 @@ export interface NovariConfirmActionProps {
     buttonSize?: 'xsmall' | 'small' | 'medium';
     /** Visual style variant of the trigger button */
     buttonVariant?: 'tertiary' | 'primary' | 'primary-neutral' | 'secondary' | 'secondary-neutral' | 'tertiary-neutral' | 'danger';
-    /** Optional icon to show in the trigger button */
-    icon?: React.ReactNode;
+    /** Icon to show in the trigger button. Can be either a predefined icon name or a custom React node */
+    icon?: IconType | React.ReactNode;
     /** Text for confirm button */
     confirmText?: string;
     /** Text for cancel button */
@@ -35,7 +52,7 @@ export const NovariConfirmAction: React.FC<NovariConfirmActionProps> = ({
     subTitleText,
     buttonSize = 'xsmall',
     buttonVariant = 'tertiary',
-    icon,
+    icon = 'trash',
     confirmText = 'Ja, jeg er sikker',
     cancelText = 'Avbryt',
     modalTitle = 'Bekreftelse'
@@ -47,11 +64,18 @@ export const NovariConfirmAction: React.FC<NovariConfirmActionProps> = ({
         if (isConfirmed) onConfirm();
     };
 
+    const getIcon = () => {
+        if (typeof icon === 'string' && icon in ICONS) {
+            return ICONS[icon as IconType];
+        }
+        return icon;
+    };
+
     return (
         <>
             <Button
                 variant={buttonVariant}
-                icon={icon}
+                icon={getIcon()}
                 size={buttonSize}
                 onClick={() => setOpen(true)}
             >
