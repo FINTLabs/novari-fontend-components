@@ -2,8 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 import NovariLinkBox from "./NovariLinkBox.tsx";
 
 const meta: Meta<typeof NovariLinkBox> = {
-  title: "Novari/NovariLinkBox",
+  title: "Experimental-Novari/NovariLinkBox",
   component: NovariLinkBox,
+  tags: ["autodocs","experimental"],
   parameters: {
     layout: "padded",
   },

@@ -9,9 +9,9 @@ const illustrations = {
 };
 
 const meta: Meta<typeof GuidePanel> = {
-  title: "Novari/GuidePanel",
+  title: "Experimental-Novari/GuidePanel",
   component: GuidePanel,
-  tags: ["autodocs"],
+  tags: ["autodocs","experimental"],
   argTypes: {
     children: {
       control: "text",
@@ -31,6 +31,7 @@ export default meta;
 type Story = StoryObj<typeof GuidePanel>;
 
 export const Default: Story = {
+  tags: ["experimental"],
   args: {
     children: "Welcome to Novari! This panel guides you through the process.",
     imageSrc: illustrations.Default,

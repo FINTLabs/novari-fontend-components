@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { NovariCookieConsent } from "./NovariCookieConsent";
 
 const meta = {
-  title: "Novari/NovariCookieConsent",
+  title: "Experimental-Novari/NovariCookieConsent",
   component: NovariCookieConsent,
-  tags: ["autodocs"],
+  tags: ["autodocs","experimental"],
   parameters: {
     layout: "fullscreen",
     docs: {

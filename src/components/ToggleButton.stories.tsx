@@ -3,9 +3,9 @@ import {ToggleButton} from './ToggleButton';
 
 
 const meta = {
-    title: 'Novari/ToggleButton',
+    title: 'Experimental-Novari/ToggleButton',
     component: ToggleButton,
-    tags: ['autodocs'],
+    tags: ["autodocs","experimental"],
     parameters: {
         layout: 'centered',
     },

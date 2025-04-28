@@ -9,13 +9,15 @@ import "../src/styles/novari-theme.css";
 const preview: Preview = {
   decorators: [
     (Story) => (
-          <div data-theme="novari" >
-            <Story />
-          </div>
-      )
-
+      <React.StrictMode>
+        <div data-theme="novari">
+          <Story />
+        </div>
+      </React.StrictMode>
+    )
   ],
   parameters: {
+    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,

@@ -3,9 +3,9 @@ import NovariInternalHeader from "./NovariInternalHeader.tsx";
 
 
 const meta: Meta<typeof NovariInternalHeader> = {
-    title: "Novari/InternalHeader",
+    title: "Experimental-Novari/InternalHeader",
     component: NovariInternalHeader,
-    tags: ["autodocs"],
+    tags: ["autodocs","experimental"],
 
 };
 export default meta;
