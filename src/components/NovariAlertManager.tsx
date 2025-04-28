@@ -29,19 +29,20 @@ export const NovariAlertManager: React.FC<AlertManagerProps> = ({
     const [displayAlerts, setDisplayAlerts] = useState<AlertType[]>([]);
 
     useEffect(() => {
-        // When alerts prop changes, update displayAlerts
         if (alerts.length > 0) {
-            const newAlerts = alerts.filter(alert => 
-                !displayAlerts.find(d => d.id === alert.id)
+            // Filter out alerts that are already being displayed
+            const newAlerts = alerts.filter(alert =>
+                !displayAlerts.some(d => d.id === alert.id)
             );
             
             if (newAlerts.length > 0) {
                 setDisplayAlerts(prev => {
+                    // Combine existing alerts with new ones, respecting maxAlerts limit
                     const combined = [...prev, ...newAlerts];
                     return combined.slice(-maxAlerts);
                 });
 
-                // Set removal timeout for new alerts
+                // Set up removal timeouts for new alerts
                 newAlerts.forEach(alert => {
                     setTimeout(() => {
                         setDisplayAlerts(prev => 
@@ -51,7 +52,7 @@ export const NovariAlertManager: React.FC<AlertManagerProps> = ({
                 });
             }
         }
-    }, [alerts]);
+    }, [alerts, maxAlerts, autoRemoveDelay]);
 
     return (
         <VStack

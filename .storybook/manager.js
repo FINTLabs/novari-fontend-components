@@ -1,7 +1,6 @@
 import { addons } from "@storybook/manager-api";
 import NovariTheme from "./NovariTheme.js";
 
-console.log('Manager.js is loading!');
 
 addons.setConfig({
   theme: NovariTheme,
