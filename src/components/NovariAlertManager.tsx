@@ -27,31 +27,19 @@ export const NovariAlertManager: React.FC<AlertManagerProps> = ({
     position = { top: '1rem', right: '1rem' }
 }) => {
     const [displayAlerts, setDisplayAlerts] = useState<AlertType[]>([]);
-
+    
+    // Reset displayAlerts when alerts prop changes completely
     useEffect(() => {
-        if (alerts.length > 0) {
-            // Filter out alerts that are already being displayed
-            const newAlerts = alerts.filter(alert =>
-                !displayAlerts.some(d => d.id === alert.id)
-            );
-            
-            if (newAlerts.length > 0) {
-                setDisplayAlerts(prev => {
-                    // Combine existing alerts with new ones, respecting maxAlerts limit
-                    const combined = [...prev, ...newAlerts];
-                    return combined.slice(-maxAlerts);
-                });
-
-                // Set up removal timeouts for new alerts
-                newAlerts.forEach(alert => {
-                    setTimeout(() => {
-                        setDisplayAlerts(prev => 
-                            prev.filter(a => a.id !== alert.id)
-                        );
-                    }, autoRemoveDelay);
-                });
-            }
-        }
+        setDisplayAlerts(alerts.slice(-maxAlerts));
+        
+        // Set up removal timeouts for all alerts
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                setDisplayAlerts(prev => 
+                    prev.filter(a => a.id !== alert.id)
+                );
+            }, autoRemoveDelay);
+        });
     }, [alerts, maxAlerts, autoRemoveDelay]);
 
     return (
