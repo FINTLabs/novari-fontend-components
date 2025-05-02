@@ -8,18 +8,20 @@ export interface HeaderProps {
   isLoggedIn: boolean;
   displayName?: string;
   onLogout?: () => void;
-    onLogin?: () => void;
+  onLogin?: () => void;
   onMenuClick?: (action: string) => void;
+  showLogoWithTitle?: boolean; // New prop to show logo alongside title
 }
 
 const NovariHeader: React.FC<HeaderProps> = ({
   appName,
   menu,
-                                                 isLoggedIn,
+  isLoggedIn,
   displayName,
   onLogout,
-    onLogin,
-    onMenuClick,
+  onLogin,
+  onMenuClick,
+  showLogoWithTitle = false, // Default to false for backward compatibility
 }) => {
   // useEffect(() => {
   //   document.documentElement.setAttribute("data-theme", "novari");
@@ -40,9 +42,12 @@ const NovariHeader: React.FC<HeaderProps> = ({
             {!appName ? (
                 <NovariIKS width="9em" />
             ) : (
-                <Heading size="medium" className="text-[#500F2D] pr-10">
-                  {appName}
-                </Heading>
+                <HStack gap="2">
+                  {showLogoWithTitle && <NovariIKS width="6em" />}
+                  <Heading size="medium" className="text-[#500F2D] pr-10">
+                    {appName}
+                  </Heading>
+                </HStack>
             )}
           </HStack>
 

@@ -64,7 +64,7 @@ interface ApiDemoProps {
   /** HTTP method @required */
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   /** Request body (for POST/PUT) */
-  body?: any;
+  body?: unknown;
   /** Message to override response message */
   message?: string;
   /** Custom error message to override default */
@@ -79,7 +79,7 @@ const ApiDemo: React.FC<ApiDemoProps> = ({
   endpoint,
   method,
   body,
-  message,
+  // message,
   customErrorMessage,
   customSuccessMessage
 }) => {
@@ -115,8 +115,18 @@ const ApiDemo: React.FC<ApiDemoProps> = ({
 
       <div style={{ marginBottom: '20px' }}>
         <strong>Configuration:</strong>
-        <pre>
-          {JSON.stringify({ baseUrl, endpoint, method, body, message,customErrorMessage,customSuccessMessage }, null, 2)}
+        <pre style={{ marginTop: '8px', background: '#f5f5f5', padding: '12px', borderRadius: '4px' }}>
+{`const api = new NovariApiManager({ 
+  baseUrl: '${baseUrl}'
+});
+
+const response = await api.call<IUser>({
+  method: "${method}",
+  endpoint: "${endpoint}",
+  functionName: "getUsers",
+  customErrorMessage: "${customErrorMessage || 'Get users failed'}", 
+  customSuccessMessage: "${customSuccessMessage || 'Get users successful'}"
+});`}
         </pre>
       </div>
       <Button
@@ -152,9 +162,16 @@ const ApiDemo: React.FC<ApiDemoProps> = ({
 const meta = {
   title: 'Novari/NovariApiManager',
   component: ApiDemo,
+
   parameters: {
     layout: 'centered',
     docs: {
+        canvas: {
+          // This will remove the "show code" button
+          // https://storybook.js.org/docs/api/doc-blocks/doc-block-canvas#sourcestate
+          sourceState: "none"
+        },
+
       description: {
         component: `
 ### Usage Examples

@@ -35,6 +35,7 @@ const meta = {
     ],
     isLoggedIn: true,
     displayName: "John Doe",
+    showLogoWithTitle: false,
   },
   argTypes: {
     onLogout: { action: "onLogout" },
@@ -100,8 +101,16 @@ export const CustomMenuOnlyButtons: Story = {
 };
 
 // NovariHeader with Logo
-export const WithLogo: Story = {
+export const WithLogoOnly: Story = {
   args: {
     appName: undefined,
+  },
+};
+
+// Add a new story for showing logo with title
+export const WithLogoAndTitle: Story = {
+  args: {
+    appName: "FINTApp",
+    showLogoWithTitle: true,
   },
 };
