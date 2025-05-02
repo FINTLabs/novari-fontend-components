@@ -38,16 +38,23 @@ const NovariHeader: React.FC<HeaderProps> = ({
       >
 
         <HStack gap="2" >
-          <HStack gap="2" className={"pl-2 pt-2 "}>
+          <HStack gap="2" className={"pl-2 pt-2 items-center"}>
             {!appName ? (
                 <NovariIKS width="9em" />
             ) : (
-                <HStack gap="2">
-                  {showLogoWithTitle && <NovariIKS width="6em" />}
-                  <Heading size="medium" className="text-[#500F2D] pr-10">
-                    {appName}
-                  </Heading>
+                <HStack gap="2" className="pl-2 items-center">
+                  {!appName ? (
+                      <NovariIKS width="9em" />
+                  ) : (
+                      <HStack gap="2" className="items-center">
+                        {showLogoWithTitle && <NovariIKS width="9em" />}
+                        <Heading size="medium" className="!text-[#500F2D] pr-10">
+                          {appName}
+                        </Heading>
+                      </HStack>
+                  )}
                 </HStack>
+
             )}
           </HStack>
 
