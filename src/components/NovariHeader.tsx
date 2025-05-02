@@ -47,7 +47,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                       <NovariIKS width="9em" />
                   ) : (
                       <HStack gap="2" className="items-center">
-                        {showLogoWithTitle && <NovariIKS width="6em" />}
+                        {showLogoWithTitle && <NovariIKS width="9em" />}
                         <Heading size="medium" className="pr-10" style={{ color: 'var(--a-surface-alt-3-moderate)' }}>
                           {appName}
                         </Heading>
