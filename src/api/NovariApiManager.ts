@@ -8,6 +8,24 @@ const colors = {
   reset: '\x1b[0m'
 };
 
+// Log level colors mapping
+const levelColors = {
+  error: colors.red,
+  warn: colors.yellow,
+  info: colors.green,
+  debug: colors.brown
+};
+
+// Helper function to write formatted log lines
+//TODO: Create levels of log lines based on environment
+// const isDevelopment = import.meta.env.DEV;
+// writeLogLine('debug', 'DEV ENV:', isDevelopment);
+function writeLogLine(level: 'error' | 'warn' | 'info' | 'debug', message: string, ...args: any[]): void {
+  const timestamp = new Date().toISOString();
+  const color = levelColors[level] || colors.blue;
+  console.log(`[${timestamp}] ${color}${level}:${colors.reset}`, message, ...args);
+}
+
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export interface NovariApiConfig {
@@ -55,16 +73,14 @@ export class NovariApiManager {
   }: ApiCallOptions): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
 
-    console.log(`${colors.green}[${new Date().toISOString()}] Starting function:${colors.reset}`, functionName);
-    console.log(`${colors.brown}[${new Date().toISOString()}] Headers being sent:${colors.reset}`, {
+    writeLogLine('info', 'Starting function:', functionName);
+    writeLogLine('debug', 'Headers being sent:', {
       'Content-Type': contentType,
       ...this.config.defaultHeaders,
       ...additionalHeaders,
     });
 
-    //TODO: Create levels of log lines based on environment
-    // const isDevelopment = import.meta.env.DEV;
-    // console.log(`${colors.brown}[${new Date().toISOString()}] DEV ENV:${colors.reset}`, isDevelopment);
+
 
     const headers: Record<string, string> = {
       'Content-Type': contentType,
@@ -85,10 +101,9 @@ export class NovariApiManager {
         : JSON.stringify(requestBody);
     }
 
-    // logger.info(`${method} API URL: ${url}`);
-    console.log(`${colors.brown}[${new Date().toISOString()}] ${method} API URL: ${colors.reset}${url}`);
+    writeLogLine('info', `${method} API URL: ${url}`);
     if (requestBody) {
-      console.log(`${colors.brown}[${new Date().toISOString()}] Request body:${colors.reset}`, requestBody);
+      writeLogLine('debug', 'Request body:', requestBody);
     }
 
     try {
@@ -96,7 +111,7 @@ export class NovariApiManager {
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        console.log(`${colors.red}[${new Date().toISOString()}] [ERROR] Response from ${functionName}: ${errorMessage}${colors.reset}`);
+        writeLogLine('error', `Response from ${functionName}: ${errorMessage}`);
         
         return {
           success: false,
@@ -133,21 +148,21 @@ export class NovariApiManager {
             data = responseMessage as unknown as T;
           }
         } catch (err) {
-          console.log(`${colors.red}[${new Date().toISOString()}] [ERROR] Response parsing error for ${functionName}:${colors.reset}`, err);
+          writeLogLine('error', `Response parsing error for ${functionName}:`, err);
         }
       }
-      console.log(`${colors.green}[${new Date().toISOString()}] ${method} Finished with success: ${colors.reset}${functionName}`);
+      writeLogLine('info', `${method} Finished with success: ${functionName}`);
       return {
         success: true,
         message: customSuccessMessage || responseMessage || response.statusText,
         variant: 'success',
         data,
         status: response.status,
-        body:  response.body || requestBody,  // Include the request body in the response
+        body: response.body || requestBody,  // Include the request body in the response
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.log(`${colors.red}[${new Date().toISOString()}] [ERROR] API call error: ${errorMessage}${colors.reset}`);
+      writeLogLine('error', 'API call error:', errorMessage);
       
       return {
         success: false,
