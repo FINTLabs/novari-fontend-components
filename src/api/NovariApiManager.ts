@@ -1,45 +1,9 @@
+import { Logger, LogLevel } from './logger';
 
-const colors = {
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  brown: '\x1b[38;5;136m',
-  reset: '\x1b[0m'
-};
-
-
-// Log level colors mapping
-const levelColors = {
-  error: colors.red,
-  warn: colors.yellow,
-  info: colors.green,
-  debug: colors.brown
-};
-
-type LogLevel = 'error' | 'warn' | 'info' | 'debug';
-const levelSeverity: Record<LogLevel, number> = {
-  error: 0,
-  warn:  1,
-  info:  2,
-  debug: 3,
-};
-
-
-const CURRENT_LOG_LEVEL: LogLevel = typeof import.meta.env.LOG_LEVEL !== 'undefined' ?
-    (import.meta.env.LOG_LEVEL as LogLevel):'info';
-
-// helper: should I log this level?
-function shouldLog(level: LogLevel): boolean {
-  return levelSeverity[level] <= levelSeverity[CURRENT_LOG_LEVEL];
-}
-
-// Helper function to write formatted log lines
-function writeLogLine(level: 'error' | 'warn' | 'info' | 'debug', message: string, ...args: any[]): void {
-  if (!shouldLog(level)) return;
-  const timestamp = new Date().toISOString();
-  const color = levelColors[level] || colors.blue;
-  console.log(`[${timestamp}] ${color}${level}:${colors.reset}`, message, ...args);
+export interface NovariApiConfig {
+  baseUrl: string;
+  defaultHeaders?: Record<string, string>;
+  logLevel?: LogLevel | 'info';
 }
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -47,6 +11,7 @@ export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 export interface NovariApiConfig {
   baseUrl: string;
   defaultHeaders?: Record<string, string>;
+  logLevel?: LogLevel | 'info';
 }
 
 export interface ApiCallOptions {
@@ -71,10 +36,12 @@ export interface ApiResponse<T> {
 
 export class NovariApiManager {
   private config: NovariApiConfig;
-  // private logger: Logger;
+  private logger: Logger;
 
   constructor(config: NovariApiConfig) {
     this.config = config;
+    const level = config.logLevel ?? 'info';
+    this.logger = new Logger({ level: level as LogLevel });
   }
 
   async call<T>({
@@ -89,8 +56,8 @@ export class NovariApiManager {
   }: ApiCallOptions): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
 
-    writeLogLine('info', 'Starting function:', functionName);
-    writeLogLine('debug', 'Headers being sent:', {
+    this.logger.info('Starting function:', functionName);
+    this.logger.debug('Headers being sent:', {
       'Content-Type': contentType,
       ...this.config.defaultHeaders,
       ...additionalHeaders,
@@ -112,14 +79,14 @@ export class NovariApiManager {
     // Use body for the request payload, fallback to message for backward compatibility
     const requestBody = body;
     if (requestBody && method !== 'GET') {
-      requestOptions.body = typeof requestBody === 'string' 
-        ? requestBody 
+      requestOptions.body = typeof requestBody === 'string'
+        ? requestBody
         : JSON.stringify(requestBody);
     }
 
-    writeLogLine('info', `${method} API URL: ${url}`);
+    this.logger.info(`${method} API URL: ${url}`);
     if (requestBody) {
-      writeLogLine('debug', 'Request body:', requestBody);
+      this.logger.debug('Request body:', requestBody);
     }
 
     try {
@@ -127,8 +94,8 @@ export class NovariApiManager {
 
       if (!response.ok) {
         const errorMessage = await response.text();
-        writeLogLine('error', `Response from ${functionName}: ${errorMessage}`);
-        
+        this.logger.error(`Response from ${functionName}: ${errorMessage}`);
+
         return {
           success: false,
           message: customErrorMessage || errorMessage,
@@ -164,10 +131,10 @@ export class NovariApiManager {
             data = responseMessage as unknown as T;
           }
         } catch (err) {
-          writeLogLine('error', `Response parsing error for ${functionName}:`, err);
+          this.logger.error(`Response parsing error for ${functionName}:`, err);
         }
       }
-      writeLogLine('info', `${method} Finished with success: ${functionName}:${response.status}`);
+      this.logger.info(`${method} Finished with success: ${functionName}:${response.status}`);
       return {
         success: true,
         message: customSuccessMessage || responseMessage || response.statusText,
@@ -178,8 +145,8 @@ export class NovariApiManager {
       };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      writeLogLine('error', 'API call error:', errorMessage);
-      
+      this.logger.error('API call error:', errorMessage);
+
       return {
         success: false,
         message: customErrorMessage || errorMessage,
