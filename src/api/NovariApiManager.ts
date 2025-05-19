@@ -26,7 +26,7 @@ const levelSeverity: Record<LogLevel, number> = {
 };
 
 
-const CURRENT_LOG_LEVEL: LogLevel = typeof import.meta !== 'undefined' ?
+const CURRENT_LOG_LEVEL: LogLevel = typeof import.meta.env.LOG_LEVEL !== 'undefined' ?
     (import.meta.env.LOG_LEVEL as LogLevel):'info';
 
 // helper: should I log this level?
