@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading, HStack, Link } from "@navikt/ds-react";
+import { Box, HStack, Link } from "@navikt/ds-react";
 import { NovariIKS } from "../logo/NovariIKS";
 
 export interface FooterLink {
@@ -23,11 +23,10 @@ export const NovariFooter = ({ links }: FooterProps) => {
 
     >
       <HStack gap="4" align="center">
-        <Heading level="2" size="medium" spacing>
+
           <Link href="http://novari.no">
-            <NovariIKS width={"9em"} />
+            <NovariIKS width={"9em"} aria-label="Novari logo" />
           </Link>
-        </Heading>
 
         {links.map((link, index) => (
           <React.Fragment key={index}>

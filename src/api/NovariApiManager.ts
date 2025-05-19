@@ -16,11 +16,24 @@ const levelColors = {
   debug: colors.brown
 };
 
+type LogLevel = 'error' | 'warn' | 'info' | 'debug';
+const levelSeverity: Record<LogLevel, number> = {
+  error: 0,
+  warn:  1,
+  info:  2,
+  debug: 3,
+};
+const CURRENT_LOG_LEVEL: LogLevel =
+    (import.meta.env.LOG_LEVEL as LogLevel) ?? 'info';
+
+// helper: should I log this level?
+function shouldLog(level: LogLevel): boolean {
+  return levelSeverity[level] <= levelSeverity[CURRENT_LOG_LEVEL];
+}
+
 // Helper function to write formatted log lines
-//TODO: Create levels of log lines based on environment
-// const isDevelopment = import.meta.env.DEV;
-// writeLogLine('debug', 'DEV ENV:', isDevelopment);
 function writeLogLine(level: 'error' | 'warn' | 'info' | 'debug', message: string, ...args: any[]): void {
+  if (!shouldLog(level)) return;
   const timestamp = new Date().toISOString();
   const color = levelColors[level] || colors.blue;
   console.log(`[${timestamp}] ${color}${level}:${colors.reset}`, message, ...args);
@@ -151,7 +164,7 @@ export class NovariApiManager {
           writeLogLine('error', `Response parsing error for ${functionName}:`, err);
         }
       }
-      writeLogLine('info', `${method} Finished with success: ${functionName}`);
+      writeLogLine('info', `${method} Finished with success: ${functionName}:${response.status}`);
       return {
         success: true,
         message: customSuccessMessage || responseMessage || response.statusText,
