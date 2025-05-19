@@ -1,3 +1,5 @@
+const validLevels = ['error', 'warn', 'info', 'debug'] as const;
+type LogLevel = typeof validLevels[number];
 
 const colors = {
   red: '\x1b[31m',
@@ -8,6 +10,7 @@ const colors = {
   reset: '\x1b[0m'
 };
 
+
 // Log level colors mapping
 const levelColors = {
   error: colors.red,
@@ -16,27 +19,36 @@ const levelColors = {
   debug: colors.brown
 };
 
-type LogLevel = 'error' | 'warn' | 'info' | 'debug';
 const levelSeverity: Record<LogLevel, number> = {
   error: 0,
   warn:  1,
   info:  2,
   debug: 3,
 };
+const rawLogLevel = import.meta.env.LOG_LEVEL as string | undefined;
+
+
 const CURRENT_LOG_LEVEL: LogLevel =
-    (import.meta.env.LOG_LEVEL as LogLevel) ?? 'info';
+    validLevels.includes(rawLogLevel as LogLevel)
+        ? (rawLogLevel as LogLevel)
+        : 'info';
 
 // helper: should I log this level?
 function shouldLog(level: LogLevel): boolean {
   return levelSeverity[level] <= levelSeverity[CURRENT_LOG_LEVEL];
 }
 
+
 // Helper function to write formatted log lines
 function writeLogLine(level: 'error' | 'warn' | 'info' | 'debug', message: string, ...args: any[]): void {
   if (!shouldLog(level)) return;
   const timestamp = new Date().toISOString();
-  const color = levelColors[level] || colors.blue;
-  console.log(`[${timestamp}] ${color}${level}:${colors.reset}`, message, ...args);
+  const color     = levelColors[level];
+  console.log(
+      `[${timestamp}] ${color}${level}:${colors.reset}`,
+      message,
+      ...args
+  );
 }
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
