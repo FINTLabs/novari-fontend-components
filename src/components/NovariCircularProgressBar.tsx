@@ -3,16 +3,15 @@ import React from "react";
 export interface CircularProgressProps {
     maxValue: number;
     value: number;
+    firstColor?: string;
+    secondColor?: string;
 }
 
-export const NovariCircularProgressBar: React.FC<CircularProgressProps> =  ({ maxValue, value, }) => {
+export const NovariCircularProgressBar: React.FC<CircularProgressProps> =  ({ maxValue, value, firstColor = "#6B133D", secondColor = "#7F78E8" }) => {
 
     const currentValue: number = Math.floor((value / maxValue) * 100);
     const circumference: number = 2 * Math.PI * 56;
     const valueOffset: number = circumference * (1 - (value / maxValue));
-
-    const firstColor: string = "#6B133D"
-    const secondColor: string = "#7F78E8"
 
     const outerShadow = () => `2px 2px 6px -1px ${firstColor}`
     const innerShadow = () => `inset 2px 2px 6px -1px ${secondColor}`
