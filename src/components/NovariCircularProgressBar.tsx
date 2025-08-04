@@ -1,9 +1,14 @@
-type props = {
+import React from "react";
+
+export interface CircularProgressProps {
     maxValue: number;
     value: number;
-};
+}
 
-export default function CircularProgressBar({maxValue, value}: props) {
+export const NovariCircularProgressBar: React.FC<CircularProgressProps> =  ({
+                                                                          maxValue,
+                                                                          value,
+                                                                      }) => {
 
     const currentValue: number = Math.floor((value / maxValue) * 100);
     const circumference: number = 2 * Math.PI * 56;
@@ -50,3 +55,5 @@ export default function CircularProgressBar({maxValue, value}: props) {
         </div>
     )
 }
+
+export default NovariCircularProgressBar;
