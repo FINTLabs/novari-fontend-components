@@ -25,6 +25,7 @@ npm install novari-frontend-components
 - npm (v9 or higher)React 
 - NAV Aksel Design System 
 - TypeScript
+- Tailwind
 - React
 
 ### Local Development
@@ -101,6 +102,7 @@ For support, please create an issue in the GitHub repository or contact the main
 - [React](https://reactjs.org/)
 - [NAV Aksel Design System](https://aksel.nav.no/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind](https://tailwindcss.com)
 - [Storybook](https://storybook.js.org/)
 - [Rollup](https://rollupjs.org/)
 
