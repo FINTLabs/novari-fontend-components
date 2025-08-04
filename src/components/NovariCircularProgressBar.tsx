@@ -5,10 +5,7 @@ export interface CircularProgressProps {
     value: number;
 }
 
-export const NovariCircularProgressBar: React.FC<CircularProgressProps> =  ({
-                                                                          maxValue,
-                                                                          value,
-                                                                      }) => {
+export const NovariCircularProgressBar: React.FC<CircularProgressProps> =  ({ maxValue, value, }) => {
 
     const currentValue: number = Math.floor((value / maxValue) * 100);
     const circumference: number = 2 * Math.PI * 56;
@@ -17,16 +14,19 @@ export const NovariCircularProgressBar: React.FC<CircularProgressProps> =  ({
     const firstColor: string = "#6B133D"
     const secondColor: string = "#7F78E8"
 
+    const outerShadow = () => `2px 2px 6px -1px ${firstColor}`
+    const innerShadow = () => `inset 2px 2px 6px -1px ${secondColor}`
+
     return (
         <div className={"h-32 w-32 relative"}>
             <div className={"h-32 w-32 rounded-full p-4"}
                  style={{
-                     boxShadow: "2px 2px 6px -1px #6B133D",
+                     boxShadow: outerShadow(),
                  }}
             >
                 <div className={"h-24 w-24 rounded-full flex items-center justify-center"}
                      style={{
-                         boxShadow: "inset 2px 2px 6px -1px #7F78E8",
+                         boxShadow: innerShadow(),
                      }}
                 >
                     <p className={"text-3xl pl-2"}>{currentValue}%</p>
