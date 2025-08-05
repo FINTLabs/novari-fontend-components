@@ -4,14 +4,14 @@ import NovariCircularProgressBar from "./NovariCircularProgressBar";
 const meta = {
     title: "Novari/NovariCircularProgressBar",
     component: NovariCircularProgressBar,
-    tags: ["autodocs", "experimental"],
+    tags: ["autodocs"],
     parameters: {
         layout: 'centered',
         docs: {
             description: {
                 component: "A versatile component that shows progress and percentage of two values given. " +
-                    "It calculates the percentage of value from maxValue and displays the percentage rounded down, " +
-                    "and visualizes the progression through the circle. ",
+                    "It calculates the percentage of **value** from **maxValue** and displays the rounded" +
+                    " down percentage while visualizing the progression through the circle. ",
             }
         }
     },
@@ -41,11 +41,10 @@ export const Custom: Story = {
         docs: {
             codePanel: true,
             description: {
-                story: "You may of course chose any colors you see fit for your application, like for example the" +
-                    " Novari Beige and Korall" +
-                    " like I've done here. Both the Progression Circle itself and the shadow around it will take on" +
-                    " the colors you desire. firstColor specifies the color and shadow on top, and secondColor" +
-                    " specifies the bottom."
+                story: "You may of course choose any colors you see fit for your application, like for example the" +
+                    " Novari Beige and Korall as shown here. Both the Progression Circle itself and the shadow" +
+                    " around it will take on the colors you desire. firstColor specifies the color and shadow on" +
+                    " top, and secondColor specifies the bottom."
             }
         }
     },

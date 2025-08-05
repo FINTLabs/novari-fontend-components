@@ -50,7 +50,7 @@ export const NovariCircularProgressBar: React.FC<CircularProgressProps> =  ({
                 <g transform="scale(-1,1) translate(-128,0)">
                     <circle cx="64" cy="64" r="56" strokeLinecap={"round"} fill={"none"}
                             stroke={`url(#${uniqueId})`}
-                            strokeDasharray={2 * Math.PI * 56}
+                            strokeDasharray={circumference}
                             strokeDashoffset={valueOffset}
                             strokeWidth={"16px"}
                             transform="rotate(-90 64 64)"
