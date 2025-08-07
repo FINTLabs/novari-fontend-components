@@ -23,22 +23,43 @@ export const NovariCircularProgressBar: React.FC<CircularProgressProps> =  ({
     const outerShadow = () => `2px 2px 6px -1px ${secondColor}`
 
     return (
-        <div className={"h-32 w-32 relative"}>
-            <div className={"h-32 w-32 rounded-full p-4"}
-                 style={{
+        <div style={{
+            position: "relative",
+            height: "128px",
+            width: "128px",
+        }}>
+            <div style={{
+                     borderRadius: "100%",
                      boxShadow: outerShadow(),
+                     padding: "16px",
+                     height: "128px",
+                     width: "128px",
                  }}
             >
-                <div className={"h-24 w-24 rounded-full flex items-center justify-center"}
-                     style={{
+                <div style={{
+                         display: "flex",
+                         justifyContent: "center",
+                         alignItems: "center",
+                         borderRadius: "100%",
                          boxShadow: innerShadow(),
+                         height: "96px",
+                         width: "96px",
                      }}
                 >
-                    <p className={`text-3xl pl-2`}>{currentValue}%</p>
+                    <p style = {{
+                            fontSize: "32px",
+                            paddingLeft: "8px",
+                    }}
+                    >{currentValue}%</p>
                 </div>
             </div>
             <svg xmlns={"https://www.w3.org/200/svg"} version={"1.1"} width={"128px"} height={"128px"}
-                 className={"absolute top-0 left-0"}>
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                }}
+            >
                 <defs>
                     <linearGradient id={uniqueId}>
                         <stop offset={"0%"}
