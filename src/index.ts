@@ -8,6 +8,7 @@ export { default as NovariFooter } from "./components/NovariFooter";
 export { default as NovariInternalHeader} from "./components/NovariInternalHeader";
 export { NovariIKS };
 export { NovariAlertManager };
+export {NovariCircularProgressBar} from "./components/NovariCircularProgressBar";
 
 // API exports
 export { NovariApiManager };
