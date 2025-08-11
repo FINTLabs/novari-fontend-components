@@ -8,6 +8,13 @@ const meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
+    docs: {
+      description: {
+        component: "Standardized header for Novari IKS / Fintlabs applications with built in functionality for" +
+            " navigating your application. For this to work best, you have to hook it up to useNavigate from your " +
+            "native React library, and impliment it, for example like in the code snippet of this preview."
+      }
+    }
   },
   args: {
     appName: "FINTApp",
@@ -55,10 +62,41 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Default NovariHeader Story
-export const Default: Story = {};
+export const Default: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `
+    export default function pageheader() {
+        const navigate = useNavigate();
+        
+        return (
+          <NovariHeader
+          onMenuClick={(action) => navigate(action)}
+          // Your menues and stuff various other stuff here //
+          />
+        )
+    }
+        `
+      }
+    }
+  }
+};
 
-// NovariHeader with Logged Out State
+export const MenuStructure: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "The structure of the menu is pretty simple and intuitive. It's an array that can hold both menu" +
+            " items and sections of several menu items. The items themselves are arrays with two strings, one is the" +
+            " title and the other is the path. For menu sections you make an object that has a label and objects." +
+            " The label is just a string, and the items is an array of new menu items. Click show code on the box" +
+            " below to see the structure of how the menu is implimented here. "
+      }
+    }
+  }
+}
+
 export const LoggedOut: Story = {
   args: {
     isLoggedIn: false,
