@@ -23,41 +23,51 @@ const NovariHeader: React.FC<HeaderProps> = ({
   onMenuClick,
   showLogoWithTitle = false, // Default to false for backward compatibility
 }) => {
-  // useEffect(() => {
-  //   document.documentElement.setAttribute("data-theme", "novari");
-  // }, []);
 
   return (
-
-      <Box
-          style={{
-            textAlign: "center",
-            backgroundColor: "var(--a-bg-subtle)"
-
-          }}
-      >
-
-        <HStack gap="2" >
-          <HStack gap="2" className={"pl-2 pt-2 items-center"}>
+      <HStack gap="2" style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: "var(--a-bg-subtle)",
+        height: "52px",
+        textAlign: "center",
+      }}>
+        <HStack gap="2"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "32px",
+                }}>
             {!appName ? (
                 <NovariIKS width="9em" />
             ) : (
-                <HStack gap="2" className="pl-2 items-center">
+                <HStack gap="2"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}>
                   {!appName ? (
                       <NovariIKS width="9em" />
                   ) : (
-                      <HStack gap="2" className="items-center">
+                      <HStack gap="2"
+                              style={{
+                                display: "flex",
+                                alignItems: "center"
+                              }}>
                         {showLogoWithTitle && <NovariIKS width="9em" />}
-                        <Heading size="medium" className="pr-10" style={{ color: 'var(--a-surface-alt-3-moderate)' }}>
+                        <Heading size="medium"
+                                 style={{
+                                   color: 'var(--a-surface-alt-3-moderate)',
+                                   paddingRight: "28px"
+                                 }}>
                           {appName}
                         </Heading>
                       </HStack>
                   )}
                 </HStack>
-
             )}
           </HStack>
-
           {isLoggedIn && (
             <HStack gap="2">
               {menu.map((menuItem, index) => {
@@ -104,13 +114,15 @@ const NovariHeader: React.FC<HeaderProps> = ({
               })}
             </HStack>
           )}
-
           <Spacer />
-
-
-            <HStack gap={"2"} >
-                {displayName && <Box padding={"3"}>{displayName}</Box>}
-
+        <HStack gap={"2"} style={{textAlign: "center"}}>
+                {displayName && <Box style={{
+                  position: "absolute",
+                  right: "46px",
+                  height: "52px",
+                  lineHeight: "52px",
+                  textAlign: "center"
+                }}>{displayName}</Box>}
                 {isLoggedIn && onLogout &&  (<Button
                 variant="tertiary"
                 title="logg ut"
@@ -118,7 +130,6 @@ const NovariHeader: React.FC<HeaderProps> = ({
                 onClick={onLogout}
               />)}
             </HStack>
-
           {!isLoggedIn && onLogin && (
             <Button
               variant="tertiary"
@@ -131,8 +142,6 @@ const NovariHeader: React.FC<HeaderProps> = ({
             </Button>
           )}
         </HStack>
-      </Box>
-
   );
 };
 
