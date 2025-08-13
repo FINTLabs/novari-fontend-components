@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import NovariHeader from "./NovariHeader";
 import { Box } from "@navikt/ds-react";
+import { PersonGroupIcon, PadlockLockedIcon, QuestionmarkCircleIcon, BriefcaseIcon, PersonCircleIcon } from '@navikt/aksel-icons';
+
+
+
 
 const meta = {
   title: "Novari/NovariHeader",
@@ -10,9 +14,12 @@ const meta = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Standardized header for Novari IKS / Fintlabs applications with built in functionality for" +
-            " navigating your application. For this to work best, you have to hook it up to useNavigate from your " +
-            "native React library, and impliment it, for example like in the code snippet of this preview."
+        component: "Standardized header for Novari IKS / Fintlabs applications with built-in functionality for " +
+            "navigating your application. For this to work best, you have to hook it up to useNavigate from your " +
+            "native React library, and implement it, for example like in the code snippet of this preview. " +
+            "The header menu can be built using a combination of individual links and dropdown menus " +
+            "containing several links. The links in the menu links can have Icons and can also be dynamically disabled " +
+            "with javascript. "
       }
     }
   },
@@ -26,17 +33,23 @@ const meta = {
       {
         label: "Main Sections",
         items: [
-          ["About", "/about"],
-          ["Team", "/team"],
-          ["Careers", "/careers"],
+          { label: "About", action: "/about", icon: <QuestionmarkCircleIcon title="a11y-title" fontSize="1.5rem" />
+            ,
+            disabled:true },
+          { label: "Team", action: "/team", icon: <PersonGroupIcon title="a11y-title" fontSize="1.5rem" />
+          },
+          { label: "Careers", action: "/careers", icon: <BriefcaseIcon title="a11y-title" fontSize="1.5rem" />
+          },
         ],
       },
       ["Contact", "/contact"],
       {
         label: "Settings",
         items: [
-          ["Profile", "/profile"],
-          ["Security", "/security"],
+          { label: "Profile", action: "/profile" , icon: <PersonCircleIcon title="a11y-title" fontSize="1.5rem" />
+          },
+          { label: "Security", action: "/security", icon: <PadlockLockedIcon title="a11y-title" fontSize="1.5rem" />
+          },
         ],
       },
     ],
@@ -90,7 +103,7 @@ export const MenuStructure: Story = {
         story: "The structure of the menu is pretty simple and intuitive. It's an array that can hold both menu" +
             " items and sections of several menu items. The items themselves are arrays with two strings, one is the" +
             " title and the other is the path. For menu sections you make an object that has a label and objects." +
-            " The label is just a string, and the items is an array of new menu items. Click show code on the box" +
+            " The label is just a string, and the items is an array of menuItem objects. Click show code on the box" +
             " below to see the structure of how the menu is implimented here. "
       }
     }
