@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import NovariHeader from "./NovariHeader";
-import { Box } from "@navikt/ds-react";
+import {Box, Select} from "@navikt/ds-react";
 import { PersonGroupIcon, PadlockLockedIcon, QuestionmarkCircleIcon, BriefcaseIcon, PersonCircleIcon } from '@navikt/aksel-icons';
 
 
@@ -56,6 +56,12 @@ const meta = {
     isLoggedIn: true,
     displayName: "John Doe",
     showLogoWithTitle: false,
+    children: <Select label="Velg bostedsland" hideLabel size="small" className="p-2">
+      <option value="">- Velg land -</option>
+      <option value="norge">Norge</option>
+      <option value="sverige">Sverige</option>
+      <option value="danmark">Danmark</option>
+    </Select>,
   },
   argTypes: {
     onLogout: { action: "onLogout" },

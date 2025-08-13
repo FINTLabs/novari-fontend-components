@@ -22,9 +22,7 @@ export interface HeaderProps {
     onLogin?: () => void;
     onMenuClick?: (action: string) => void;
     showLogoWithTitle?: boolean;
-    selectOptions?: { label: string; value: string }[];
-    selectedOption?: string;
-    onSelectChange?: (value: string) => void;
+    children?: React.ReactNode;
 }
 
 
@@ -36,7 +34,8 @@ const NovariHeader: React.FC<HeaderProps> = ({
                                                  onLogout,
                                                  onLogin,
                                                  onMenuClick,
-                                                 showLogoWithTitle = false, // Default to false for backward compatibility
+                                                 showLogoWithTitle = false,
+                                                 children,
                                              }) => {
 
     return (
@@ -131,6 +130,8 @@ const NovariHeader: React.FC<HeaderProps> = ({
                     })}
                 </HStack>
             )}
+            <Spacer />
+            {isLoggedIn && children}
             <Spacer />
             <HStack gap={"2"} style={{textAlign: "center"}}>
                 {displayName && <Box style={{
