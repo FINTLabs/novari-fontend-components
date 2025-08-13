@@ -1,16 +1,27 @@
 import {ActionMenu, Box, Button, Heading, HStack, Spacer} from "@navikt/ds-react";
 import {ChevronDownIcon, EnterIcon, LeaveIcon} from "@navikt/aksel-icons";
 import {NovariIKS} from "./assets/NovariIKS";
+import {ReactNode} from "react";
+
+type MenuItem = [label: string, path: string, icon?: ReactNode, disabled?: false];
+
+type MenuGroup = {
+    label?: string;
+    disabled?: false;
+    items: MenuItem[];
+};
+
+export type MenuType = (MenuItem | MenuGroup)[];
 
 export interface HeaderProps {
   appName?: string;
-  menu: ({ label?: string; items: [string, string][] } | [string, string])[];
+  menu: MenuType;
   isLoggedIn: boolean;
   displayName?: string;
   onLogout?: () => void;
   onLogin?: () => void;
   onMenuClick?: (action: string) => void;
-  showLogoWithTitle?: boolean; // New prop to show logo alongside title
+  showLogoWithTitle?: boolean;
 }
 
 const NovariHeader: React.FC<HeaderProps> = ({
@@ -21,7 +32,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
   onLogout,
   onLogin,
   onMenuClick,
-  showLogoWithTitle = false, // Default to false for backward compatibility
+  showLogoWithTitle = false,
 }) => {
 
   return (
@@ -73,12 +84,15 @@ const NovariHeader: React.FC<HeaderProps> = ({
               {menu.map((menuItem, index) => {
                 if (Array.isArray(menuItem)) {
                   // If menuItem is a single [label, action], render a Button
-                  const [label, action] = menuItem;
+                  const [label, action, icon, disabled] = menuItem;
                   return (
                     <Button
                       key={index}
                       size="small"
                       variant="tertiary-neutral"
+                      disabled={disabled}
+                      iconPosition={"left"}
+                      icon={icon}
                       onClick={() => onMenuClick?.(action)}
                     >
                       {label}
@@ -99,9 +113,11 @@ const NovariHeader: React.FC<HeaderProps> = ({
                         </Button>
                       </ActionMenu.Trigger>
                       <ActionMenu.Content>
-                        {menuItem.items.map(([label, action], i) => (
+                        {menuItem.items.map(([label, action, icon, disabled], i) => (
                           <ActionMenu.Item
                             key={i}
+                            icon={icon}
+                            disabled={disabled}
                             onSelect={() => onMenuClick?.(action)}
                           >
                             {label}
@@ -118,7 +134,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
         <HStack gap={"2"} style={{textAlign: "center"}}>
                 {displayName && <Box style={{
                   position: "absolute",
-                  right: "46px",
+                  right: "82px",
                   height: "52px",
                   lineHeight: "52px",
                   textAlign: "center"
