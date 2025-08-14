@@ -6,6 +6,7 @@ import { NovariAlertManager } from './components/NovariAlertManager';
 export { default as NovariHeader } from "./components/NovariHeader";
 export { default as NovariFooter } from "./components/NovariFooter";
 export { default as NovariInternalHeader} from "./components/NovariInternalHeader";
+export { default as NovariSubHeader } from "./components/NovariSubHeader";
 export { NovariIKS };
 export { NovariAlertManager };
 export {NovariCircularProgressBar} from "./components/NovariCircularProgressBar";

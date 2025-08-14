@@ -31,6 +31,13 @@
 
     --ac-guide-panel-border: #6B133D;
 
+    .subHeader-select {
+        --ac-select-bg: #FCF5ED;
+        --ac-select-border: lightgrey;
+        --ac-select-active-border: lightgrey;
+        --ac-select-hover-border: lightgrey;
+    }
+
     /* Styles for the active panel */
     .my-custom-panel {
         background-color: #f3f4f6; /* Light gray background */
