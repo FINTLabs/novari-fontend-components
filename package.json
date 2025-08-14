@@ -66,7 +66,7 @@
     "storybook": "^8.6.4",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
-    "vite": "6.2.6",
+    "vite": "6.3.4",
     "vitest": "^3.0.8"
   },
   "peerDependencies": {
@@ -95,6 +95,7 @@
     }
   },
   "dependencies": {
-    "date-fns": "^4.1.0"
+    "date-fns": "^4.1.0",
+    "esbuild": "^0.25.9"
   }
 }

@@ -1,4 +1,4 @@
-import {ActionMenu, Box, Button, Heading, HStack, Spacer} from "@navikt/ds-react";
+import {ActionMenu, Box, Button, Heading, HStack} from "@navikt/ds-react";
 import {ChevronDownIcon, EnterIcon, LeaveIcon} from "@navikt/aksel-icons";
 import {NovariIKS} from "./assets/NovariIKS";
 import React from "react";
@@ -131,35 +131,60 @@ const NovariHeader: React.FC<HeaderProps> = ({
                     })}
                 </HStack>
             )}
-            <Spacer />
-            {isLoggedIn && children}
-            <Spacer />
-            <HStack gap={"2"} style={{textAlign: "center"}}>
-                {displayName && <Box style={{
-                    position: "absolute",
-                    right: "46px",
-                    height: "52px",
-                    lineHeight: "52px",
-                    textAlign: "center"
-                }}>{displayName}</Box>}
-                {isLoggedIn && onLogout &&  (<Button
-                    variant="tertiary"
-                    title="logg ut"
-                    icon={<LeaveIcon title="logg ut" fontSize="1.5rem" />}
-                    onClick={onLogout}
-                />)}
+
+            {/* RIGHT CLUSTER: push to the far right */}
+            <div style={{ marginLeft: "auto" }} />
+
+            <HStack
+                gap="2"
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    // padding to match left side
+                    paddingRight: "14px",
+                }}
+            >
+                {/* injected content */}
+                {isLoggedIn && children}
+
+                {/* display name (now naturally inline, right after the selector) */}
+                {displayName && (
+                    <Box
+                        as="span"
+                        style={{
+                            height: "52px",
+                            lineHeight: "52px",
+                            textAlign: "center",
+                            whiteSpace: "nowrap",
+                        }}
+                    >
+                        {displayName}
+                    </Box>
+                )}
+
+                {/* logout button */}
+                {isLoggedIn && onLogout && (
+                    <Button
+                        variant="tertiary"
+                        title="logg ut"
+                        icon={<LeaveIcon title="logg ut" fontSize="1.5rem" />}
+                        onClick={onLogout}
+                    />
+                )}
+
+                {/* login button */}
+                {!isLoggedIn && onLogin && (
+                    <Button
+                        variant="tertiary"
+                        title="logg inn"
+                        icon={<EnterIcon title="logg inn" fontSize="1.5rem" />}
+                        onClick={onLogin}
+                        iconPosition="right"
+                    >
+                        Login
+                    </Button>
+                )}
             </HStack>
-            {!isLoggedIn && onLogin && (
-                <Button
-                    variant="tertiary"
-                    title="logg inn"
-                    icon={<EnterIcon title="logg inn" fontSize="1.5rem" />}
-                    onClick={onLogin}
-                    iconPosition="right"
-                >
-                    Login
-                </Button>
-            )}
         </HStack>
     );
 };
