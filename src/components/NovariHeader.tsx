@@ -1,8 +1,9 @@
-import {ActionMenu, Box, Button, Heading, HStack, Link} from "@navikt/ds-react";
+import {ActionMenu, Box, Button, Heading, HStack} from "@navikt/ds-react";
 import {ChevronDownIcon, EnterIcon, LeaveIcon} from "@navikt/aksel-icons";
 import {NovariIKS} from "./assets/NovariIKS";
 import React from "react";
 
+//TODO: Make a mobile version ?
 export interface HeaderProps {
     appName?: string;
     menu: (
@@ -22,7 +23,6 @@ export interface HeaderProps {
     onLogout?: () => void;
     onLogin?: () => void;
     onMenuClick?: (action: string) => void;
-    userInfoUrl?: string;
     showLogoWithTitle?: boolean;
     children?: React.ReactNode;
 }
@@ -36,7 +36,6 @@ const NovariHeader: React.FC<HeaderProps> = ({
                                                  onLogout,
                                                  onLogin,
                                                  onMenuClick,
-                                                 userInfoUrl,
                                                  showLogoWithTitle = false,
                                                  children,
                                              }) => {
@@ -160,11 +159,9 @@ const NovariHeader: React.FC<HeaderProps> = ({
                             whiteSpace: 'nowrap',
                         }}
                     >
-                        {userInfoUrl ? (
-                                <Link href={userInfoUrl}>{displayName}</Link>
-                        ) : (
+                        {
                             displayName
-                        )}
+                        }
                     </Box>
                 )}
 

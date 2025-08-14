@@ -55,7 +55,6 @@ const meta = {
     ],
     isLoggedIn: true,
     displayName: "John Doe",
-    userInfoUrl: "#",
     showLogoWithTitle: false,
     children: <Select label="Velg bostedsland" hideLabel size="small" className="p-2">
       <option value="">- Velg land -</option>
@@ -171,13 +170,5 @@ export const WithLogoAndTitle: Story = {
     appName: "FINTApp",
     showLogoWithTitle: true,
     children: null,
-  },
-};
-
-// Add a new story for link on username
-export const WithLinkUser: Story = {
-  args: {
-    appName: "FINTApp",
-    userInfoUrl: "#"
   },
 };
