@@ -63,10 +63,13 @@ This will:
 1. Update version:
 ```bash
 npm version patch
+```
+```bash
 npm version minor
+```
+```bash
 npm version major
 ```
-
 2. Publish to npm:
 ```bash
 npm publish --access public
