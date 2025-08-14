@@ -22,6 +22,7 @@ export interface HeaderProps {
     onLogout?: () => void;
     onLogin?: () => void;
     onMenuClick?: (action: string) => void;
+    onUserClick?: () => void;
     showLogoWithTitle?: boolean;
     children?: React.ReactNode;
 }
@@ -35,6 +36,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                                                  onLogout,
                                                  onLogin,
                                                  onMenuClick,
+                                                 onUserClick,
                                                  showLogoWithTitle = false,
                                                  children,
                                              }) => {
@@ -152,15 +154,22 @@ const NovariHeader: React.FC<HeaderProps> = ({
                     <Box
                         as="span"
                         style={{
-                            height: "52px",
-                            lineHeight: "52px",
-                            textAlign: "center",
-                            whiteSpace: "nowrap",
+                            height: '52px',
+                            lineHeight: '52px',
+                            textAlign: 'center',
+                            whiteSpace: 'nowrap',
                         }}
                     >
-                        {displayName}
+                        {onUserClick ? (
+                            <a href="#" onClick={onUserClick}>
+                                {displayName}
+                            </a>
+                        ) : (
+                            displayName
+                        )}
                     </Box>
                 )}
+
 
                 {/* logout button */}
                 {isLoggedIn && onLogout && (

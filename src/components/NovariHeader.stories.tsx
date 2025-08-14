@@ -55,6 +55,7 @@ const meta = {
     ],
     isLoggedIn: true,
     displayName: "John Doe",
+    onUserClick: () => console.log("User clicked"),
     showLogoWithTitle: false,
     children: <Select label="Velg bostedsland" hideLabel size="small" className="p-2">
       <option value="">- Velg land -</option>
@@ -169,5 +170,14 @@ export const WithLogoAndTitle: Story = {
   args: {
     appName: "FINTApp",
     showLogoWithTitle: true,
+    children: null,
+  },
+};
+
+// Add a new story for link on username
+export const WithLinkUser: Story = {
+  args: {
+    appName: "FINTApp",
+    onUserClick: () => console.log("User clicked"),
   },
 };
