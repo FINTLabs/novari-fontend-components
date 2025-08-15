@@ -1,7 +1,7 @@
-import {ActionMenu, Box, Button, Heading, HStack} from "@navikt/ds-react";
-import {ChevronDownIcon, EnterIcon, LeaveIcon} from "@navikt/aksel-icons";
-import {NovariIKS} from "./assets/NovariIKS";
-import React from "react";
+import { ActionMenu, Box, Button, Heading, HStack } from '@navikt/ds-react';
+import { ChevronDownIcon, EnterIcon, LeaveIcon } from '@navikt/aksel-icons';
+import { NovariIKS } from './assets/NovariIKS';
+import React from 'react';
 
 //TODO: Make a mobile version ?
 export interface HeaderProps {
@@ -9,15 +9,15 @@ export interface HeaderProps {
     menu: (
         | [string, string] // Simple menu item
         | {
-        label?: string;
-        items: {
-            label: string;
-            action: string;
-            icon?: React.ReactNode;
-            disabled?: boolean;
-        }[];
-    }
-        )[];
+              label?: string;
+              items: {
+                  label: string;
+                  action: string;
+                  icon?: React.ReactNode;
+                  disabled?: boolean;
+              }[];
+          }
+    )[];
     isLoggedIn: boolean;
     displayName?: string;
     onLogout?: () => void;
@@ -27,56 +27,60 @@ export interface HeaderProps {
     children?: React.ReactNode;
 }
 
-
 const NovariHeader: React.FC<HeaderProps> = ({
-                                                 appName,
-                                                 menu,
-                                                 isLoggedIn,
-                                                 displayName,
-                                                 onLogout,
-                                                 onLogin,
-                                                 onMenuClick,
-                                                 showLogoWithTitle = false,
-                                                 children,
-                                             }) => {
-
+    appName,
+    menu,
+    isLoggedIn,
+    displayName,
+    onLogout,
+    onLogin,
+    onMenuClick,
+    showLogoWithTitle = false,
+    children,
+}) => {
     return (
-        <HStack gap="2" style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            backgroundColor: "var(--a-bg-subtle)",
-            height: "52px",
-            textAlign: "center",
-        }}>
-            <HStack gap="2"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        paddingLeft: "32px",
-                    }}>
+        <HStack
+            gap="2"
+            style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                backgroundColor: 'var(--a-bg-subtle)',
+                height: '52px',
+                textAlign: 'center',
+            }}>
+            <HStack
+                gap="2"
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    paddingLeft: '32px',
+                }}>
                 {!appName ? (
                     <NovariIKS width="9em" />
                 ) : (
-                    <HStack gap="2"
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                            }}>
+                    <HStack
+                        gap="2"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}>
                         {!appName ? (
                             <NovariIKS width="9em" />
                         ) : (
-                            <HStack gap="2"
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center"
-                                    }}>
+                            <HStack
+                                gap="2"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}>
                                 {showLogoWithTitle && <NovariIKS width="9em" />}
-                                <Heading size="medium"
-                                         style={{
-                                             color: 'var(--a-surface-alt-3-moderate)',
-                                             paddingRight: "28px"
-                                         }}>
+                                <Heading
+                                    size="medium"
+                                    style={{
+                                        color: 'var(--a-surface-alt-3-moderate)',
+                                        paddingRight: '28px',
+                                    }}>
                                     {appName}
                                 </Heading>
                             </HStack>
@@ -95,8 +99,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                                     key={index}
                                     size="small"
                                     variant="tertiary-neutral"
-                                    onClick={() => onMenuClick?.(action)}
-                                >
+                                    onClick={() => onMenuClick?.(action)}>
                                     {label}
                                 </Button>
                             );
@@ -109,22 +112,24 @@ const NovariHeader: React.FC<HeaderProps> = ({
                                             size="small"
                                             variant="tertiary-neutral"
                                             icon={<ChevronDownIcon aria-hidden />}
-                                            iconPosition="right"
-                                        >
+                                            iconPosition="right">
                                             {menuItem.label ?? `Meny ${index + 1}`}
                                         </Button>
                                     </ActionMenu.Trigger>
                                     <ActionMenu.Content>
-                                        {menuItem.items.map(({ label, action, icon, disabled }, i) => (
-                                            <ActionMenu.Item
-                                                key={i}
-                                                onSelect={() => !disabled && onMenuClick?.(action)}
-                                                disabled={disabled}
-                                                icon={icon}
-                                            >
-                                                {label}
-                                            </ActionMenu.Item>
-                                        ))}
+                                        {menuItem.items.map(
+                                            ({ label, action, icon, disabled }, i) => (
+                                                <ActionMenu.Item
+                                                    key={i}
+                                                    onSelect={() =>
+                                                        !disabled && onMenuClick?.(action)
+                                                    }
+                                                    disabled={disabled}
+                                                    icon={icon}>
+                                                    {label}
+                                                </ActionMenu.Item>
+                                            )
+                                        )}
                                     </ActionMenu.Content>
                                 </ActionMenu>
                             );
@@ -134,17 +139,16 @@ const NovariHeader: React.FC<HeaderProps> = ({
             )}
 
             {/* RIGHT CLUSTER: push to the far right */}
-            <div style={{ marginLeft: "auto" }} />
+            <div style={{ marginLeft: 'auto' }} />
 
             <HStack
                 gap="2"
                 style={{
-                    display: "flex",
-                    alignItems: "center",
+                    display: 'flex',
+                    alignItems: 'center',
                     // padding to match left side
-                    paddingRight: "14px",
-                }}
-            >
+                    paddingRight: '14px',
+                }}>
                 {/* injected content */}
                 {isLoggedIn && children}
 
@@ -157,14 +161,10 @@ const NovariHeader: React.FC<HeaderProps> = ({
                             lineHeight: '52px',
                             textAlign: 'center',
                             whiteSpace: 'nowrap',
-                        }}
-                    >
-                        {
-                            displayName
-                        }
+                        }}>
+                        {displayName}
                     </Box>
                 )}
-
 
                 {/* logout button */}
                 {isLoggedIn && onLogout && (
@@ -183,8 +183,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                         title="logg inn"
                         icon={<EnterIcon title="logg inn" fontSize="1.5rem" />}
                         onClick={onLogin}
-                        iconPosition="right"
-                    >
+                        iconPosition="right">
                         Login
                     </Button>
                 )}
