@@ -6,7 +6,7 @@ export interface NovariApiConfig {
   logLevel?: LogLevel | 'info';
 }
 
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 export interface NovariApiConfig {
   baseUrl: string;
@@ -23,6 +23,7 @@ export interface ApiCallOptions {
   additionalHeaders?: Record<string, string>;
   customErrorMessage?: string;
   customSuccessMessage?: string;
+  customSuccessVariant?: 'success' | 'error' | 'warning';
 }
 
 export interface ApiResponse<T> {
@@ -53,6 +54,7 @@ export class NovariApiManager {
     additionalHeaders = {},
     customErrorMessage,
     customSuccessMessage,
+                  customSuccessVariant = 'success',
   }: ApiCallOptions): Promise<ApiResponse<T>> {
     const url = `${this.config.baseUrl}${endpoint}`;
 
@@ -138,7 +140,7 @@ export class NovariApiManager {
       return {
         success: true,
         message: customSuccessMessage || responseMessage || response.statusText,
-        variant: 'success',
+        variant: customSuccessVariant || 'success',
         data,
         status: response.status,
         body: response.body || requestBody,  // Include the request body in the response
