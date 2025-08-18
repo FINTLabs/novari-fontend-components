@@ -1,34 +1,26 @@
-import { NovariIKS } from "./logo/NovariIKS";
-import "./styles/novari-theme.css";
-import { NovariApiManager } from './api/NovariApiManager';
-import { NovariAlertManager } from './components/NovariAlertManager';
+// Side effects & assets
+import './styles/novari-theme.css';
 
-export { default as NovariHeader } from "./components/NovariHeader";
-export { default as NovariFooter } from "./components/NovariFooter";
-export { default as NovariInternalHeader} from "./components/NovariInternalHeader";
-export { default as NovariSubHeader } from "./components/NovariSubHeader";
-export { NovariIKS };
-export { NovariAlertManager };
-export {NovariCircularProgressBar} from "./components/NovariCircularProgressBar";
+// Logos
+export { NovariIKS } from './logo/NovariIKS';
 
-// API exports
-export { NovariApiManager };
+// App-level APIs
+export { NovariApiManager } from './api/NovariApiManager';
 export type {
     NovariApiConfig,
     ApiCallOptions,
     ApiResponse,
-    HttpMethod
+    HttpMethod,
 } from './api/NovariApiManager';
 
-// Alert exports
-export type {
-    AlertType,
-    AlertManagerProps
-} from './components/NovariAlertManager';
+// Headers / layout
+export { default as NovariHeader } from './components/NovariHeader';
+export { default as NovariFooter } from './components/NovariFooter';
+export { default as NovariInternalHeader } from './components/NovariInternalHeader';
+export { default as NovariSubHeader } from './components/NovariSubHeader';
+export { NovariCircularProgressBar } from './components/NovariCircularProgressBar';
+export { default as NovariConfirmAction } from './components/NovariConfirmAction';
+export type { NovariConfirmActionProps } from './components/NovariConfirmAction';
 
-export { default as NovariCookieConsent } from "./components/NovariCookieConsent";
-export type { CookieConsentProps, CookiePreferences } from "./components/NovariCookieConsent";
-
-export { default as NovariConfirmAction } from "./components/NovariConfirmAction";
-export type { NovariConfirmActionProps } from "./components/NovariConfirmAction";
-
+// Alerts (re-export the feature barrel)
+export * from './components/NovariAlertManager';

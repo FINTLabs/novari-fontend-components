@@ -23,13 +23,13 @@ export interface ApiCallOptions {
     additionalHeaders?: Record<string, string>;
     customErrorMessage?: string;
     customSuccessMessage?: string;
-    customSuccessVariant?: 'success' | 'error' | 'warning';
+    customSuccessVariant?: 'success' | 'error' | 'warning' | 'info';
 }
 
 export interface ApiResponse<T> {
     success: boolean;
     message: string;
-    variant: 'success' | 'error' | 'warning';
+    variant: 'success' | 'error' | 'warning' | 'info';
     data?: T;
     status?: number;
     body?: any; // Add body to include the request payload in the response
