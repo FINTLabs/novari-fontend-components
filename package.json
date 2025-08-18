@@ -1,6 +1,6 @@
 {
   "name": "novari-frontend-components",
-  "version": "1.6.2",
+  "version": "2.0.0",
   "type": "module",
   "private": false,
   "description": "Frontend components for Novari, IKS",
