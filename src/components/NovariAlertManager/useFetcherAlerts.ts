@@ -3,20 +3,21 @@ import { useAlerts } from './useAlerts';
 
 export function useFetcherAlerts(
     fetcherData: any,
-    fetcherState: string,
-    deleteName?: string | null
+    fetcherState: string
+    // deleteName?: string | null
 ) {
     const { addAlert } = useAlerts();
 
-    useEffect(() => {
-        if (deleteName) {
-            addAlert({
-                variant: 'warning',
-                message: `Element '${deleteName}' er slettet`,
-                header: 'Slettingsvarsel',
-            });
-        }
-    }, [deleteName, addAlert]);
+    // Is this useful ??
+    // useEffect(() => {
+    //     if (deleteName) {
+    //         addAlert({
+    //             variant: 'warning',
+    //             message: `Element '${deleteName}' er slettet`,
+    //             header: 'Slettingsvarsel',
+    //         });
+    //     }
+    // }, [deleteName, addAlert]);
 
     useEffect(() => {
         if (fetcherState === 'idle' && fetcherData?.message) {

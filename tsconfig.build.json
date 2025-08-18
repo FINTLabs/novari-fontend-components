@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "outDir": "lib",         // ✅ Ensures output goes into `lib/`
-    "declaration": true,      // ✅ Generates `.d.ts` files
+    "outDir": "lib",
+    "declaration": true,
     "declarationMap": true,
-    "emitDeclarationOnly": true, // ✅ Generates both `.js` and `.d.ts`
-    "allowJs": false,         // ❌ Ensure TypeScript does not process `.js`
+    "emitDeclarationOnly": true,
+    "allowJs": false,
     "strict": true,
     "target": "ESNext",
     "module": "ESNext",
@@ -15,6 +15,6 @@
     "jsx": "react-jsx",
     "skipLibCheck": true
   },
-  "include": ["src"],         // ✅ Includes all TypeScript files in `src/`
+  "include": ["src"],
   "exclude": ["node_modules", "lib", "**/*.test.ts", "**/*.stories.tsx"]
 }
