@@ -21,7 +21,7 @@ export { default as NovariSubHeader } from './components/NovariSubHeader';
 export { NovariCircularProgressBar } from './components/NovariCircularProgressBar';
 export { default as NovariConfirmAction } from './components/NovariConfirmAction';
 export type { NovariConfirmActionProps } from './components/NovariConfirmAction';
-export type { NovariAlertProvider } from './components/NovariAlertManager';
+export type { NovariAlertProvider } from './components/NovariAlertManager/NovariAlertProvider';
 
 // Alerts (re-export the feature barrel)
 export * from './components/NovariAlertManager';
