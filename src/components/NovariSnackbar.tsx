@@ -1,4 +1,4 @@
-import { Alert, Heading } from '@navikt/ds-react';
+import SnackbarItem from './SnackbarItem.tsx';
 
 export type NovariSnackbarVariant = 'info' | 'success' | 'warning' | 'error';
 export type NovariSnackbarPosition =
@@ -11,7 +11,7 @@ export type NovariSnackbarPosition =
 
 export interface NovariSnackbarItem {
     id: string;
-    open?: boolean;
+    open?: boolean | true;
     message: string;
     variant?: NovariSnackbarVariant;
     header?: string;
@@ -25,13 +25,21 @@ export interface NovariSnackbar {
     onCloseItem?: (id: string) => void;
 }
 
-const positionClasses: Record<NovariSnackbarPosition, string> = {
-    'top-left': 'top-4 left-4',
-    'top-right': 'top-4 right-4',
-    'bottom-left': 'bottom-4 left-4',
-    'bottom-right': 'bottom-4 right-4',
-    'top-center': 'top-4 left-1/2 -translate-x-1/2',
-    'bottom-center': 'bottom-4 left-1/2 -translate-x-1/2',
+// const positionClasses: Record<NovariSnackbarPosition, string> = {
+//     'top-left': 'top-4 left-4',
+//     'top-right': 'top-4 right-4',
+//     'bottom-left': 'bottom-4 left-4',
+//     'bottom-right': 'bottom-4 right-4',
+//     'top-center': 'top-4 left-1/2 -translate-x-1/2',
+//     'bottom-center': 'bottom-4 left-1/2 -translate-x-1/2',
+// };
+const positionStyles: Record<NovariSnackbarPosition, React.CSSProperties> = {
+    'top-left': { top: '1rem', left: '1rem' },
+    'top-right': { top: '1rem', right: '1rem' },
+    'bottom-left': { bottom: '1rem', left: '1rem' },
+    'bottom-right': { bottom: '1rem', right: '1rem' },
+    'top-center': { top: '1rem', left: '50%', transform: 'translateX(-50%)' },
+    'bottom-center': { bottom: '1rem', left: '50%', transform: 'translateX(-50%)' },
 };
 
 const NovariSnackbar = ({
@@ -41,57 +49,20 @@ const NovariSnackbar = ({
     items,
     onCloseItem,
 }: NovariSnackbar) => {
-    // const [visible, setVisible] = useState(open);
-
-    // // sync external `open` state
-    // useEffect(() => {
-    //     setVisible(open);
-    // }, [open]);
-    //
-    // // auto-dismiss logic
-    // useEffect(() => {
-    //     if (visible && autoHideDuration) {
-    //         const timer = setTimeout(() => {
-    //             setVisible(false);
-    //             onClose();
-    //         }, autoHideDuration);
-    //         return () => clearTimeout(timer);
-    //     }
-    // }, [visible, autoHideDuration, onClose]);
-
-    // if (!visible) return null;
-    //
-    // const filterVisibleItems = (item: NovariSnackbarItem) => {
-    //     return item.open;
-    // };
-
     return (
+        // <div
+        //     className={`fixed z-50 transition-all animate-fadeIn ${
+        //         positionClasses[position]
+        //     }  ${className}`}>
         <div
-            className={`fixed z-50 transition-all animate-fadeIn ${
-                positionClasses[position]
-            }  ${className}`}>
-            {/*{items.map(*/}
-            {/*    (item) =>*/}
-            {/*        filterVisibleItems(item) && (*/}
-            {/*            <>*/}
-            {/*                <Alert*/}
-            {/*                    key={item.id}*/}
-            {/*                    variant={item.variant ?? 'info'}*/}
-            {/*                    className={'relative mb-2'}*/}
-            {/*                    closeButton*/}
-            {/*                    onClose={() => onCloseItem?.(item.id)}>*/}
-            {/*                    <div>*/}
-            {/*                        {item.header && (*/}
-            {/*                            <Heading spacing size="small" level="3">*/}
-            {/*                                {item.header}*/}
-            {/*                            </Heading>*/}
-            {/*                        )}*/}
-            {/*                        {item.message}*/}
-            {/*                    </div>*/}
-            {/*                </Alert>*/}
-            {/*            </>*/}
-            {/*        )*/}
-            {/*)}*/}
+            style={{
+                position: 'fixed',
+                zIndex: 50,
+                transition: 'all 0.2s ease-in-out',
+                animation: 'fadeIn 0.3s',
+                ...positionStyles[position],
+            }}
+            className={className}>
             {items.map(
                 (item) =>
                     item.open && (
@@ -104,60 +75,7 @@ const NovariSnackbar = ({
                     )
             )}
         </div>
-
-        // <div
-        //     className={`fixed z-50 transition-all animate-fadeIn ${
-        //         positionClasses[position]
-        //     }  ${className}`}
-        //     id={id}>
-        //     <Alert variant={variant} className="relative " closeButton onClose={onClose}>
-        //         <div>
-        //             {header && <div className="font-semibold mb-1">{header}</div>}
-        //             {message}
-        //         </div>
-        //     </Alert>
-        // </div>
     );
 };
 
 export default NovariSnackbar;
-
-import { useEffect } from 'react';
-
-interface SnackbarItemProps {
-    item: NovariSnackbarItem;
-    autoHideDuration: number;
-    onCloseItem?: (id: string) => void;
-}
-
-const SnackbarItem = ({ item, autoHideDuration, onCloseItem }: SnackbarItemProps) => {
-    useEffect(() => {
-        if (!item.open) return;
-
-        const timer = setTimeout(() => {
-            onCloseItem?.(item.id);
-        }, autoHideDuration);
-
-        return () => clearTimeout(timer);
-    }, [item.id, item.open, autoHideDuration, onCloseItem]);
-
-    if (!item.open) return null;
-
-    return (
-        <Alert
-            key={item.id}
-            variant={item.variant ?? 'info'}
-            className="relative mb-2"
-            closeButton
-            onClose={() => onCloseItem?.(item.id)}>
-            <div>
-                {item.header && (
-                    <Heading spacing size="small" level="3">
-                        {item.header}
-                    </Heading>
-                )}
-                {item.message}
-            </div>
-        </Alert>
-    );
-};
