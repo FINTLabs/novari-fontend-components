@@ -15,7 +15,7 @@ export type {
 
 // Snackbar
 export type {
-    NovariSnackbarProps,
+    NovariSnackbarItem,
     NovariSnackbarVariant,
     NovariSnackbarPosition,
 } from './components/NovariSnackbar';
