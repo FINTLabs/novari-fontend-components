@@ -11,7 +11,7 @@ export type NovariSnackbarPosition =
     | 'bottom-center';
 
 export interface NovariSnackbarItem {
-    open: boolean;
+    open?: boolean;
     onClose: () => void;
     message: string;
     autoHideDuration?: number;
@@ -31,7 +31,7 @@ const positionClasses: Record<NovariSnackbarPosition, string> = {
 };
 
 const NovariSnackbar = ({
-    open,
+    open = true,
     onClose,
     message,
     autoHideDuration = 4000,
