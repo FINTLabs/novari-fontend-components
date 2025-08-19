@@ -10,7 +10,7 @@ export type NovariSnackbarPosition =
     | 'top-center'
     | 'bottom-center';
 
-export interface NovariSnackbarProps {
+export interface NovariSnackbarItem {
     open: boolean;
     onClose: () => void;
     message: string;
@@ -39,7 +39,7 @@ const NovariSnackbar = ({
     position = 'top-left',
     header,
     className = '',
-}: NovariSnackbarProps) => {
+}: NovariSnackbarItem) => {
     const [visible, setVisible] = useState(open);
 
     // sync external `open` state

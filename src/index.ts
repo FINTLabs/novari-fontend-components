@@ -4,7 +4,7 @@ import './styles/novari-theme.css';
 // Logos
 export { NovariIKS } from './logo/NovariIKS';
 
-// App-level APIs
+// NovariApiManager
 export { NovariApiManager } from './api/NovariApiManager';
 export type {
     NovariApiConfig,
@@ -13,7 +13,15 @@ export type {
     HttpMethod,
 } from './api/NovariApiManager';
 
-// Headers / layout
+// Snackbar
+export type {
+    NovariSnackbarProps,
+    NovariSnackbarVariant,
+    NovariSnackbarPosition,
+} from './components/NovariSnackbar';
+export { default as NovariSnackbar } from './components/NovariSnackbar';
+
+// All Components
 export { default as NovariHeader } from './components/NovariHeader';
 export { default as NovariFooter } from './components/NovariFooter';
 export { default as NovariInternalHeader } from './components/NovariInternalHeader';
@@ -21,4 +29,3 @@ export { default as NovariSubHeader } from './components/NovariSubHeader';
 export { NovariCircularProgressBar } from './components/NovariCircularProgressBar';
 export { default as NovariConfirmAction } from './components/NovariConfirmAction';
 export type { NovariConfirmActionProps } from './components/NovariConfirmAction';
-export { default as NovariSnackbar } from './components/NovariSnackbar';
