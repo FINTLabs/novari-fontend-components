@@ -12,7 +12,7 @@ export type NovariSnackbarPosition =
 
 export interface NovariSnackbarItem {
     id: string;
-    open?: boolean | true;
+    open?: boolean;
     message: string;
     variant?: NovariSnackbarVariant;
     header?: string;
@@ -66,7 +66,7 @@ const NovariSnackbar = ({
             className={className}>
             {items.map(
                 (item) =>
-                    item.open && (
+                    (item.open ?? true) && (
                         <SnackbarAlertItem
                             key={item.id}
                             item={item}
