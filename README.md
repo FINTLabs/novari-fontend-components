@@ -14,7 +14,6 @@ npm install novari-frontend-components
 - `NovariFooter` - Application footer with customizable links
 - `NovariApiManager` - HTTP client for API interactions
 - `NovariInternalHeader` - Internal page header component
-- `NovariAlertManager` - Toast notification system for displaying alerts
 - `NovariCircularProgressBar` - Visually display progression of one value compared to another
 
 
