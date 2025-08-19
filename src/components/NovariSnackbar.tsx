@@ -69,7 +69,7 @@ const NovariSnackbar = ({
                     (item.open ?? true) && (
                         <SnackbarAlertItem
                             key={item.id}
-                            item={item}
+                            item={{ ...item, open: true }}
                             autoHideDuration={autoHideDuration}
                             onCloseItem={onCloseItem}
                         />

@@ -39,7 +39,7 @@ const Template = (args: any) => {
         const id = Math.random().toString();
         const newItem: NovariSnackbarItem = {
             id,
-            open: true,
+            // open: true,
             message: 'Dette er en testmelding',
             variant: variant,
             header: args.header,
