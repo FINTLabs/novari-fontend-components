@@ -1,0 +1,134 @@
+import { Meta } from "@storybook/blocks";
+import {Box, LinkCard, HGrid} from "@navikt/ds-react";
+
+import header from "./assets/preview-header.png";
+import footer from "./assets/preview-footer.png";
+import snack from "./assets/preview-snack.png";
+import confirm from "./assets/preview-confirm.png";
+
+export const RightArrow = () => <svg
+    viewBox="0 0 14 14"
+    width="8px"
+    height="14px"
+    style={{
+        marginLeft: '4px',
+        display: 'inline-block',
+        shapeRendering: 'inherit',
+        verticalAlign: 'middle',
+        fill: 'currentColor',
+        'path fill': 'currentColor'
+    }}
+>
+    <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
+</svg>
+
+<Meta title="All Novari Components" />
+
+<div className="sb-container">
+    <div className='sb-section-title'>
+        # Novari Frontend Components
+        > Et prosjekt fra arbeidsgruppen **Frontend-is-best** – vi utvikler og forbedrer kontinuerlig komponentene her!
+        > Har du ideer, ønsker eller behov? Ikke nøl med å ta kontakt – vi vil at dette skal bli det mest nyttige og brukervennlige komponentbiblioteket vi kan lage.
+    </div>
+
+    <HGrid className="pt-4" gap="3" columns={{ xs: 1, sm: 1, md: 2, lg: 2, xl: 2 }}>
+
+
+    <LinkCard>
+        <Box
+            asChild
+            borderRadius="12"
+            padding="space-8"
+            style={{ backgroundColor: "var(--ax-bg-moderateA)" }}
+        >
+            <LinkCard.Image>
+                <img
+                    src={header}
+                    alt="need to write"
+                />
+            </LinkCard.Image>
+        </Box>
+        <LinkCard.Title>
+            <LinkCard.Anchor href="/?path=/docs/novari-novariheader--docs">Novari Header</LinkCard.Anchor>
+        </LinkCard.Title>
+    </LinkCard>
+
+        <LinkCard>
+            <Box
+                asChild
+                borderRadius="12"
+                padding="space-8"
+                style={{ backgroundColor: "var(--ax-bg-moderateA)" }}
+            >
+                <LinkCard.Image>
+                    <img
+                        src={footer}
+                        alt="need to write"
+                    />
+                </LinkCard.Image>
+            </Box>
+            <LinkCard.Title>
+                <LinkCard.Anchor href="?path=/docs/novari-novarifooter--docs">Novari Footer</LinkCard.Anchor>
+            </LinkCard.Title>
+        </LinkCard>
+
+        <LinkCard>
+            <Box
+                asChild
+                borderRadius="12"
+                padding="space-8"
+                style={{ backgroundColor: "var(--ax-bg-moderateA)" }}
+            >
+                <LinkCard.Image>
+                    <img
+                        src={snack}
+                        alt="need to write"
+                    />
+                </LinkCard.Image>
+            </Box>
+            <LinkCard.Title>
+                <LinkCard.Anchor href="?path=/docs/novari-novarifooter--docs">Novari Alerts Snackbar</LinkCard.Anchor>
+            </LinkCard.Title>
+        </LinkCard>
+
+        <LinkCard>
+            <Box
+                asChild
+                borderRadius="12"
+                padding="space-8"
+                style={{ backgroundColor: "var(--ax-bg-moderateA)" }}
+            >
+                <LinkCard.Image>
+                    <img
+                        src={confirm}
+                        alt="need to write"
+                    />
+                </LinkCard.Image>
+            </Box>
+            <LinkCard.Title>
+                <LinkCard.Anchor href="?path=/docs/novari-novariconfirmaction--docs">Confirm Action</LinkCard.Anchor>
+            </LinkCard.Title>
+        </LinkCard>
+    </HGrid>
+
+</div>
+
+<style>
+    {`
+  .sb-container {
+    margin-bottom: 48px;
+  }
+
+      .sb-section {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+      }
+        .sb-section-item-heading {
+    padding-top: 20px !important;
+    padding-bottom: 5px !important;
+    margin: 0 !important;
+  }
+  `}
+</style>

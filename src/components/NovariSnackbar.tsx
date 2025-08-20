@@ -104,7 +104,8 @@ const SnackbarAlertItem = ({ item, autoHideDuration, onCloseItem }: SnackbarItem
         <Alert
             key={item.id}
             variant={item.variant ?? 'info'}
-            className="relative mb-2"
+            // className="relative mb-2"
+            style={{ position: 'relative', marginBottom: '0.5rem' }}
             closeButton
             onClose={() => onCloseItem?.(item.id)}>
             <div>

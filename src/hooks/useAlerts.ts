@@ -2,19 +2,23 @@ import { useEffect, useState } from 'react';
 import { NovariSnackbarItem } from '../components/NovariSnackbar';
 import { ApiResponse } from '../api/NovariApiManager';
 
-export function useAlerts<T>(initialAlerts: NovariSnackbarItem[], actionData?: ApiResponse<T>) {
+export function useAlerts<T>(
+    initialAlerts: NovariSnackbarItem[],
+    fetcherData?: ApiResponse<T>,
+    fetcherState?: string
+) {
     const [alertState, setAlertState] = useState<NovariSnackbarItem[]>(initialAlerts);
 
     useEffect(() => {
-        if (actionData) {
+        if (fetcherData && fetcherState === 'idle') {
             const newAlert: NovariSnackbarItem = {
                 id: Date.now().toString(),
-                variant: actionData.variant || 'success',
-                message: actionData.message || 'Handlingen fullført.',
+                variant: fetcherData.variant || 'success',
+                message: fetcherData.message || 'Handlingen fullført.',
             };
             setAlertState((prevAlerts) => [...prevAlerts, newAlert]);
         }
-    }, [actionData]);
+    }, [fetcherData, fetcherState]);
 
     const handleCloseItem = (id: string) => {
         setAlertState((prev) =>

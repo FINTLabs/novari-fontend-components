@@ -7,6 +7,8 @@ import NovariSnackbar, {
 } from './NovariSnackbar';
 import { Button, HStack, VStack } from '@navikt/ds-react';
 
+//TODO: Fix documentation, add useAlerts to this document also!!
+
 const meta: Meta<typeof NovariSnackbar> = {
     title: 'Novari/NovariSnackbar',
     component: NovariSnackbar,
