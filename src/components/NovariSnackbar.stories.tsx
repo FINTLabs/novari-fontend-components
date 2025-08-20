@@ -42,7 +42,7 @@ const Template = (args: any) => {
         const newItem: NovariSnackbarItem = {
             id,
             // open: true,
-            message: 'Dette er en testmelding',
+            message: 'Dette er en testmelding with id: ' + id.slice(2, 9),
             variant: variant,
             header: args.header,
         };
@@ -61,7 +61,7 @@ const Template = (args: any) => {
     };
 
     return (
-        <HStack gap="2">
+        <HStack gap="2" style={{ height: '50vh' }}>
             <VStack gap="2">
                 <Button onClick={() => handleShow('info')}>Add Info</Button>
                 <Button onClick={() => handleShow('warning')}>Add Warning</Button>

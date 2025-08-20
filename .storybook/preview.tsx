@@ -18,7 +18,7 @@ const preview: Preview = {
     ],
     parameters: {
         codesandbox: {
-            apiToken: 'csb_v1_lHgbDdAUuZvCPwSNTdoqOsYbz4sljCHCAbJ3Wf7Gs_s',
+            // apiToken: 'csb_v1_lHgbDdAUuZvCPwSNTdoqOsYbz4sljCHCAbJ3Wf7Gs_s',
             fallbackImport: '@radix-ui/themes',
             template: 'react-ts',
 
