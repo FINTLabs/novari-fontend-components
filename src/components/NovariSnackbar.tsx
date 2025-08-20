@@ -23,6 +23,7 @@ export interface NovariSnackbar {
     autoHideDuration?: number;
     position?: NovariSnackbarPosition;
     className?: string;
+    size?: 'small' | 'medium';
     items: NovariSnackbarItem[];
     onCloseItem?: (id: string) => void;
 }
@@ -42,6 +43,7 @@ const NovariSnackbar = ({
     autoHideDuration = 4000,
     position = 'top-left',
     className = '',
+    size = 'small',
     items,
     onCloseItem,
 }: NovariSnackbar) => {
@@ -98,6 +100,7 @@ const NovariSnackbar = ({
                     item={{ ...item, open: true }}
                     autoHideDuration={autoHideDuration}
                     onCloseItem={handleClose}
+                    size={size}
                 />
             ))}
 
@@ -108,6 +111,9 @@ const NovariSnackbar = ({
                         fontSize: '0.85rem',
                         color: '#6b7280', // gray-500
                         textAlign: 'center',
+                        backgroundColor: '#f3f4f6', // gray-100
+                        borderRadius: '0.5rem',
+                        padding: '0.5rem',
                     }}
                     aria-live="polite">
                     +{moreCount} more
@@ -123,9 +129,10 @@ interface SnackbarItemProps {
     item: NovariSnackbarItem;
     autoHideDuration: number;
     onCloseItem?: (id: string) => void;
+    size?: 'small' | 'medium';
 }
 
-const SnackbarAlertItem = ({ item, autoHideDuration, onCloseItem }: SnackbarItemProps) => {
+const SnackbarAlertItem = ({ item, autoHideDuration, onCloseItem, size }: SnackbarItemProps) => {
     useEffect(() => {
         if (!item.open) return;
         const timer = setTimeout(() => onCloseItem?.(item.id), autoHideDuration);
@@ -137,17 +144,16 @@ const SnackbarAlertItem = ({ item, autoHideDuration, onCloseItem }: SnackbarItem
     return (
         <Alert
             variant={item.variant ?? 'info'}
+            size={size || 'small'}
             style={{ position: 'relative', marginBottom: '0.5rem' }}
             closeButton
             onClose={() => onCloseItem?.(item.id)}>
-            <div>
-                {item.header && (
-                    <Heading spacing size="small" level="3">
-                        {item.header}
-                    </Heading>
-                )}
-                {item.message}
-            </div>
+            {item.header && (
+                <Heading spacing size="small" level="3">
+                    {item.header}
+                </Heading>
+            )}
+            {item.message}
         </Alert>
     );
 };

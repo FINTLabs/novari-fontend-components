@@ -13,9 +13,25 @@ const meta: Meta<typeof NovariSnackbar> = {
     title: 'Novari/NovariSnackbar',
     component: NovariSnackbar,
     tags: ['autodocs'],
+    parameters: {
+        docs: {
+            description: {
+                component: 'A customizable snackbar component for displaying notifications.',
+            },
+        },
+    },
+    args: {
+        autoHideDuration: 4000,
+        position: 'top-right',
+        className: '',
+        items: [],
+        size: 'small',
+    },
     argTypes: {
         position: {
+            description: 'The position of the snackbar on the screen.',
             control: 'select',
+            type: 'string',
             options: [
                 'top-left',
                 'top-right',
@@ -26,7 +42,31 @@ const meta: Meta<typeof NovariSnackbar> = {
             ],
         },
         autoHideDuration: {
+            description:
+                'The duration in milliseconds after which the snackbar automatically hides.',
+            type: 'number',
             control: { type: 'number', min: 1000, step: 1000 },
+        },
+        className: {
+            description: 'Additional CSS class for the snackbar.',
+            control: 'text',
+        },
+        size: {
+            description: 'The size of the snackbar.',
+            type: 'string',
+            control: 'select',
+            options: ['small', 'medium'],
+        },
+        items: {
+            description: 'The items to display in the snackbar.',
+            control: 'object',
+        },
+
+        onCloseItem: {
+            description:
+                'Callback function when the snackbar is closed (useAlerts util will handle this automatically).',
+            action: 'onCloseItem',
+            type: 'function',
         },
     },
 };
@@ -68,7 +108,12 @@ const Template = (args: any) => {
                 <Button onClick={() => handleShow('error')}>Add Error</Button>
             </VStack>
 
-            <NovariSnackbar {...args} items={items} onCloseItem={handleCloseItem} />
+            <NovariSnackbar
+                {...args}
+                items={items}
+                onCloseItem={handleCloseItem}
+                size={args.size}
+            />
         </HStack>
     );
 };
