@@ -18,12 +18,12 @@ export type {
     NovariSnackbarItem,
     NovariSnackbarVariant,
     NovariSnackbarPosition,
-} from './components/NovariSnackbar';
-export { default as NovariSnackbar } from './components/NovariSnackbar';
-export { useAlerts } from './hooks/useAlerts';
+} from './components/Snackbar/NovariSnackbar';
+export { default as NovariSnackbar } from './components/Snackbar/NovariSnackbar';
+// export { useAlerts } from './hooks/useAlerts';
 
 // All Components
-export { default as NovariHeader } from './components/NovariHeader';
+export { default as NovariHeader } from './components/Header/NovariHeader';
 export { default as NovariFooter } from './components/NovariFooter';
 export { default as NovariInternalHeader } from './components/NovariInternalHeader';
 export { default as NovariSubHeader } from './components/NovariSubHeader';

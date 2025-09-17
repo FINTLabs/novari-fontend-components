@@ -57,66 +57,71 @@ import { NovariApiManager } from '../api/NovariApiManager.ts';
 
 // Update the interface to mark required props
 interface ApiDemoProps {
-  /** Base URL for the API @required */
-  baseUrl: string;
-  /** API endpoint path @required */
-  endpoint: string;
-  /** HTTP method @required */
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-  /** Request body (for POST/PUT) */
-  body?: unknown;
-  /** Message to override response message */
-  message?: string;
-  /** Custom error message to override default */
-  customErrorMessage?: string;
-  /** Custom success message to override default */
-  customSuccessMessage?: string;
+    /** Base URL for the API @required */
+    baseUrl: string;
+    /** API endpoint path @required */
+    endpoint: string;
+    /** HTTP method @required */
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    /** Request body (for POST/PUT) */
+    body?: unknown;
+    /** Message to override response message */
+    message?: string;
+    /** Custom error message to override default */
+    customErrorMessage?: string;
+    /** Custom success message to override default */
+    customSuccessMessage?: string;
 }
 
 // Example component to demonstrate API usage
 const ApiDemo: React.FC<ApiDemoProps> = ({
-  baseUrl,
-  endpoint,
-  method,
-  body,
-  // message,
-  customErrorMessage,
-  customSuccessMessage
+    baseUrl,
+    endpoint,
+    method,
+    body,
+    // message,
+    customErrorMessage,
+    customSuccessMessage,
 }) => {
-  const [result, setResult] = useState<string>('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+    const [result, setResult] = useState<string>('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-  const api = new NovariApiManager({ baseUrl });
+    const api = new NovariApiManager({ baseUrl });
 
-  const handleApiCall = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await api.call({
-        method,
-        endpoint,
-        body,
-        // message,
-        functionName: 'storybook-demo',
-        customErrorMessage,
-        customSuccessMessage,
-      });
-      setResult(JSON.stringify(response, null, 2));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
-    } finally {
-      setLoading(false);
-    }
-  };
+    const handleApiCall = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await api.call({
+                method,
+                endpoint,
+                body,
+                // message,
+                functionName: 'storybook-demo',
+                customErrorMessage,
+                customSuccessMessage,
+            });
+            setResult(JSON.stringify(response, null, 2));
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <div style={{ padding: '20px' }}>
-
-      <div style={{ marginBottom: '20px' }}>
-        <strong>Configuration:</strong>
-        <pre style={{ marginTop: '8px', background: '#f5f5f5', padding: '12px', borderRadius: '4px' }}>
-{`const api = new NovariApiManager({ 
+    return (
+        <div style={{ padding: '20px' }}>
+            <div style={{ marginBottom: '20px' }}>
+                <strong>Configuration:</strong>
+                <pre
+                    style={{
+                        marginTop: '8px',
+                        background: '#f5f5f5',
+                        padding: '12px',
+                        borderRadius: '4px',
+                    }}>
+                    {`const api = new NovariApiManager({ 
   baseUrl: '${baseUrl}'
 });
 
@@ -127,53 +132,49 @@ const response = await api.call<IUser>({
   customErrorMessage: "${customErrorMessage || 'Get users failed'}", 
   customSuccessMessage: "${customSuccessMessage || 'Get users successful'}"
 });`}
-        </pre>
-      </div>
-      <Button
-        variant="primary"
-        loading={loading}
-        onClick={handleApiCall}
-        style={{ marginBottom: '16px' }}
-      >
-        {loading ? 'Loading...' : 'Make API Call'}
-      </Button>
-      {error && (
-        <div style={{ color: 'red', marginBottom: '16px' }}>
-          Error: {error}
+                </pre>
+            </div>
+            <Button
+                variant="primary"
+                loading={loading}
+                onClick={handleApiCall}
+                style={{ marginBottom: '16px' }}>
+                {loading ? 'Loading...' : 'Make API Call'}
+            </Button>
+            {error && <div style={{ color: 'red', marginBottom: '16px' }}>Error: {error}</div>}
+            {result && (
+                <div>
+                    <strong>Response:</strong>
+                    <pre
+                        style={{
+                            background: '#f5f5f5',
+                            padding: '16px',
+                            borderRadius: '4px',
+                            overflow: 'auto',
+                        }}>
+                        {result}
+                    </pre>
+                </div>
+            )}
         </div>
-      )}
-      {result && (
-        <div>
-          <strong>Response:</strong>
-          <pre style={{
-            background: '#f5f5f5',
-            padding: '16px',
-            borderRadius: '4px',
-            overflow: 'auto'
-          }}>
-            {result}
-          </pre>
-        </div>
-      )}
-    </div>
-  );
+    );
 };
 
 const meta = {
-  title: 'Novari/NovariApiManager',
-  component: ApiDemo,
+    title: 'Utils/NovariApiManager',
+    component: ApiDemo,
 
-  parameters: {
-    layout: 'centered',
-    docs: {
-        canvas: {
-          // This will remove the "show code" button
-          // https://storybook.js.org/docs/api/doc-blocks/doc-block-canvas#sourcestate
-          sourceState: "none"
-        },
+    parameters: {
+        layout: 'centered',
+        docs: {
+            canvas: {
+                // This will remove the "show code" button
+                // https://storybook.js.org/docs/api/doc-blocks/doc-block-canvas#sourcestate
+                sourceState: 'none',
+            },
 
-      description: {
-        component: `
+            description: {
+                component: `
 ### Usage Examples
 
 1. GET Request with Data:
@@ -262,41 +263,41 @@ const response = await apiManager.call({
 
 
         `,
-      },
+            },
+        },
     },
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    baseUrl: {
-      control: 'text',
-      description: 'Base URL for the API',
+    tags: ['autodocs'],
+    argTypes: {
+        baseUrl: {
+            control: 'text',
+            description: 'Base URL for the API',
+        },
+        endpoint: {
+            control: 'text',
+            description: 'API endpoint path',
+        },
+        method: {
+            control: 'select',
+            options: ['GET', 'POST', 'PUT', 'DELETE'],
+            description: 'HTTP method',
+        },
+        body: {
+            control: 'object',
+            description: 'Request body (for POST/PUT)',
+        },
+        message: {
+            control: 'text',
+            description: 'Message to override response message',
+        },
+        customErrorMessage: {
+            control: 'text',
+            description: 'Custom error message to override default',
+        },
+        customSuccessMessage: {
+            control: 'text',
+            description: 'Custom success message to override default',
+        },
     },
-    endpoint: {
-      control: 'text',
-      description: 'API endpoint path',
-    },
-    method: {
-      control: 'select',
-      options: ['GET', 'POST', 'PUT', 'DELETE'],
-      description: 'HTTP method',
-    },
-    body: {
-      control: 'object',
-      description: 'Request body (for POST/PUT)',
-    },
-    message: {
-      control: 'text',
-      description: 'Message to override response message',
-    },
-    customErrorMessage: {
-      control: 'text',
-      description: 'Custom error message to override default',
-    },
-    customSuccessMessage: {
-      control: 'text',
-      description: 'Custom success message to override default',
-    },
-  },
 } satisfies Meta<typeof ApiDemo>;
 
 export default meta;
@@ -304,56 +305,56 @@ type Story = StoryObj<typeof meta>;
 
 // GET example
 export const GetExample: Story = {
-  args: {
-    baseUrl: 'https://jsonplaceholder.typicode.com',
-    endpoint: '/todos/1',
-    method: 'GET',
-    customSuccessMessage: 'Successfully retrieved todo',
-    customErrorMessage: 'Failed to get todo',
-  },
+    args: {
+        baseUrl: 'https://jsonplaceholder.typicode.com',
+        endpoint: '/todos/1',
+        method: 'GET',
+        customSuccessMessage: 'Successfully retrieved todo',
+        customErrorMessage: 'Failed to get todo',
+    },
 };
 
 // POST example with both body and message
 export const PostExample: Story = {
-  args: {
-    baseUrl: 'https://jsonplaceholder.typicode.com',
-    endpoint: '/posts',
-    method: 'POST',
-    body: {
-      title: 'foo',
-      body: 'bar',
-      userId: 1,
+    args: {
+        baseUrl: 'https://jsonplaceholder.typicode.com',
+        endpoint: '/posts',
+        method: 'POST',
+        body: {
+            title: 'foo',
+            body: 'bar',
+            userId: 1,
+        },
+        message: 'Custom message for the response',
+        customSuccessMessage: 'Post created successfully',
+        customErrorMessage: 'Failed to create post',
     },
-    message: 'Custom message for the response',
-    customSuccessMessage: 'Post created successfully',
-    customErrorMessage: 'Failed to create post',
-  },
 };
 
 // PUT example
 export const PutExample: Story = {
-  args: {
-    baseUrl: 'https://jsonplaceholder.typicode.com',
-    endpoint: '/posts/1',
-    method: 'PUT',
-    body: {
-      id: 1,
-      title: 'Updated title',
-      body: 'Updated content',
-      userId: 1,
+    args: {
+        baseUrl: 'https://jsonplaceholder.typicode.com',
+        endpoint: '/posts/1',
+        method: 'PUT',
+        body: {
+            id: 1,
+            title: 'Updated title',
+            body: 'Updated content',
+            userId: 1,
+        },
+        customSuccessMessage: 'Post updated successfully',
+        customErrorMessage: 'Failed to update post',
     },
-    customSuccessMessage: 'Post updated successfully',
-    customErrorMessage: 'Failed to update post',
-  },
 };
 
 // DELETE example
 export const DeleteExample: Story = {
-  args: {
-    baseUrl: 'https://jsonplaceholder.typicode.com',
-    endpoint: '/posts/1',
-    method: 'DELETE',
-    customSuccessMessage: 'Post deleted successfully',
-    customErrorMessage: 'Failed to delete post',
-  },
+    args: {
+        baseUrl: 'https://jsonplaceholder.typicode.com',
+        endpoint: '/posts/1',
+        method: 'DELETE',
+        customSuccessMessage: 'Post deleted successfully',
+        customErrorMessage: 'Failed to delete post',
+    },
 };

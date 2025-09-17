@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { NovariSnackbarItem } from '../components/NovariSnackbar';
+import { NovariSnackbarItem } from '../components/Snackbar/NovariSnackbar';
 import { ApiResponse } from '../api/NovariApiManager';
 
+//TODO: DELETE THIS HOOK!
 export function useAlerts<T>(
     initialAlerts: NovariSnackbarItem[],
     fetcherData?: ApiResponse<T>,

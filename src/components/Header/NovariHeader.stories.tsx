@@ -2,13 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import NovariHeader from './NovariHeader';
 import NovariMenuItem from './NovariMenuItem.tsx';
-import { extraChild, menuData, simpleMenu } from './menuData.tsx';
+import { extraChild, menuData, simpleMenu } from '../StoryBookMockData/menuData.tsx';
 import { fn } from '@storybook/test';
 
+//TODO: Remove onMenuClick from args in header items
 const meta = {
     title: 'Components/NovariHeader',
     component: NovariHeader,
-    subcomponents: { MenuItem: NovariMenuItem },
+    subcomponents: { NovariMenuItem },
     tags: ['autodocs'],
     parameters: {
         layout: 'fullscreen',
@@ -35,10 +36,11 @@ export const Default: Story = {
         appName: 'FINTApp',
         menu: menuData,
         onMenuClick: fn(),
-        // displayName: 'John Doe',
+        displayName: 'John Doe',
         isLoggedIn: true,
         onLogin: fn(),
         onLogout: fn(),
+        showLogoWithTitle: false,
     },
 };
 

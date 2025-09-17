@@ -6,7 +6,7 @@ import {
     PersonCircleIcon,
     PadlockLockedIcon,
 } from '@navikt/aksel-icons';
-import { MenuItem } from './NovariMenuItem';
+import { MenuItem } from '../Header/NovariMenuItem';
 import { Select } from '@navikt/ds-react';
 
 export const extraChild = (

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { NovariFooter } from './NovariFooter.tsx';
 
 const meta = {
-    title: 'Novari/NovariFooter',
+    title: 'Components/NovariFooter',
     component: NovariFooter,
     tags: ['autodocs'],
     parameters: {

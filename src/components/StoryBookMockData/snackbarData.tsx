@@ -1,4 +1,4 @@
-import { NovariSnackbarItem } from './NovariSnackbar';
+import { NovariSnackbarItem } from '../Snackbar/NovariSnackbar';
 
 export const sampleAlertsNoHeadings: NovariSnackbarItem[] = [
     {

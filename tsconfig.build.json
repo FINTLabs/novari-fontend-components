@@ -16,5 +16,6 @@
     "skipLibCheck": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "lib", "**/*.test.ts", "**/*.stories.tsx"]
+  "exclude": ["node_modules", "lib", "**/*.test.ts", "**/*.stories.tsx", "src/components/StoryBookMockData/**"
+  ]
 }

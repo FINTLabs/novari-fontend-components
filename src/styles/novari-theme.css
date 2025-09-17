@@ -131,4 +131,7 @@
         text-decoration: none; /* Prevent any hover effect on the title */
         cursor: default; /* Indicate that the title is not clickable */
     }
+    .my-custom-class {
+        max-width: 400px;
+    }
 }

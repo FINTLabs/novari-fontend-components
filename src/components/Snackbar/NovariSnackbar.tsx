@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Heading } from '@navikt/ds-react';
 
 export type NovariSnackbarVariant = 'info' | 'success' | 'warning' | 'error';
@@ -12,8 +12,8 @@ export type NovariSnackbarPosition =
 
 export interface NovariSnackbarItem {
     id: string;
-    open?: boolean; // for lifecycle (auto-hide / parent close)
-    show?: boolean; // NEW: explicitly eligible to be shown in the queue
+    open?: boolean; // optional signal; if explicitly false on props it will be removed
+    show?: boolean; // eligible to be queued (default true)
     message: string;
     variant?: NovariSnackbarVariant;
     header?: string;
@@ -28,10 +28,10 @@ export interface NovariSnackbarProps {
     className?: string;
     /** Size of each alert */
     size?: 'small' | 'medium';
-    /** Queue of items */
+    /** New items to enqueue; the component owns lifecycle thereafter */
     items: NovariSnackbarItem[];
-    /** Called when an alert closes */
-    onCloseItem?: (id: string) => void;
+    /** Max concurrently visible alerts (default 3) */
+    maxVisible?: number;
 }
 
 const positionStyles: Record<NovariSnackbarPosition, React.CSSProperties> = {
@@ -43,52 +43,90 @@ const positionStyles: Record<NovariSnackbarPosition, React.CSSProperties> = {
     'bottom-center': { bottom: '1rem', left: '50%', transform: 'translateX(-50%)' },
 };
 
-const VISIBLE_MAX = 3;
-
 const NovariSnackbar = ({
     autoHideDuration = 4000,
-    position = 'top-left',
+    position = 'top-right',
     className = '',
     size = 'small',
     items,
-    onCloseItem,
+    maxVisible = 3,
 }: NovariSnackbarProps) => {
+    /**
+     * Internal queue is the single source of truth after items are accepted.
+     * We only append/update from props; we never require the parent to remove.
+     */
+    const [queue, setQueue] = useState<NovariSnackbarItem[]>([]);
     const [visibleItems, setVisibleItems] = useState<NovariSnackbarItem[]>([]);
+    const seenIds = useRef<Set<string>>(new Set());
 
-    // Only count/queue items with show === true (default true) and open !== false
+    // Accept/merge incoming items without requiring parent cleanup
+    useEffect(() => {
+        if (!items?.length) return;
+
+        setQueue((prev) => {
+            const byId = new Map(prev.map((p) => [p.id, p]));
+            for (const incoming of items) {
+                // If parent explicitly sends open === false, treat as a cancel/remove request.
+                if (incoming.open === false) {
+                    byId.delete(incoming.id);
+                    seenIds.current.delete(incoming.id);
+                    continue;
+                }
+                // Upsert (merge) so later prop updates can refresh text/variant/header
+                const existing = byId.get(incoming.id);
+                const next = existing ? { ...existing, ...incoming } : { ...incoming, open: true };
+                byId.set(incoming.id, next);
+                seenIds.current.add(incoming.id);
+            }
+            return Array.from(byId.values());
+        });
+    }, [items]);
+
+    // Eligible = internal queue where show !== false and open !== false
     const eligible = useMemo(
-        () => items.filter((i) => (i.show ?? true) && (i.open ?? true)),
-        [items]
+        () => queue.filter((i) => (i.show ?? true) && (i.open ?? true)),
+        [queue]
     );
 
-    // Keep up to 3 visible; refill from the eligible queue in order
+    // Maintain up to maxVisible visible items; refill from eligible
     useEffect(() => {
         setVisibleItems((prev) => {
+            // Keep items that still exist and are eligible
             const stillVisible = prev.filter((p) => eligible.some((e) => e.id === p.id));
-            const deficit = Math.max(VISIBLE_MAX - stillVisible.length, 0);
-            const next = eligible
-                .filter((e) => !stillVisible.some((s) => s.id === e.id))
-                .slice(0, deficit);
+            const deficit = Math.max(maxVisible - stillVisible.length, 0);
+            if (deficit <= 0) return stillVisible;
+
+            // Pull next eligible in insertion order (queue order)
+            const stillVisibleIds = new Set(stillVisible.map((s) => s.id));
+            const next = eligible.filter((e) => !stillVisibleIds.has(e.id)).slice(0, deficit);
             return [...stillVisible, ...next];
         });
-    }, [eligible]);
+    }, [eligible, maxVisible]);
 
-    const handleClose = (id: string) => {
-        // Remove from local visible set and pull next eligible
+    const handleInternalClose = (id: string) => {
+        // 1) Remove from visible immediately to make room
+        setVisibleItems((prev) => prev.filter((i) => i.id !== id));
+
+        // 2) Remove from queue entirely (ownership is internal now)
+        setQueue((prev) => prev.filter((i) => i.id !== id));
+        seenIds.current.delete(id);
+
+        // 3) Refill visible from remaining eligible handled in next effect tick,
+        //    but we can proactively try to top up now for snappier UX:
         setVisibleItems((prev) => {
             const afterRemove = prev.filter((i) => i.id !== id);
-            const deficit = Math.max(VISIBLE_MAX - afterRemove.length, 0);
+            const deficit = Math.max(maxVisible - afterRemove.length, 0);
+            if (deficit <= 0) return afterRemove;
+
+            const afterRemoveIds = new Set(afterRemove.map((v) => v.id));
             const nextFromQueue = eligible
-                .filter((e) => !afterRemove.some((v) => v.id === e.id))
+                .filter((e) => !afterRemoveIds.has(e.id) && e.id !== id)
                 .slice(0, deficit);
             return [...afterRemove, ...nextFromQueue];
         });
-
-        // Let parent know so it can set open=false or remove the item
-        onCloseItem?.(id);
     };
 
-    const moreCount = Math.max(eligible.length - visibleItems.length, 0); // counts ONLY show===true
+    const moreCount = Math.max(eligible.length - visibleItems.length, 0);
 
     return (
         <div
@@ -99,13 +137,16 @@ const NovariSnackbar = ({
                 animation: 'fadeIn 0.3s',
                 ...positionStyles[position],
             }}
-            className={className}>
+            className={className}
+            aria-live="polite"
+            aria-atomic="false"
+            role="region">
             {visibleItems.map((item) => (
                 <SnackbarAlertItem
                     key={item.id}
                     item={{ ...item, open: true }}
                     autoHideDuration={autoHideDuration}
-                    onCloseItem={handleClose}
+                    onCloseItem={handleInternalClose}
                     size={size}
                 />
             ))}
@@ -120,8 +161,7 @@ const NovariSnackbar = ({
                         backgroundColor: '#f3f4f6', // gray-100
                         borderRadius: '0.5rem',
                         padding: '0.5rem',
-                    }}
-                    aria-live="polite">
+                    }}>
                     +{moreCount} more
                 </div>
             )}
@@ -134,18 +174,21 @@ export default NovariSnackbar;
 interface SnackbarItemProps {
     item: NovariSnackbarItem;
     autoHideDuration: number;
-    onCloseItem?: (id: string) => void;
+    onCloseItem: (id: string) => void;
     size?: 'small' | 'medium';
 }
 
 const SnackbarAlertItem = ({ item, autoHideDuration, onCloseItem, size }: SnackbarItemProps) => {
+    // Auto-hide per item
     useEffect(() => {
         if (!item.open) return;
-        const timer = setTimeout(() => onCloseItem?.(item.id), autoHideDuration);
+        const timer = setTimeout(() => onCloseItem(item.id), autoHideDuration);
         return () => clearTimeout(timer);
     }, [item.id, item.open, autoHideDuration, onCloseItem]);
 
     if (!item.open) return null;
+
+    //TODO: Rewrite to use NovariSnackbarItem component
 
     return (
         <Alert
@@ -153,7 +196,7 @@ const SnackbarAlertItem = ({ item, autoHideDuration, onCloseItem, size }: Snackb
             size={size || 'small'}
             style={{ position: 'relative', marginBottom: '0.5rem' }}
             closeButton
-            onClose={() => onCloseItem?.(item.id)}>
+            onClose={() => onCloseItem(item.id)}>
             {item.header && (
                 <Heading spacing size="small" level="3">
                     {item.header}

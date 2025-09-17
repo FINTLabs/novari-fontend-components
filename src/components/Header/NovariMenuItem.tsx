@@ -2,64 +2,71 @@ import React from 'react';
 import { Button, ActionMenu } from '@navikt/ds-react';
 import { ChevronDownIcon } from '@navikt/aksel-icons';
 
-export type MenuAction = {
+export interface MenuItem {
+    /** Text to display */
     label: string;
-    action: string;
+    /** Icon to display */
     icon?: React.ReactNode;
+    /** Whether the item is disabled */
     disabled?: boolean;
-};
-
-export type MenuItemType =
-    | [string, string]
-    | {
-          label?: string;
-          items: MenuAction[];
-      };
-
-interface MenuItemProps {
-    item: MenuItemType;
-    index: number;
-    onMenuClick?: (action: string) => void;
+    /** String to identify the item, sent to onMenuClick callback */
+    action: string;
+    /** Submenu items */
+    submenu?: MenuItem[];
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ item, index, onMenuClick }) => {
-    if (Array.isArray(item)) {
-        const [label, action] = item;
+interface MenuItemProps extends MenuItem {
+    /** @ignore */
+    onMenuClick: (action: string) => void;
+}
+//TODO: fix action on the button to use the onMenuClick function
+
+const MenuItemComponent: React.FC<MenuItemProps> = ({
+    label,
+    icon,
+    disabled,
+    action,
+    submenu,
+    onMenuClick,
+}) => {
+    if (submenu && submenu.length > 0) {
         return (
-            <Button
-                key={index}
-                size="small"
-                variant="tertiary-neutral"
-                onClick={() => onMenuClick?.(action)}>
-                {label}
-            </Button>
+            <ActionMenu>
+                <ActionMenu.Trigger>
+                    <Button
+                        size="small"
+                        variant="tertiary-neutral"
+                        icon={<ChevronDownIcon aria-hidden />}
+                        iconPosition="right">
+                        {label}
+                    </Button>
+                </ActionMenu.Trigger>
+                <ActionMenu.Content>
+                    {submenu.map((sub, i) => (
+                        <ActionMenu.Item
+                            key={i}
+                            onSelect={sub.disabled ? undefined : () => onMenuClick?.(sub.action)}
+                            // onClick={sub.action}
+                            disabled={sub.disabled}
+                            icon={sub.icon}>
+                            {sub.label}
+                        </ActionMenu.Item>
+                    ))}
+                </ActionMenu.Content>
+            </ActionMenu>
         );
     }
 
     return (
-        <ActionMenu key={index}>
-            <ActionMenu.Trigger>
-                <Button
-                    size="small"
-                    variant="tertiary-neutral"
-                    icon={<ChevronDownIcon aria-hidden />}
-                    iconPosition="right">
-                    {item.label ?? `Meny ${index + 1}`}
-                </Button>
-            </ActionMenu.Trigger>
-            <ActionMenu.Content>
-                {item.items.map(({ label, action, icon, disabled }, i) => (
-                    <ActionMenu.Item
-                        key={i}
-                        onSelect={() => !disabled && onMenuClick?.(action)}
-                        disabled={disabled}
-                        icon={icon}>
-                        {label}
-                    </ActionMenu.Item>
-                ))}
-            </ActionMenu.Content>
-        </ActionMenu>
+        <Button
+            size="small"
+            variant="tertiary-neutral"
+            disabled={disabled}
+            onClick={() => onMenuClick(action)}
+            icon={icon}>
+            {label}
+        </Button>
     );
 };
 
-export default MenuItem;
+export default MenuItemComponent;

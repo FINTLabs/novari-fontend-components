@@ -1,35 +1,25 @@
-import { ActionMenu, Box, Button, Heading, HStack } from '@navikt/ds-react';
-import { ChevronDownIcon, EnterIcon, LeaveIcon } from '@navikt/aksel-icons';
-import { NovariIKS } from './assets/NovariIKS';
+import { Box, Button, Heading, HStack } from '@navikt/ds-react';
+import { EnterIcon, LeaveIcon } from '@navikt/aksel-icons';
+import { NovariIKS } from '../assets/NovariIKS';
 import React from 'react';
+import NovariMenuItem, { MenuItem } from './NovariMenuItem';
 
 //TODO: Make a mobile version ?
 export interface HeaderProps {
     /** Title to display in the header */
-    appName?: string;
-    /** JSON List of Menu items  */
-    menu: (
-        | [string, string] // Simple menu item
-        | {
-              label?: string;
-              items: {
-                  label: string;
-                  action: string;
-                  icon?: React.ReactNode;
-                  disabled?: boolean;
-              }[];
-          }
-    )[];
+    appName: string;
+    /** List of Menu items  */
+    menu: MenuItem[];
     /** Is the user logged in? */
     isLoggedIn: boolean;
     /** Display name of the user */
     displayName?: string;
     /** Callback for when the user clicks on a menu item */
-    onLogout?: () => void;
+    onLogout: () => void;
     /** Callback for when the user clicks on a menu item */
-    onLogin?: () => void;
+    onLogin: () => void;
     /** Callback for when the user clicks on a menu item */
-    onMenuClick?: (action: string) => void;
+    onMenuClick: (action: string) => void;
     /** Should we show the logo and title? */
     showLogoWithTitle?: boolean;
     /** Extra child code to display in the header */
@@ -99,51 +89,18 @@ const NovariHeader: React.FC<HeaderProps> = ({
             </HStack>
             {isLoggedIn && (
                 <HStack gap="2">
-                    {menu.map((menuItem, index) => {
-                        if (Array.isArray(menuItem)) {
-                            // If menuItem is a single [label, action], render a Button
-                            const [label, action] = menuItem;
-                            return (
-                                <Button
-                                    key={index}
-                                    size="small"
-                                    variant="tertiary-neutral"
-                                    onClick={() => onMenuClick?.(action)}>
-                                    {label}
-                                </Button>
-                            );
-                        } else {
-                            // If menuItem is an object with a dropdown label, render an ActionMenu
-                            return (
-                                <ActionMenu key={index}>
-                                    <ActionMenu.Trigger>
-                                        <Button
-                                            size="small"
-                                            variant="tertiary-neutral"
-                                            icon={<ChevronDownIcon aria-hidden />}
-                                            iconPosition="right">
-                                            {menuItem.label ?? `Meny ${index + 1}`}
-                                        </Button>
-                                    </ActionMenu.Trigger>
-                                    <ActionMenu.Content>
-                                        {menuItem.items.map(
-                                            ({ label, action, icon, disabled }, i) => (
-                                                <ActionMenu.Item
-                                                    key={i}
-                                                    onSelect={() =>
-                                                        !disabled && onMenuClick?.(action)
-                                                    }
-                                                    disabled={disabled}
-                                                    icon={icon}>
-                                                    {label}
-                                                </ActionMenu.Item>
-                                            )
-                                        )}
-                                    </ActionMenu.Content>
-                                </ActionMenu>
-                            );
-                        }
-                    })}
+                    {menu.map((item, index) => (
+                        // <NovariMenuItem key={index} item={item} index={index} onMenuClick={onMenuClick} />
+                        <NovariMenuItem
+                            key={index}
+                            label={item.label}
+                            icon={item.icon}
+                            disabled={item.disabled}
+                            action={item.action}
+                            submenu={item.submenu}
+                            onMenuClick={onMenuClick}
+                        />
+                    ))}
                 </HStack>
             )}
 
@@ -162,7 +119,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                 {isLoggedIn && children}
 
                 {/* display name (now naturally inline, right after the selector) */}
-                {displayName && (
+                {isLoggedIn && displayName && (
                     <Box
                         as="span"
                         style={{
@@ -175,7 +132,6 @@ const NovariHeader: React.FC<HeaderProps> = ({
                     </Box>
                 )}
 
-                {/* logout button */}
                 {isLoggedIn && onLogout && (
                     <Button
                         variant="tertiary"

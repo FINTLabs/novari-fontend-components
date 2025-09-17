@@ -17,38 +17,13 @@ const preview: Preview = {
         ),
     ],
     parameters: {
-        codesandbox: {
-            // apiToken: 'csb_v1_lHgbDdAUuZvCPwSNTdoqOsYbz4sljCHCAbJ3Wf7Gs_s',
-            fallbackImport: '@radix-ui/themes',
-            template: 'react-ts',
-
-            // everything the sandbox must install from npm (no local paths)
-            dependencies: {
-                react: 'latest',
-                'react-dom': 'latest',
-
-                // Aksel (NAV)
-                '@navikt/ds-react': 'latest',
-                '@navikt/ds-css': 'latest',
-                '@navikt/aksel-icons': 'latest',
-
-                // optional: router if your story needs it
-                'react-router-dom': 'latest',
-            },
-
-            // a tiny wrapper to load global CSS, theme providers, etc.
-            // this runs inside the sandbox
-            provider: `
-        import React from 'react';
-        import '@navikt/ds-css';
-        export default function Provider({ children }) {
-          return <>{children}</>;
-        }
-      `,
+        docs: {
+            toc: true,
         },
+
         options: {
             storySort: {
-                order: ['Home', 'Novari', 'Experimental', '*'],
+                order: ['Home', 'Components', 'Experimental', '*'],
             },
         },
         actions: { argTypesRegex: '^on[A-Z].*' },
