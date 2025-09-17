@@ -19,12 +19,18 @@ export interface NovariSnackbarItem {
     header?: string;
 }
 
-export interface NovariSnackbar {
+export interface NovariSnackbarProps {
+    /** Auto-close duration in ms */
     autoHideDuration?: number;
+    /** Screen position */
     position?: NovariSnackbarPosition;
+    /** Wrapper class */
     className?: string;
+    /** Size of each alert */
     size?: 'small' | 'medium';
+    /** Queue of items */
     items: NovariSnackbarItem[];
+    /** Called when an alert closes */
     onCloseItem?: (id: string) => void;
 }
 
@@ -46,7 +52,7 @@ const NovariSnackbar = ({
     size = 'small',
     items,
     onCloseItem,
-}: NovariSnackbar) => {
+}: NovariSnackbarProps) => {
     const [visibleItems, setVisibleItems] = useState<NovariSnackbarItem[]>([]);
 
     // Only count/queue items with show === true (default true) and open !== false

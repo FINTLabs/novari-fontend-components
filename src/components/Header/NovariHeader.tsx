@@ -5,7 +5,9 @@ import React from 'react';
 
 //TODO: Make a mobile version ?
 export interface HeaderProps {
+    /** Title to display in the header */
     appName?: string;
+    /** JSON List of Menu items  */
     menu: (
         | [string, string] // Simple menu item
         | {
@@ -18,12 +20,19 @@ export interface HeaderProps {
               }[];
           }
     )[];
+    /** Is the user logged in? */
     isLoggedIn: boolean;
+    /** Display name of the user */
     displayName?: string;
+    /** Callback for when the user clicks on a menu item */
     onLogout?: () => void;
+    /** Callback for when the user clicks on a menu item */
     onLogin?: () => void;
+    /** Callback for when the user clicks on a menu item */
     onMenuClick?: (action: string) => void;
+    /** Should we show the logo and title? */
     showLogoWithTitle?: boolean;
+    /** Extra child code to display in the header */
     children?: React.ReactNode;
 }
 
