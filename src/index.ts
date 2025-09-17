@@ -20,7 +20,7 @@ export type {
     NovariSnackbarPosition,
 } from './components/Snackbar/NovariSnackbar';
 export { default as NovariSnackbar } from './components/Snackbar/NovariSnackbar';
-// export { useAlerts } from './hooks/useAlerts';
+export { useAlerts } from './hooks/useAlerts';
 
 // All Components
 export { default as NovariHeader } from './components/Header/NovariHeader';

@@ -61,9 +61,13 @@ const NovariSnackbar = ({
 
     // Accept/merge incoming items without requiring parent cleanup
     useEffect(() => {
-        if (!items?.length) return;
-
         setQueue((prev) => {
+            // If items is empty, clear the queue
+            if (!items?.length) {
+                seenIds.current.clear();
+                return [];
+            }
+
             const byId = new Map(prev.map((p) => [p.id, p]));
             for (const incoming of items) {
                 // If parent explicitly sends open === false, treat as a cancel/remove request.
