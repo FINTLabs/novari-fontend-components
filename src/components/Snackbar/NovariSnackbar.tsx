@@ -58,22 +58,30 @@ const NovariSnackbar = ({
     const [queue, setQueue] = useState<NovariSnackbarItem[]>([]);
     const [visibleItems, setVisibleItems] = useState<NovariSnackbarItem[]>([]);
     const seenIds = useRef<Set<string>>(new Set());
+    const closedByUserIds = useRef<Set<string>>(new Set()); // Track items explicitly closed by user
 
     // Accept/merge incoming items without requiring parent cleanup
     useEffect(() => {
         setQueue((prev) => {
-            // If items is empty, clear the queue
+            // If items is empty, clear the queue and reset tracking
             if (!items?.length) {
                 seenIds.current.clear();
+                closedByUserIds.current.clear();
                 return [];
             }
 
             const byId = new Map(prev.map((p) => [p.id, p]));
             for (const incoming of items) {
+                // Skip items that were explicitly closed by the user
+                if (closedByUserIds.current.has(incoming.id)) {
+                    continue;
+                }
+
                 // If parent explicitly sends open === false, treat as a cancel/remove request.
                 if (incoming.open === false) {
                     byId.delete(incoming.id);
                     seenIds.current.delete(incoming.id);
+                    closedByUserIds.current.delete(incoming.id);
                     continue;
                 }
                 // Upsert (merge) so later prop updates can refresh text/variant/header
@@ -108,14 +116,17 @@ const NovariSnackbar = ({
     }, [eligible, maxVisible]);
 
     const handleInternalClose = (id: string) => {
-        // 1) Remove from visible immediately to make room
+        // 1) Mark as closed by user to prevent re-adding
+        closedByUserIds.current.add(id);
+
+        // 2) Remove from visible immediately to make room
         setVisibleItems((prev) => prev.filter((i) => i.id !== id));
 
-        // 2) Remove from queue entirely (ownership is internal now)
+        // 3) Remove from queue entirely (ownership is internal now)
         setQueue((prev) => prev.filter((i) => i.id !== id));
         seenIds.current.delete(id);
 
-        // 3) Refill visible from remaining eligible handled in next effect tick,
+        // 4) Refill visible from remaining eligible handled in next effect tick,
         //    but we can proactively try to top up now for snappier UX:
         setVisibleItems((prev) => {
             const afterRemove = prev.filter((i) => i.id !== id);
