@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import NovariLinkBox from "./NovariLinkBox.tsx";
 
 const meta: Meta<typeof NovariLinkBox> = {

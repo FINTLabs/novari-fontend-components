@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import NovariSubHeader from './NovariSubHeader.tsx';
 import { Box, Select } from '@navikt/ds-react';
 import NovariHeader from './Header/NovariHeader.tsx';

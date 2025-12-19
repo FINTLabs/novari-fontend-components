@@ -3,6 +3,7 @@
   "include": ["./**/*.ts", "./**/*.tsx"],
   "compilerOptions": {
     "jsx": "react",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "bundler"
   }
 }

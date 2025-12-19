@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import NovariHeader from './NovariHeader';
 import NovariMenuItem from './NovariMenuItem.tsx';
 import { extraChild, menuData, simpleMenu } from '../StoryBookMockData/menuData.tsx';
-import { fn } from '@storybook/test';
+import { fn } from 'storybook/test';
 
 //TODO: Remove onMenuClick from args in header items
 const meta = {
