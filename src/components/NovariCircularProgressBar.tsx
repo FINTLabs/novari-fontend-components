@@ -15,9 +15,10 @@ export const NovariCircularProgressBar: React.FC<CircularProgressProps> =  ({
 }) => {
     const uniqueId = useId();
 
-    const currentValue: number = Math.floor((value / maxValue) * 100);
+    // Handle division by zero when maxValue is 0
+    const currentValue: number = maxValue === 0 ? 0 : Math.floor((value / maxValue) * 100);
     const circumference: number = 2 * Math.PI * 56;
-    const valueOffset: number = circumference * (1 - (value / maxValue));
+    const valueOffset: number = maxValue === 0 ? circumference : circumference * (1 - (value / maxValue));
 
     const innerShadow = () => `inset 2px 2px 6px -1px ${firstColor}`
     const outerShadow = () => `2px 2px 6px -1px ${secondColor}`

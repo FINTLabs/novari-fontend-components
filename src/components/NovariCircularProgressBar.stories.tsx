@@ -58,3 +58,19 @@ export const Custom: Story = {
         secondColor: '#F76650',
     },
 };
+
+export const ZeroMaxValue: Story = {
+    parameters: {
+        docs: {
+            codePanel: true,
+            description: {
+                story:
+                    'When maxValue is 0, the component safely handles division by zero and displays 0% progress.',
+            },
+        },
+    },
+    args: {
+        maxValue: 0,
+        value: 0,
+    },
+};
