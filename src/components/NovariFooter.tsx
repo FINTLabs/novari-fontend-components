@@ -18,7 +18,7 @@ export const NovariFooter = ({ links }: FooterProps) => {
         padding: "2rem",
         marginTop: "2rem",
         textAlign: "center",
-          backgroundColor: "var(--a-surface-alt-3-moderate)"
+          backgroundColor: "var(--ac-surface-alt-3-moderate)"
       }}
 
     >

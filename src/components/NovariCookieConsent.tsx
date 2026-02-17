@@ -72,7 +72,7 @@ export const NovariCookieConsent: React.FC<CookieConsentProps> = ({
           bottom: "0",
           left: "0",
           right: "0",
-          backgroundColor: "var(--a-surface-default)",
+          backgroundColor: "var(--ac-surface-default)",
           padding: "1rem",
           boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.1)",
           zIndex: 1000,

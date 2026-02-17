@@ -46,7 +46,7 @@ const NovariSubHeader: React.FC<SubHeaderProps> = ({
                 style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    backgroundColor: 'var(--a-bg-subtle)',
+                    backgroundColor: 'var(--ac-bg-subtle)',
                     height: '42px',
                     width: '100%',
                     textAlign: 'center',
@@ -69,7 +69,7 @@ const NovariSubHeader: React.FC<SubHeaderProps> = ({
                             <Heading
                                 size="medium"
                                 style={{
-                                    color: 'var(--a-surface-alt-3-moderate)',
+                                    color: 'var(--ac-surface-alt-3-moderate)',
                                 }}>
                                 {appName}
                             </Heading>
