@@ -18,11 +18,11 @@ export const NovariFooter = ({ links }: FooterProps) => {
         padding: "2rem",
         marginTop: "2rem",
         textAlign: "center",
-          backgroundColor: "var(--ac-surface-alt-3-moderate)"
+          backgroundColor: "var(--novari-magenta)"
       }}
 
     >
-      <HStack gap="4" align="center">
+      <HStack gap="space-6" align="center">
 
           <Link href="http://novari.no">
             <NovariIKS width={"9em"} aria-label="Novari logo" />

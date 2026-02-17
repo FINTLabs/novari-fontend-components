@@ -1,38 +1,47 @@
+/**
+ * Novari theme for Aksel v8
+ * Migrated from v7 - uses new --ax-* tokens (v8) instead of removed --ac-* tokens
+ * See: https://aksel.nav.no/grunnleggende/migreringsguider/versjon-8
+ */
+
+/* Novari brand colors - use these for custom components */
+:root {
+    --novari-bg-subtle: #FCF5ED;
+    --novari-bg-default: #FEFCFA;
+    --novari-accent-strong: #5A51E1;
+    --novari-accent-hover: #5149CA;
+    --novari-accent-subtle: #E5E4FA;
+    --novari-magenta: #6B133D;
+    --novari-text-on-dark: #FCF5ED;
+}
+
+/* Apply Novari theming - use class for scoping (v8 uses light/dark, not data-theme) */
+.novari-theme,
 [data-theme='novari'] {
-    --ac-bg-default: #FEFCFA;
-    --ac-bg-subtle: #FCF5ED;
+    /* Override accent tokens for Novari purple (#5A51E1) */
+    --ax-bg-accent-strong: var(--novari-accent-strong);
+    --ax-bg-accent-strong-hover: var(--novari-accent-hover);
+    --ax-bg-accent-strong-pressed: var(--novari-accent-hover);
+    --ax-bg-accent-moderate: var(--novari-accent-strong);
+    --ax-bg-accent-moderate-hover: var(--novari-accent-hover);
+    --ax-bg-accent-moderate-pressed: var(--novari-accent-hover);
+    --ax-bg-accent-soft: var(--novari-accent-subtle);
 
-    --ac-surface-action: var(--ac-surface-alt-3-strong);
-    --ac-surface-action-hover: #5149CA;
-    --ac-surface-action-active: var(--ac-surface-alt-3-strong);
-    --ac-surface-action-selected: var(--ac-surface-alt-3-strong);
-    --ac-surface-action-subtle-hover: var(--ac-surface-alt-3-subtle);
-    --ac-surface-action-selected-hover: #5149CA;
-    --ac-surface-default: var(--ac-bg-default);
-    --ac-surface-hover: #E5E4FA;
+    --ax-text-accent: var(--novari-accent-strong);
+    --ax-text-accent-contrast: #ffffff;
 
-    --ac-text-action-selected: var(--ac-surface-alt-3-strong);
-    --ac-text-on-action: #ffffff;
-    --ac-text-action: var(--ac-surface-alt-3-strong);
-    --ac-text-action-hover: var(--ac-surface-alt-3-strong);
-    --ac-text-action-on-action-subtle: var(--ac-surface-alt-3-strong);
+    --ax-border-accent: var(--novari-accent-strong);
+    --ax-border-focus: var(--novari-accent-strong);
 
-    --ac-border-action: var(--ac-surface-alt-3-strong);
-    --ac-border-action-hover: var(--ac-surface-alt-3-strong);
-    --ac-border-action-selected: var(--ac-surface-alt-3-strong);
-    --ac-border-focus: var(--ac-surface-alt-3-strong);
+    /* Custom background overrides */
+    --ax-bg-default: var(--novari-bg-default);
+}
 
-    --ac-surface-alt-3-strong: #5A51E1;
-    --ac-surface-alt-3-subtle: #E5E4FA;
-    --ac-surface-alt-3-moderate: #6B133D;
+/* Novari header and footer - custom styling using our tokens */
+.novari-header {
+    background: var(--novari-bg-subtle) !important;
+}
 
-
-    /* NOVARI Footer and header */
-    .novari-header {
-        background: #FCF5ED;
-    }
-
-    .novari-footer {
-        background: #6B133D;
-    }
+.novari-footer {
+    background: var(--novari-magenta) !important;
 }

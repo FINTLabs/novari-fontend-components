@@ -39,17 +39,17 @@ const NovariHeader: React.FC<HeaderProps> = ({
 }) => {
     return (
         <HStack
-            gap="2"
+            gap="space-2"
             style={{
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                backgroundColor: 'var(--ac-bg-subtle)',
+                backgroundColor: 'var(--novari-bg-subtle)',
                 height: '52px',
                 textAlign: 'center',
             }}>
             <HStack
-                gap="2"
+                gap="space-2"
                 style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -59,7 +59,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                     <NovariIKS width="9em" />
                 ) : (
                     <HStack
-                        gap="2"
+                        gap="space-2"
                         style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -68,7 +68,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                             <NovariIKS width="9em" />
                         ) : (
                             <HStack
-                                gap="2"
+                                gap="space-2"
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
@@ -77,7 +77,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                                 <Heading
                                     size="medium"
                                     style={{
-                                        color: 'var(--ac-surface-alt-3-moderate)',
+                                        color: 'var(--novari-magenta)',
                                         paddingRight: '28px',
                                     }}>
                                     {appName}
@@ -88,7 +88,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
                 )}
             </HStack>
             {isLoggedIn && (
-                <HStack gap="2">
+                <HStack gap="space-2">
                     {menu.map((item, index) => (
                         // <NovariMenuItem key={index} item={item} index={index} onMenuClick={onMenuClick} />
                         <NovariMenuItem
@@ -108,7 +108,7 @@ const NovariHeader: React.FC<HeaderProps> = ({
             <div style={{ marginLeft: 'auto' }} />
 
             <HStack
-                gap="2"
+                gap="space-2"
                 style={{
                     display: 'flex',
                     alignItems: 'center',

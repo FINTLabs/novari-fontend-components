@@ -46,7 +46,7 @@ const NovariSubHeader: React.FC<SubHeaderProps> = ({
                 style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    backgroundColor: 'var(--ac-bg-subtle)',
+                    backgroundColor: 'var(--novari-bg-subtle)',
                     height: '42px',
                     width: '100%',
                     textAlign: 'center',
@@ -69,14 +69,14 @@ const NovariSubHeader: React.FC<SubHeaderProps> = ({
                             <Heading
                                 size="medium"
                                 style={{
-                                    color: 'var(--ac-surface-alt-3-moderate)',
+                                    color: 'var(--novari-magenta)',
                                 }}>
                                 {appName}
                             </Heading>
                         </Box>
                     ) : null}
                     {
-                        <HStack gap="2">
+                        <HStack gap="space-2">
                             {menu.map((menuItem, index) => {
                                 if (Array.isArray(menuItem)) {
                                     const [label, action] = menuItem;

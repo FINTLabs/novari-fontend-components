@@ -8,6 +8,7 @@ export interface LinkBoxProps {
   href?: string;
 }
 
+//TODO: this is coming soon in nav aksel, so delete here
 const NovariLinkBox: React.FC<LinkBoxProps> = ({
   title,
   description,
@@ -17,9 +18,9 @@ const NovariLinkBox: React.FC<LinkBoxProps> = ({
     <Box
       as="a"
       href={href}
-      padding="6"
-      background="surface-alt-3-subtle"
-      borderRadius="medium"
+      padding="space-6"
+      // background="surface-subtle"
+      borderRadius="full"
       width="auto"
       maxWidth="400px"
       className="block no-underline hover:bg-gray-200 transition-all "

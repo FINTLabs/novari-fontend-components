@@ -72,19 +72,19 @@ export const NovariCookieConsent: React.FC<CookieConsentProps> = ({
           bottom: "0",
           left: "0",
           right: "0",
-          backgroundColor: "var(--ac-surface-default)",
+          backgroundColor: "var(--novari-bg-default)",
           padding: "1rem",
           boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.1)",
           zIndex: 1000,
         }}
       >
-        <VStack gap="4" align="stretch">
-          <HStack gap="2">
+        <VStack gap="space-4" align="stretch">
+          <HStack gap="space-2">
             <TasklistIcon aria-hidden fontSize="1.5rem" />
             <Heading size="small">{title}</Heading>
           </HStack>
           <Alert variant="info">{message}</Alert>
-          <HStack gap="4" justify="end">
+          <HStack gap="space-4" justify="end">
             <Button variant="secondary" onClick={() => setShowCustomize(true)}>
               {customizeButtonText}
             </Button>
@@ -101,8 +101,8 @@ export const NovariCookieConsent: React.FC<CookieConsentProps> = ({
         header={{ heading: "Cookie Settings" }}
       >
         <Modal.Body>
-          <VStack gap="4">
-            <Box padding="4" borderRadius="medium" borderWidth="1">
+          <VStack gap="space-4">
+            <Box padding="space-4" borderRadius="full" borderWidth="1">
               <Heading size="small">Necessary Cookies</Heading>
               <p>These cookies are required for basic site functionality and cannot be disabled.</p>
               <Button variant="primary" size="small" disabled>
@@ -110,7 +110,7 @@ export const NovariCookieConsent: React.FC<CookieConsentProps> = ({
               </Button>
             </Box>
 
-            <Box padding="4" borderRadius="medium" borderWidth="1">
+            <Box padding="space-4" borderRadius="full" borderWidth="1">
               <Heading size="small">Analytics Cookies</Heading>
               <p>Help us improve our website by collecting and reporting usage information.</p>
               <Button
@@ -122,7 +122,7 @@ export const NovariCookieConsent: React.FC<CookieConsentProps> = ({
               </Button>
             </Box>
 
-            <Box padding="4" borderRadius="medium" borderWidth="1">
+            <Box padding="space-4" borderRadius="full" borderWidth="1">
               <Heading size="small">Marketing Cookies</Heading>
               <p>Used to track visitors across websites to display relevant advertisements.</p>
               <Button
