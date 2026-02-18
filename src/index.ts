@@ -30,3 +30,10 @@ export { default as NovariSubHeader } from './components/NovariSubHeader';
 export { NovariCircularProgressBar } from './components/NovariCircularProgressBar';
 export { default as NovariConfirmAction } from './components/NovariConfirmAction';
 export type { NovariConfirmActionProps } from './components/NovariConfirmAction';
+
+// Theme
+export { ThemeProvider } from './components/ThemeSwitcher/ThemeProvider';
+export type { ThemeProviderProps } from './components/ThemeSwitcher/ThemeProvider';
+export { useTheme } from './components/ThemeSwitcher/useTheme';
+export type { Theme, ThemeProviderState } from './components/ThemeSwitcher/themeContext';
+export { default as NovariThemeSwitcher } from './components/ThemeSwitcher/NovariThemeSwitcher';

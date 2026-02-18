@@ -5,14 +5,17 @@ import '../src/tailwind.css';
 import '../src/index.css';
 import '../src/styles/novari-theme.css';
 import '@navikt/ds-css';
+import { ThemeProvider } from '../src';
 
 const preview: Preview = {
     decorators: [
         (Story) => (
             <React.StrictMode>
-                <div data-theme="novari">
-                    <Story />
-                </div>
+                <ThemeProvider>
+                    <div data-theme="novari">
+                        <Story />
+                    </div>
+                </ThemeProvider>
             </React.StrictMode>
         ),
     ],
