@@ -37,7 +37,8 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
                         size="small"
                         variant="tertiary-neutral"
                         icon={<ChevronDownIcon aria-hidden />}
-                        iconPosition="right">
+                        iconPosition="right"
+                        className={'text-[#000000]!'}>
                         {label}
                     </Button>
                 </ActionMenu.Trigger>
@@ -48,7 +49,7 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
                             onSelect={sub.disabled ? undefined : () => onMenuClick?.(sub.action)}
                             // onClick={sub.action}
                             disabled={sub.disabled}
-                            icon={sub.icon}>
+                            icon={sub.icon} >
                             {sub.label}
                         </ActionMenu.Item>
                     ))}
@@ -63,7 +64,8 @@ const MenuItemComponent: React.FC<MenuItemProps> = ({
             variant="tertiary-neutral"
             disabled={disabled}
             onClick={() => onMenuClick(action)}
-            icon={icon}>
+            icon={icon}
+            className={'text-[#000000]!'}>
             {label}
         </Button>
     );
