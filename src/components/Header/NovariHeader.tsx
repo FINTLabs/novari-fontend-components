@@ -1,30 +1,29 @@
 import { Box, Button, Heading, HStack } from '@navikt/ds-react';
 import { EnterIcon, LeaveIcon } from '@navikt/aksel-icons';
-import { NovariIKS } from '../assets/NovariIKS';
 import React from 'react';
+import { NovariIKS } from '../assets/NovariIKS';
 import NovariMenuItem, { MenuItem } from './NovariMenuItem';
 
-//TODO: Make a mobile version ?
 export interface HeaderProps {
-    /** Title to display in the header */
-    appName: string;
-    /** List of Menu items  */
+    appName?: string;
     menu: MenuItem[];
-    /** Is the user logged in? */
     isLoggedIn: boolean;
-    /** Display name of the user */
     displayName?: string;
-    /** Callback for when the user clicks on a menu item */
+
     onLogout: () => void;
-    /** Callback for when the user clicks on a menu item */
     onLogin: () => void;
-    /** Callback for when the user clicks on a menu item */
     onMenuClick: (action: string) => void;
-    /** Should we show the logo and title? */
+
     showLogoWithTitle?: boolean;
-    /** Extra child code to display in the header */
     children?: React.ReactNode;
+
+    /** Let consumers theme via CSS */
+    className?: string;
+    style?: React.CSSProperties;
 }
+
+const HEADER_HEIGHT = '52px';
+const HEADER_PADDING_INLINE = 'space-16';
 
 const NovariHeader: React.FC<HeaderProps> = ({
     appName,
@@ -36,113 +35,69 @@ const NovariHeader: React.FC<HeaderProps> = ({
     onMenuClick,
     showLogoWithTitle = false,
     children,
+    className,
+    style,
 }) => {
     return (
         <HStack
-            gap="space-2"
-            style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                backgroundColor: 'var(--novari-bg-subtle)',
-                height: '52px',
-                textAlign: 'center',
-            }}>
-            <HStack
-                gap="space-2"
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    paddingLeft: '32px',
-                }}>
-                {!appName ? (
-                    <NovariIKS width="9em" />
-                ) : (
+            className={className}
+            style={style}
+            gap="space-6"
+            align="center"
+            justify="space-between"
+            paddingInline={HEADER_PADDING_INLINE}
+            height={HEADER_HEIGHT}
+            wrap={false}>
+            {/* LEFT: logo + title + menu */}
+            <HStack gap="space-6" align="center" wrap={false}>
+                <HStack gap="space-2" align="center" wrap={false}>
+                    {(showLogoWithTitle || !appName) && <NovariIKS width="9em" />}
+                    {appName && (
+                        <Heading size="medium" className="novari-header-title">
+                            {appName}
+                        </Heading>
+                    )}
+                </HStack>
+
+                {isLoggedIn && menu.length > 0 && (
                     <HStack
                         gap="space-2"
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                        }}>
-                        {!appName ? (
-                            <NovariIKS width="9em" />
-                        ) : (
-                            <HStack
-                                gap="space-2"
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                }}>
-                                {showLogoWithTitle && <NovariIKS width="9em" />}
-                                <Heading
-                                    size="medium"
-                                    style={{
-                                        color: 'var(--novari-magenta)',
-                                        paddingRight: '28px',
-                                    }}>
-                                    {appName}
-                                </Heading>
-                            </HStack>
-                        )}
+                        align="center"
+                        wrap={false}
+                        className="novari-header-menu">
+                        {menu.map((item, index) => (
+                            <NovariMenuItem
+                                key={index}
+                                label={item.label}
+                                icon={item.icon}
+                                disabled={item.disabled}
+                                action={item.action}
+                                submenu={item.submenu}
+                                onMenuClick={onMenuClick}
+                            />
+                        ))}
                     </HStack>
                 )}
             </HStack>
-            {isLoggedIn && (
-                <HStack gap="space-2">
-                    {menu.map((item, index) => (
-                        // <NovariMenuItem key={index} item={item} index={index} onMenuClick={onMenuClick} />
-                        <NovariMenuItem
-                            key={index}
-                            label={item.label}
-                            icon={item.icon}
-                            disabled={item.disabled}
-                            action={item.action}
-                            submenu={item.submenu}
-                            onMenuClick={onMenuClick}
-                        />
-                    ))}
-                </HStack>
-            )}
 
-            {/* RIGHT CLUSTER: push to the far right */}
-            <div style={{ marginLeft: 'auto' }} />
-
-            <HStack
-                gap="space-2"
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    // padding to match left side
-                    paddingRight: '14px',
-                }}>
-                {/* injected content */}
+            {/* RIGHT: injected content + user + auth buttons */}
+            <HStack gap="space-2" align="center" wrap={false}>
                 {isLoggedIn && children}
 
-                {/* display name (now naturally inline, right after the selector) */}
                 {isLoggedIn && displayName && (
-                    <Box
-                        as="span"
-                        style={{
-                            height: '52px',
-                            lineHeight: '52px',
-                            textAlign: 'center',
-                            whiteSpace: 'nowrap',
-                        }}>
+                    <Box as="span" className="novari-header-user" style={{ whiteSpace: 'nowrap' }}>
                         {displayName}
                     </Box>
                 )}
 
-                {isLoggedIn && onLogout && (
+                {isLoggedIn ? (
                     <Button
                         variant="tertiary"
                         title="logg ut"
                         icon={<LeaveIcon title="logg ut" fontSize="1.5rem" />}
                         onClick={onLogout}
                     />
-                )}
-
-                {/* login button */}
-                {!isLoggedIn && onLogin && (
+                ) : (
                     <Button
                         variant="tertiary"
                         title="logg inn"

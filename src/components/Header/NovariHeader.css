@@ -1,0 +1,16 @@
+/*.novari-header {*/
+/*  background-color: var(--a-color-bg-subtle);*/
+/*  color: var(--a-color-text-brand);*/
+/*}*/
+.novari-header .novari-header-title  {
+  color: #6B133D;
+}
+
+.novari-header .novari-header-user {
+  color: #6B133D;
+}
+
+/*.novari-footer {*/
+/*  background-color: var(--a-color-brand-magenta);*/
+/*  color: var(--a-color-text-on-brand);*/
+/*}*/

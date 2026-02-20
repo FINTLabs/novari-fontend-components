@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-
+import './NovariHeader.css';
 import NovariHeader from './NovariHeader';
 import NovariMenuItem from './NovariMenuItem.tsx';
 import { extraChild, menuData, simpleMenu } from '../StoryBookMockData/menuData.tsx';
 import { fn } from 'storybook/test';
+
+
 
 //TODO: Remove onMenuClick from args in header items
 const meta = {
@@ -21,10 +23,24 @@ const meta = {
                     'native React library, and implement it, for example like in the code snippet of this preview. ' +
                     'The header menu can be built using a combination of individual links and dropdown menus ' +
                     'containing several links. The links in the menu links can have Icons and can also be dynamically disabled ' +
-                    'with javascript. ',
+                    'with javascript. ' +
+                    '\n\n**CSS options**\n\n' +
+                    '- `className` – Pass a custom class (e.g. `novari-header`) to theme the header root\n' +
+                    '- `style` – Pass inline styles for one-off overrides\n' +
+                    '- `.novari-header` – Root wrapper class for background and text color\n' +
+                    '- `.novari-header-title` – Targets the app name heading\n' +
+                    '- `.novari-header-user` – Targets the display name text\n' +
+                    '- `.novari-header-menu` – Targets the menu container',
             },
         },
     },
+    decorators: [
+        (Story) => (
+            <div className="novari-header-bg">
+                <Story />
+            </div>
+        ),
+    ],
 } satisfies Meta<typeof NovariHeader>;
 
 export default meta;
@@ -41,6 +57,7 @@ export const Default: Story = {
         onLogin: fn(),
         onLogout: fn(),
         showLogoWithTitle: false,
+        className: 'novari-header',
     },
 };
 
