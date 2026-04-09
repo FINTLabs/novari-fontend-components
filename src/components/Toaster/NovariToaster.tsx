@@ -155,6 +155,8 @@ const NovariToaster = ({
                 <div key={item.id} style={{ marginBottom: '0.5rem' }}>
                     <Box
                         background={statusBackgroundMap[item.status ?? 'info']}
+                        borderWidth="1"
+                        borderColor="neutral-subtle"
                         borderRadius="8"
                         padding="space-12">
                         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
