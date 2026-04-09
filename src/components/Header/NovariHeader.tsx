@@ -24,7 +24,7 @@ export interface HeaderProps {
 
 const HEADER_HEIGHT = '52px';
 const HEADER_PADDING_INLINE = 'space-16';
-
+//TODO: make an error page header
 const NovariHeader: React.FC<HeaderProps> = ({
     appName,
     menu,

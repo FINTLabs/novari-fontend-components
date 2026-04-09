@@ -13,7 +13,7 @@ export type {
     HttpMethod,
 } from './api/NovariApiManager';
 
-// Snackbar
+// Snackbar (deprecated - use NovariToaster)
 export type {
     NovariSnackbarItem,
     NovariSnackbarVariant,
@@ -21,6 +21,15 @@ export type {
 } from './components/Snackbar/NovariSnackbar';
 export { default as NovariSnackbar } from './components/Snackbar/NovariSnackbar';
 export { useAlerts } from './hooks/useAlerts';
+
+// Toaster
+export type {
+    NovariToasterItem,
+    NovariToasterStatus,
+    NovariToasterPosition,
+    NovariToasterProps,
+} from './components/Toaster/NovariToaster';
+export { default as NovariToaster } from './components/Toaster/NovariToaster';
 
 // All Components
 export { default as NovariHeader } from './components/Header/NovariHeader';
