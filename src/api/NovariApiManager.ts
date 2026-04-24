@@ -23,13 +23,13 @@ export interface ApiCallOptions {
     additionalHeaders?: Record<string, string>;
     customErrorMessage?: string;
     customSuccessMessage?: string;
-    customSuccessVariant?: 'success' | 'error' | 'warning' | 'info';
+    customSuccessVariant?: 'success' | 'error' | 'warning' | 'announcement';
 }
 
 export interface ApiResponse<T> {
     success: boolean;
     message: string;
-    variant: 'success' | 'error' | 'warning' | 'info';
+    variant: 'success' | 'error' | 'warning' | 'announcement';
     data?: T;
     status?: number;
     body?: any; // Add body to include the request payload in the response
@@ -59,6 +59,7 @@ export class NovariApiManager {
         const url = `${this.config.baseUrl}${endpoint}`;
 
         this.logger.info('Starting function:', functionName);
+        this.logger.info(`${method} API URL: ${url}`);
         this.logger.debug('Headers being sent:', {
             'Content-Type': contentType,
             ...this.config.defaultHeaders,
@@ -83,8 +84,9 @@ export class NovariApiManager {
                 typeof requestBody === 'string' ? requestBody : JSON.stringify(requestBody);
         }
 
-        this.logger.info(`${method} API URL: ${url}`);
-        if (requestBody) {
+        // Debug lines
+        if (requestBody && this.logger.debug) {
+            this.logger.debug(`${method} API URL: ${url}`);
             this.logger.debug('Request body:', requestBody);
         }
 
@@ -93,6 +95,7 @@ export class NovariApiManager {
 
             if (!response.ok) {
                 const errorMessage = await response.text();
+                this.logger.error(`${method} API URL: ${url}`);
                 this.logger.error(`Response from ${functionName}: ${errorMessage}`);
 
                 return {
@@ -130,9 +133,11 @@ export class NovariApiManager {
                         data = responseMessage as unknown as T;
                     }
                 } catch (err) {
+                    this.logger.error(`${method} API URL: ${url}`);
                     this.logger.error(`Response parsing error for ${functionName}:`, err);
                 }
             }
+            this.logger.info(`${method} API URL: ${url}`);
             this.logger.info(`${method} Finished with success: ${functionName}:${response.status}`);
             return {
                 success: true,
@@ -144,6 +149,7 @@ export class NovariApiManager {
             };
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+            this.logger.error(`${method} API URL: ${url}`);
             this.logger.error('API call error:', errorMessage);
 
             return {
