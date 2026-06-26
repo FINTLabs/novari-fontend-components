@@ -10,7 +10,7 @@ import { MenuItem } from '../Header/NovariMenuItem';
 import { Select } from '@navikt/ds-react';
 
 export const extraChild = (
-    <Select label="Velg bostedsland" hideLabel size="small" className="p-2">
+    <Select label="Velg bostedsland" hideLabel size="small" className="pr-3">
         <option value="">- Velg land -</option>
         <option value="norge">Norge</option>
         <option value="sverige">Sverige</option>

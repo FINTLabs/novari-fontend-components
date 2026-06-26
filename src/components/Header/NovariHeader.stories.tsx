@@ -71,6 +71,7 @@ export const WithLogoAndName: Story = {
         showLogoWithTitle: true,
         onLogin: fn(),
         onLogout: fn(),
+        className: 'novari-header',
     },
 };
 
@@ -84,6 +85,7 @@ export const WithSimpleMenu: Story = {
         showLogoWithTitle: true,
         onLogin: fn(),
         onLogout: fn(),
+        className: 'novari-header',
     },
 };
 
@@ -97,6 +99,7 @@ export const NotLoggedIn: Story = {
         onMenuClick: fn(),
         onLogin: fn(),
         onLogout: fn(),
+        className: 'novari-header',
     },
 };
 
@@ -111,5 +114,19 @@ export const WithChildComponent: Story = {
         onLogin: fn(),
         onLogout: fn(),
         children: extraChild,
+        className: 'novari-header',
+    },
+};
+
+export const WithNoCss: Story = {
+    args: {
+        appName: 'FINTApp',
+        menu: simpleMenu,
+        displayName: 'John Doe',
+        isLoggedIn: true,
+        showLogoWithTitle: false,
+        onMenuClick: fn(),
+        onLogin: fn(),
+        onLogout: fn(),
     },
 };

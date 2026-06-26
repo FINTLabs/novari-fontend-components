@@ -1,9 +1,11 @@
+/// <reference types="vite/client" />
+
 import React from 'react';
 
 import type { Preview } from '@storybook/react-vite';
 import '../src/tailwind.css';
 import '../src/index.css';
-import '../src/styles/novari-theme.css';
+// import '../src/styles/novari-theme.css';
 import '@navikt/ds-css';
 import { ThemeProvider } from '../src';
 

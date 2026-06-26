@@ -1,5 +1,5 @@
 // Side effects & assets
-import './styles/novari-theme.css';
+// import './styles/novari-theme.css';
 
 // Logos
 export { NovariIKS } from './logo/NovariIKS';
