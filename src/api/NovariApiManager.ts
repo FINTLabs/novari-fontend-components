@@ -173,7 +173,8 @@ export class NovariApiManager {
                 variant: customSuccessVariant || 'success',
                 data,
                 status: response.status,
-                body: response.body || requestBody, // Include the request body in the response
+                // body: response.body || requestBody,
+                body: requestBody
             };
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
