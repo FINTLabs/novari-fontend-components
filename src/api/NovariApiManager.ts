@@ -111,24 +111,25 @@ export class NovariApiManager {
             let responseMessage: string = '';
 
             if (response.status !== 204) {
-                const contentType = response.headers.get('Content-Type');
+                const responseContentType = response.headers.get('Content-Type');
+
                 try {
-                    if (contentType?.includes('application/json')) {
+                    if (responseContentType?.includes('application/json')) {
                         const jsonResponse = await response.json();
-                        // Check if the response has a message property
-                        if (jsonResponse?.message) {
-                            responseMessage = jsonResponse.message;
-                            // If the response has both message and data properties
-                            if (jsonResponse?.data) {
-                                data = jsonResponse.data;
-                            } else {
-                                data = undefined;
-                            }
+
+                        const isWrappedResponse =
+                            jsonResponse &&
+                            typeof jsonResponse === 'object' &&
+                            Object.prototype.hasOwnProperty.call(jsonResponse, 'data');
+
+                        if (isWrappedResponse) {
+                            responseMessage = jsonResponse.message ?? '';
+                            data = jsonResponse.data as T;
                         } else {
-                            // If no message property, use the whole response as data
+                            responseMessage = jsonResponse?.message ?? '';
                             data = jsonResponse as T;
                         }
-                    } else if (contentType?.includes('text/plain')) {
+                    } else if (responseContentType?.includes('text/plain')) {
                         responseMessage = await response.text();
                         data = responseMessage as unknown as T;
                     }
@@ -137,6 +138,33 @@ export class NovariApiManager {
                     this.logger.error(`Response parsing error for ${functionName}:`, err);
                 }
             }
+            // if (response.status !== 204) {
+            //     const contentType = response.headers.get('Content-Type');
+            //     try {
+            //         if (contentType?.includes('application/json')) {
+            //             const jsonResponse = await response.json();
+            //             // Check if the response has a message property
+            //             if (jsonResponse?.message) {
+            //                 responseMessage = jsonResponse.message;
+            //                 // If the response has both message and data properties
+            //                 if (jsonResponse?.data) {
+            //                     data = jsonResponse.data;
+            //                 } else {
+            //                     data = undefined;
+            //                 }
+            //             } else {
+            //                 // If no message property, use the whole response as data
+            //                 data = jsonResponse as T;
+            //             }
+            //         } else if (contentType?.includes('text/plain')) {
+            //             responseMessage = await response.text();
+            //             data = responseMessage as unknown as T;
+            //         }
+            //     } catch (err) {
+            //         this.logger.error(`${method} API URL: ${url}`);
+            //         this.logger.error(`Response parsing error for ${functionName}:`, err);
+            //     }
+            // }
             this.logger.info(`${method} API URL: ${url}`);
             this.logger.info(`${method} Finished with success: ${functionName}:${response.status}`);
             return {

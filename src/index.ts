@@ -39,6 +39,13 @@ export { default as NovariSubHeader } from './components/NovariSubHeader';
 export { NovariCircularProgressBar } from './components/NovariCircularProgressBar';
 export { default as NovariConfirmAction } from './components/NovariConfirmAction';
 export type { NovariConfirmActionProps } from './components/NovariConfirmAction';
+export { default as NovariLinkCard } from './components/LinkCard/NovariLinkCard';
+export type {
+    NovariLinkCardCssVariables,
+    NovariLinkCardProps,
+} from './components/LinkCard/NovariLinkCard';
+export { default as NovariLinkCardGrid } from './components/LinkCard/NovariLinkCardGrid';
+export type { NovariLinkCardGridProps } from './components/LinkCard/NovariLinkCardGrid';
 
 // Theme
 export { ThemeProvider } from './components/ThemeSwitcher/ThemeProvider';
