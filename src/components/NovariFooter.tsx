@@ -25,7 +25,7 @@ export const NovariFooter = ({ links, showThemeSwitcher = false }: FooterProps) 
       }}
     >
       <HStack gap="space-6" align="center" justify="center">
-        <Link href="http://novari.no">
+        <Link href="http://novari.no" aria-label="Novari logo">
           <NovariIKS width={"9em"} aria-label="Novari logo" />
         </Link>
 

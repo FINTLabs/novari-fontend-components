@@ -44,8 +44,12 @@ export type {
     NovariLinkCardCssVariables,
     NovariLinkCardProps,
 } from './components/LinkCard/NovariLinkCard';
-export { default as NovariLinkCardGrid } from './components/LinkCard/NovariLinkCardGrid';
-export type { NovariLinkCardGridProps } from './components/LinkCard/NovariLinkCardGrid';
+export { default as NovariStatsLinkCard } from './components/LinkCard/NovariStatsLinkCard';
+export type {
+    NovariStatsLinkCardCssVariables,
+    NovariStatsLinkCardLink,
+    NovariStatsLinkCardProps,
+} from './components/LinkCard/NovariStatsLinkCard';
 
 // Theme
 export { ThemeProvider } from './components/ThemeSwitcher/ThemeProvider';
