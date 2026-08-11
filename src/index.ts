@@ -38,13 +38,13 @@ export { default as NovariInternalHeader } from './components/NovariInternalHead
 export { default as NovariSubHeader } from './components/NovariSubHeader';
 export { NovariCircularProgressBar } from './components/NovariCircularProgressBar';
 export { default as NovariConfirmAction } from './components/NovariConfirmAction';
-export type { NovariConfirmActionProps } from './components/NovariConfirmAction';
-export { default as NovariLinkCard } from './components/LinkCard/NovariLinkCard';
+export type { default as NovariConfirmActionProps } from './components/NovariConfirmAction';
+export { NovariLinkCard } from './components/LinkCard/NovariLinkCard';
 export type {
     NovariLinkCardCssVariables,
     NovariLinkCardProps,
 } from './components/LinkCard/NovariLinkCard';
-export { default as NovariStatsLinkCard } from './components/LinkCard/NovariStatsLinkCard';
+export { NovariStatsLinkCard } from './components/LinkCard/NovariStatsLinkCard';
 export type {
     NovariStatsLinkCardCssVariables,
     NovariStatsLinkCardLink,
