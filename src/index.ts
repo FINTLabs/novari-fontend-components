@@ -1,5 +1,5 @@
 // Side effects & assets
-import './styles/novari-theme.css';
+// import './styles/novari-theme.css';
 
 // Logos
 export { NovariIKS } from './logo/NovariIKS';
@@ -13,7 +13,7 @@ export type {
     HttpMethod,
 } from './api/NovariApiManager';
 
-// Snackbar
+// Snackbar (deprecated - use NovariToaster)
 export type {
     NovariSnackbarItem,
     NovariSnackbarVariant,
@@ -22,6 +22,15 @@ export type {
 export { default as NovariSnackbar } from './components/Snackbar/NovariSnackbar';
 export { useAlerts } from './hooks/useAlerts';
 
+// Toaster
+export type {
+    NovariToasterItem,
+    NovariToasterStatus,
+    NovariToasterPosition,
+    NovariToasterProps,
+} from './components/Toaster/NovariToaster';
+export { default as NovariToaster } from './components/Toaster/NovariToaster';
+
 // All Components
 export { default as NovariHeader } from './components/Header/NovariHeader';
 export { default as NovariFooter } from './components/NovariFooter';
@@ -29,4 +38,22 @@ export { default as NovariInternalHeader } from './components/NovariInternalHead
 export { default as NovariSubHeader } from './components/NovariSubHeader';
 export { NovariCircularProgressBar } from './components/NovariCircularProgressBar';
 export { default as NovariConfirmAction } from './components/NovariConfirmAction';
-export type { NovariConfirmActionProps } from './components/NovariConfirmAction';
+export type { default as NovariConfirmActionProps } from './components/NovariConfirmAction';
+export { NovariLinkCard } from './components/LinkCard/NovariLinkCard';
+export type {
+    NovariLinkCardCssVariables,
+    NovariLinkCardProps,
+} from './components/LinkCard/NovariLinkCard';
+export { NovariStatsLinkCard } from './components/LinkCard/NovariStatsLinkCard';
+export type {
+    NovariStatsLinkCardCssVariables,
+    NovariStatsLinkCardLink,
+    NovariStatsLinkCardProps,
+} from './components/LinkCard/NovariStatsLinkCard';
+
+// Theme
+export { ThemeProvider } from './components/ThemeSwitcher/ThemeProvider';
+export type { ThemeProviderProps } from './components/ThemeSwitcher/ThemeProvider';
+export { useTheme } from './components/ThemeSwitcher/useTheme';
+export type { Theme, ThemeProviderState } from './components/ThemeSwitcher/themeContext';
+export { default as NovariThemeSwitcher } from './components/ThemeSwitcher/NovariThemeSwitcher';

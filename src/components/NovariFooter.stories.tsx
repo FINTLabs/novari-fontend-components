@@ -81,3 +81,14 @@ export const CustomLinks: Story = {
         ],
     },
 };
+
+// NovariFooter with theme switcher
+export const WithThemeSwitcher: Story = {
+    args: {
+        links: [
+            { label: 'Driftsmeldinger', href: 'https://novari.no/driftsmeldinger/' },
+            { label: 'Opprett supportsak', href: 'http://support.novari.no' },
+        ],
+        showThemeSwitcher: true,
+    },
+};

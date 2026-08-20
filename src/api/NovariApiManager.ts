@@ -23,13 +23,13 @@ export interface ApiCallOptions {
     additionalHeaders?: Record<string, string>;
     customErrorMessage?: string;
     customSuccessMessage?: string;
-    customSuccessVariant?: 'success' | 'error' | 'warning' | 'info';
+    customSuccessVariant?: 'success' | 'error' | 'warning' | 'announcement';
 }
 
 export interface ApiResponse<T> {
     success: boolean;
     message: string;
-    variant: 'success' | 'error' | 'warning' | 'info';
+    variant: 'success' | 'error' | 'warning' | 'announcement';
     data?: T;
     status?: number;
     body?: any; // Add body to include the request payload in the response
@@ -59,6 +59,7 @@ export class NovariApiManager {
         const url = `${this.config.baseUrl}${endpoint}`;
 
         this.logger.info('Starting function:', functionName);
+        this.logger.info(`${method} API URL: ${url}`);
         this.logger.debug('Headers being sent:', {
             'Content-Type': contentType,
             ...this.config.defaultHeaders,
@@ -83,8 +84,9 @@ export class NovariApiManager {
                 typeof requestBody === 'string' ? requestBody : JSON.stringify(requestBody);
         }
 
-        this.logger.info(`${method} API URL: ${url}`);
-        if (requestBody) {
+        // Debug lines
+        if (requestBody && this.logger.debug) {
+            this.logger.debug(`${method} API URL: ${url}`);
             this.logger.debug('Request body:', requestBody);
         }
 
@@ -93,6 +95,7 @@ export class NovariApiManager {
 
             if (!response.ok) {
                 const errorMessage = await response.text();
+                this.logger.error(`${method} API URL: ${url}`);
                 this.logger.error(`Response from ${functionName}: ${errorMessage}`);
 
                 return {
@@ -108,31 +111,61 @@ export class NovariApiManager {
             let responseMessage: string = '';
 
             if (response.status !== 204) {
-                const contentType = response.headers.get('Content-Type');
+                const responseContentType = response.headers.get('Content-Type');
+
                 try {
-                    if (contentType?.includes('application/json')) {
+                    if (responseContentType?.includes('application/json')) {
                         const jsonResponse = await response.json();
-                        // Check if the response has a message property
-                        if (jsonResponse?.message) {
-                            responseMessage = jsonResponse.message;
-                            // If the response has both message and data properties
-                            if (jsonResponse?.data) {
-                                data = jsonResponse.data;
-                            } else {
-                                data = undefined;
-                            }
+
+                        const isWrappedResponse =
+                            jsonResponse &&
+                            typeof jsonResponse === 'object' &&
+                            Object.prototype.hasOwnProperty.call(jsonResponse, 'data');
+
+                        if (isWrappedResponse) {
+                            responseMessage = jsonResponse.message ?? '';
+                            data = jsonResponse.data as T;
                         } else {
-                            // If no message property, use the whole response as data
+                            responseMessage = jsonResponse?.message ?? '';
                             data = jsonResponse as T;
                         }
-                    } else if (contentType?.includes('text/plain')) {
+                    } else if (responseContentType?.includes('text/plain')) {
                         responseMessage = await response.text();
                         data = responseMessage as unknown as T;
                     }
                 } catch (err) {
+                    this.logger.error(`${method} API URL: ${url}`);
                     this.logger.error(`Response parsing error for ${functionName}:`, err);
                 }
             }
+            // if (response.status !== 204) {
+            //     const contentType = response.headers.get('Content-Type');
+            //     try {
+            //         if (contentType?.includes('application/json')) {
+            //             const jsonResponse = await response.json();
+            //             // Check if the response has a message property
+            //             if (jsonResponse?.message) {
+            //                 responseMessage = jsonResponse.message;
+            //                 // If the response has both message and data properties
+            //                 if (jsonResponse?.data) {
+            //                     data = jsonResponse.data;
+            //                 } else {
+            //                     data = undefined;
+            //                 }
+            //             } else {
+            //                 // If no message property, use the whole response as data
+            //                 data = jsonResponse as T;
+            //             }
+            //         } else if (contentType?.includes('text/plain')) {
+            //             responseMessage = await response.text();
+            //             data = responseMessage as unknown as T;
+            //         }
+            //     } catch (err) {
+            //         this.logger.error(`${method} API URL: ${url}`);
+            //         this.logger.error(`Response parsing error for ${functionName}:`, err);
+            //     }
+            // }
+            this.logger.info(`${method} API URL: ${url}`);
             this.logger.info(`${method} Finished with success: ${functionName}:${response.status}`);
             return {
                 success: true,
@@ -140,10 +173,12 @@ export class NovariApiManager {
                 variant: customSuccessVariant || 'success',
                 data,
                 status: response.status,
-                body: response.body || requestBody, // Include the request body in the response
+                // body: response.body || requestBody,
+                body: requestBody
             };
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+            this.logger.error(`${method} API URL: ${url}`);
             this.logger.error('API call error:', errorMessage);
 
             return {

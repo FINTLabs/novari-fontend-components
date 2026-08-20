@@ -1,0 +1,115 @@
+.novari-link-card {
+    --novari-link-card-hover-color: var(--ax-bg-accent-moderate-hover);
+
+    display: block;
+    height: 100%;
+    color: var(--ax-text-default);
+    text-decoration: none;
+    background-color: var(--ax-bg-default);
+    border-color: var(--ax-border-default);
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease;
+}
+
+.novari-link-card:hover,
+.novari-link-card:focus-visible {
+    color: var(--ax-text-default);
+    text-decoration: none;
+}
+
+.novari-link-card.novari-link-card--hover-color:hover {
+    background-color: var(--novari-link-card-hover-color);
+}
+
+.novari-link-card:focus-visible {
+    outline: 3px solid var(--ax-border-focus);
+    outline-offset: 3px;
+}
+
+.novari-link-card .circle {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.novari-link-card .arrow-icon {
+    flex: 0 0 auto;
+    transition: transform 160ms ease;
+}
+
+.novari-link-card:hover .arrow-icon,
+.novari-link-card:focus-visible .arrow-icon {
+    transform: translateX(0.125rem);
+}
+
+.novari-link-card hr {
+    width: 100%;
+    height: 1px;
+    margin: 0;
+    border: 0;
+}
+
+.novari-stats-link-card {
+    --novari-stats-link-card-error-border-color: var(--ax-border-danger);
+    --novari-stats-link-card-error-color: var(--ax-text-danger-subtle);
+    --novari-stats-link-card-link-color: var(--ax-text-accent-subtle);
+    --novari-stats-link-card-link-background: var(--ax-bg-accent-soft);
+    --novari-stats-link-card-link-background-hover: var(--ax-bg-accent-moderate-hover);
+
+    display: block;
+    width: 100%;
+    height: 9.375rem;
+    overflow: hidden;
+    color: var(--ax-text-default);
+    background-color: var(--ax-bg-default);
+    border-color: var(--ax-border-subtle);
+}
+
+.novari-stats-link-card--error {
+    border-color: var(--novari-stats-link-card-error-border-color);
+}
+
+.novari-stats-link-card__content {
+    min-height: 0;
+    padding-inline: var(--ax-space-16);
+    text-align: center;
+}
+
+.novari-stats-link-card__error {
+    color: var(--novari-stats-link-card-error-color);
+}
+
+.novari-stats-link-card__link {
+    display: block;
+    flex: 0 0 2.75rem;
+    min-height: 2.75rem;
+    color: var(--novari-stats-link-card-link-color);
+    text-decoration: none;
+    background-color: var(--novari-stats-link-card-link-background);
+    border-top: 1px solid var(--ax-border-subtle);
+    transition: background-color 160ms ease;
+}
+
+.novari-stats-link-card__link:hover,
+.novari-stats-link-card__link:focus-visible {
+    color: var(--novari-stats-link-card-link-color);
+    text-decoration: none;
+    background-color: var(--novari-stats-link-card-link-background-hover);
+}
+
+.novari-stats-link-card__link:focus-visible {
+    outline: 3px solid var(--ax-border-focus);
+    outline-offset: -3px;
+}
+
+.novari-stats-link-card .arrow-icon {
+    flex: 0 0 auto;
+    transition: transform 160ms ease;
+}
+
+.novari-stats-link-card__link:hover .arrow-icon,
+.novari-stats-link-card__link:focus-visible .arrow-icon {
+    transform: translateX(0.125rem);
+}

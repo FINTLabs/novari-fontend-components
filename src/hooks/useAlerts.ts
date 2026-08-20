@@ -14,7 +14,10 @@ export function useAlerts<T>(
         if (fetcherData && fetcherState === 'idle') {
             const newAlert: NovariSnackbarItem = {
                 id: Date.now().toString(),
-                variant: fetcherData.variant || 'success',
+                variant:
+                    fetcherData.variant === 'announcement'
+                        ? 'info'
+                        : fetcherData.variant || 'success',
                 message: fetcherData.message || 'Handlingen fullført.',
             };
             setAlertState((prevAlerts) => [...prevAlerts, newAlert]);

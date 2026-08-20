@@ -7,7 +7,7 @@ import { Heading, Button } from '@navikt/ds-react';
 import { NovariSnackbarItem as SnackbarItemType, NovariSnackbarPosition } from './NovariSnackbar';
 
 const meta = {
-    title: 'Components/NovariSnackbar',
+    title: 'Deprecated/NovariSnackbar',
     component: NovariSnackbar,
     subcomponents: { NovariSnackbarItem },
     tags: ['autodocs'],
@@ -26,7 +26,8 @@ const meta = {
         docs: {
             description: {
                 component: `
-
+This component is deprecated because Aksel has removed the legacy Alert component.  
+Use \`NovariToaster\` (built on \`InlineMessage\`) for all new development.
 
 A flexible notification system for displaying alerts, messages, and feedback to users. The component automatically manages a queue of notifications and displays them in a fixed position on the screen.
 
@@ -82,7 +83,7 @@ export const BasicUsage: Story = {
         position: 'top-right',
         size: 'small',
     },
-    render: () => {
+    render: function RenderBasicUsage() {
         const [alerts, setAlerts] = useState<SnackbarItemType[]>([]);
 
         const addAlert = (variant: SnackbarItemType['variant'], message: string, header?: string) => {
@@ -181,7 +182,7 @@ export const DifferentPositions: Story = {
         position: 'top-right',
         size: 'small',
     },
-    render: () => {
+    render: function RenderDifferentPositions() {
         const [alerts, setAlerts] = useState<SnackbarItemType[]>([]);
         const [position, setPosition] = useState<NovariSnackbarPosition>('top-right');
 
@@ -263,7 +264,7 @@ export const FormValidationExample: Story = {
         position: 'top-right',
         size: 'small',
     },
-    render: () => {
+    render: function RenderFormValidationExample() {
         const [alerts, setAlerts] = useState<SnackbarItemType[]>([]);
         const [formData, setFormData] = useState({ name: '', email: '' });
 
@@ -393,7 +394,7 @@ export const ApiResponseExample: Story = {
         position: 'top-right',
         size: 'small',
     },
-    render: () => {
+    render: function RenderApiResponseExample() {
         const [alerts, setAlerts] = useState<SnackbarItemType[]>([]);
         const [loading, setLoading] = useState(false);
 
@@ -499,7 +500,7 @@ export const ConfigurationOptions: Story = {
         position: 'top-right',
         size: 'small',
     },
-    render: () => {
+    render: function RenderConfigurationOptions() {
         const [alerts, setAlerts] = useState<SnackbarItemType[]>([]);
         const [autoHideDuration, setAutoHideDuration] = useState(4000);
         const [maxVisible, setMaxVisible] = useState(3);
