@@ -1,18 +1,23 @@
+/// <reference types="vite/client" />
+
 import React from 'react';
 
 import type { Preview } from '@storybook/react-vite';
-import '@navikt/ds-css';
-import '../src/index.css';
 import '../src/tailwind.css';
-import '../src/styles/novari-theme.css';
+import '../src/index.css';
+// import '../src/styles/novari-theme.css';
+import '@navikt/ds-css';
+import { ThemeProvider } from '../src';
 
 const preview: Preview = {
     decorators: [
         (Story) => (
             <React.StrictMode>
-                <div data-theme="novari">
-                    <Story />
-                </div>
+                <ThemeProvider>
+                    <div data-theme="novari">
+                        <Story />
+                    </div>
+                </ThemeProvider>
             </React.StrictMode>
         ),
     ],
@@ -26,7 +31,7 @@ const preview: Preview = {
                 order: ['Home', 'Components', 'Experimental', '*'],
             },
         },
-        actions: { argTypesRegex: '^on[A-Z].*' },
+        // actions: { argTypesRegex: '^on[A-Z].*' },
         controls: {
             matchers: {
                 color: /(background|color)$/i,

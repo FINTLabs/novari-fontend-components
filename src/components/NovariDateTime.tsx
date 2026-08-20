@@ -71,7 +71,7 @@ export const NovariDateTime: React.FC<DateTimeProps> = ({
     };
 
     return (
-        <VStack gap="2">
+        <VStack gap="space-2">
             <DatePicker {...datepickerProps}>
                 <DatePicker.Input
                     {...inputProps}

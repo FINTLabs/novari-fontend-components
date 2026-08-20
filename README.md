@@ -22,26 +22,25 @@ npm install novari-frontend-components
 ### Prerequisites
 
 - Node.js (v18 or higher)
-- npm (v9 or higher)React 
+- npm (v9 or higher) React 
 - NAV Aksel Design System 
 - TypeScript
 - Tailwind
 - React
 
 ### Local Development
-
-1. Clone the repository:
+Clone the repository:
 ```bash
 git clone https://github.com/FINTLabs/novari-fontend-components.git
 cd novari-fontend-components
 ```
 
-2. Install dependencies:
+Install dependencies:
 ```bash
 npm install
 ```
 
-3. Start Storybook for component development:
+Start a Storybook for component development:
 ```bash
 npm run storybook
 ```
@@ -69,7 +68,7 @@ npm version minor
 ```bash
 npm version major
 ```
-2. Publish to npm:
+1. Publish to npm:
 ```bash
 npm publish --access public
 ```
@@ -94,7 +93,7 @@ Visit `http://localhost:6006` to view the Storybook interface.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License – see the LICENSE file for details.
 
 ## Support
 
@@ -111,5 +110,5 @@ For support, please create an issue in the GitHub repository or contact the main
 
 ## Project Status
 
-Active development - This project is actively maintained and accepting contributions.
+Active development – This project is actively maintained and accepting contributions.
 

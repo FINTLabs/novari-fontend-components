@@ -38,9 +38,12 @@ export default [
       commonjs(),
       typescript({
         tsconfig: "./tsconfig.build.json",
-        include: ["src/**/*.ts", "src/**/*.tsx"],
         sourceMap: true,
-        declaration: true,
+        compilerOptions: {
+          declaration: false,
+          declarationMap: false,
+          emitDeclarationOnly: false,
+        },
       }),
       postcss({
         extensions: [".css"],
