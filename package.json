@@ -67,7 +67,7 @@
         "rollup-plugin-dts": "^6.4.1",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-postcss": "^4.0.2",
-        "storybook": "^10.1.10",
+        "storybook": "10.5.10",
         "typescript": "~6.0.3",
         "typescript-eslint": "^8.61.1",
         "vite": "^7.3.0",
@@ -100,7 +100,7 @@
     },
     "dependencies": {
         "date-fns": "^4.1.0",
-      "esbuild": "^0.28.2",
-      "prettier": "^3.9.6"
+        "esbuild": "^0.28.2",
+        "prettier": "^3.9.6"
     }
 }
