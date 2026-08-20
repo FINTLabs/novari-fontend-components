@@ -25,6 +25,34 @@ const preview: Preview = {
         docs: {
             toc: true,
         },
+        viewport: {
+            options: {
+                largeDesktop: {
+                    name: 'Large desktop',
+                    styles: {
+                        width: '1920px',
+                        height: '1080px',
+                    },
+                    type: 'desktop',
+                },
+                smallDesktop: {
+                    name: 'Small desktop',
+                    styles: {
+                        width: '1280px',
+                        height: '800px',
+                    },
+                    type: 'desktop',
+                },
+                phone: {
+                    name: 'Phone',
+                    styles: {
+                        width: '390px',
+                        height: '844px',
+                    },
+                    type: 'mobile',
+                },
+            },
+        },
 
         options: {
             storySort: {
