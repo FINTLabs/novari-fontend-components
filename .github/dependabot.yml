@@ -38,14 +38,3 @@ updates:
         applies-to: security-updates
         patterns: ["*"]
         update-types: ["patch", "minor"]
-
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "04:20"
-      timezone: "Europe/Oslo"
-    groups:
-      github-actions:
-        patterns: ["*"]
